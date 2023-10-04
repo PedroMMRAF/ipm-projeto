@@ -1,3 +1,194 @@
+.parallax {
+    height: 500px;
+    /* fallback for older browsers */
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-perspective: 300px;
+    perspective: 300px;
+}
+
+.parallax-group {
+    position: relative;
+    height: 500px;
+    /* fallback for older browsers */
+    height: 100vh;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.parallax-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.parallax-group {
+    -webkit-transition: -webkit-transform 0.5s;
+    transition: transform 0.5s;
+}
+
+.parallax-layer-fore {
+    -webkit-transform: translateZ(90px) scale(.7);
+    transform: translateZ(90px) scale(.7);
+    z-index: 1;
+}
+
+.parallax-layer-base {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    z-index: 4;
+}
+
+.parallax-layer-back {
+    -webkit-transform: translateZ(-300px) scale(2);
+    transform: translateZ(-300px) scale(2);
+    z-index: 3;
+}
+
+.parallax-layer-deep {
+    -webkit-transform: translateZ(-600px) scale(3);
+    transform: translateZ(-600px) scale(3);
+    z-index: 2;
+}
+
+#image {
+    background-image: url("images/logo-color.png");
+    background-color: #E7B17F;
+
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+
+#navbar {
+    background-color: #551F18;
+    z-index: 2000;
+}
+
 #content {
+    background-color: #000000;
+    margin-top: 100vh;
     margin-bottom: 20rem;
+}
+
+
+#timeline {
+    display: flex;
+    background-color: #ffffff;
+
+    &:hover {
+        .tl-item {
+            width: 23.3333%;
+        }
+    }
+}
+
+.tl-item {
+    transform: translate3d(0, 0, 0);
+    position: relative;
+    width: 25%;
+    height: 100vh;
+    min-height: 600px;
+    color: #fff;
+    overflow: hidden;
+    transition: width 0.5s ease;
+
+    &:before,
+    &:after {
+        transform: translate3d(0, 0, 0);
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    &:after {
+        background: transparentize(#031625, 0.15);
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+
+    &:before {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 75%);
+        z-index: 1;
+        opacity: 0;
+        transform: translate3d(0, 0, 0) translateY(50%);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    &:hover {
+        width: 30% !important;
+
+        &:after {
+            opacity: 0;
+        }
+
+        &:before {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) translateY(0);
+            transition: opacity 1s ease, transform 1s ease 0.25s;
+        }
+
+        .tl-content {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.75s ease 0.5s;
+        }
+
+        .tl-bg {
+            filter: grayscale(0);
+        }
+    }
+}
+
+.tl-content {
+    transform: translate3d(0, 0, 0) translateY(25px);
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin: 0 1.618em;
+    top: 55%;
+    opacity: 0;
+
+    h1 {
+        font-family: 'Pathway Gothic One', Helvetica Neue, Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        color: #1779cf;
+        font-size: 1.44rem;
+        font-weight: normal;
+    }
+}
+
+.tl-year {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 1;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+
+    p {
+        font-family: 'Pathway Gothic One', Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 1.728rem;
+        line-height: 0;
+    }
+}
+
+.tl-bg {
+    transform: translate3d(0, 0, 0);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center center;
+    transition: filter 0.5s ease;
+    filter: grayscale(100%);
 }
