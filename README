@@ -1,0 +1,11 @@
+Website de base de dados de filmes e séries, com reviews.
+
+Funcionalidades:
+- Pesquisar filmes, séries e pessoas por relevância, categorias, rating
+- Pequisa avançada
+- Pesquisa aleatória de filmes/séries
+- Rating de 0 a 10 com direito a descrição de opinião
+- Sistema de login
+- Lista de filmes/series já vistos, a ver, por ver
+- Calendário de lançamentos
+- Dark mode/Light mode

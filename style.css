@@ -58,6 +58,10 @@
     z-index: 2;
 }
 
+.margine {
+    margin-top: 10px;
+}
+
 #image {
     background-image: url("images/logo-color.png");
     height: 100vh;
