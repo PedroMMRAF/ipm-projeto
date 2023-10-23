@@ -118,6 +118,23 @@
         </div>
     </div>
 
+    <!-- PDF View (Phase 1 > Stage 3) -->
+    <div class="modal fade" id="phase1-stage3" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">PDF</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body m-0 p-0">
+                    <object data="phases/first_prototype.pdf" type="application/pdf" width="100%" height="100%">
+                        <a href="phases/first_prototype.pdf">View PDF</a>
+                    </object>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation bar -->
     <nav id="navbar" class="navbar navbar-expand-lg fixed-top">
         <div class="container">
@@ -217,10 +234,13 @@
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#phase1-stage1">View Stage 1</button>
+                                        data-bs-target="#phase1-stage1">View Stage 1 (Project Proposal)</button>
                                     <hr>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#phase1-stage2">View Stage 2</button>
+                                        data-bs-target="#phase1-stage2">View Stage 2 (User and Task Analysis)</button>
+                                    <hr>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#phase1-stage3">View Stage 3 (First Prototype)</button>
                                 </div>
                             </div>
                         </div>
