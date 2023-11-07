@@ -8,7 +8,6 @@ export default function Home() {
       <MyNavbar />
       <div className="container mt-4">
         <h2>Welcome to the modern movie database!</h2>
-        <input type="text" className="form-control taller-input" placeholder="Search for a movie" />
       </div>
     </div>
   )

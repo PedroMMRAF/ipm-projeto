@@ -17,3 +17,9 @@
     margin-top: 0px;
     margin-bottom: 0.5em;
 }
+
+.nav-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

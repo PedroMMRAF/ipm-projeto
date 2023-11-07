@@ -1,4 +1,7 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
+import Collapse from 'react-bootstrap/Collapse';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import NavbarBrand from 'react-bootstrap/NavbarBrand';
@@ -12,21 +15,85 @@ import NavDropdownDivider from 'react-bootstrap/DropdownDivider';
 import NavDropdownHeader from 'react-bootstrap/DropdownHeader';
 
 import './navbar.scss';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-function Dropdown({ title }) {
+
+const MOVIE_GENRES = [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "History",
+    "Horror",
+    "Mystery",
+    "Romance",
+    "Sci-Fi",
+    "Sport",
+    "Thriller",
+    "War",
+    "Western",
+];
+
+const TV_GENRES = [
+    "Action",
+    "Adventure",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Historical",
+    "Horror",
+    "Medical",
+    "Mystery",
+    "Reality",
+    "Romance",
+    "Sci-Fi",
+    "Sitcom",
+    "Soap Opera",
+    "Sports",
+    "Talk Show",
+    "Thriller",
+    "War",
+    "Western",
+];
+
+
+function Dropdown({ title, genres }) {
+    let visible = genres.slice(0, 5);
+    let hidden = genres.slice(5);
+
+    let [isOpen, setIsOpen] = useState(false);
+
+    const toggleCollapse = (e) => {
+        e.stopPropagation();
+        setIsOpen(!isOpen);
+    }
+
     return (
         <NavDropdown title={title} href="#home">
-            <div className="dropdown-multicol">
+            <div className="dropdown-multicol animate slideIn">
                 <div className="dropdown-col">
                     <NavDropdownHeader>Genres</NavDropdownHeader>
                     <NavDropdownDivider />
-                    <NavDropdownItem href="#">Action</NavDropdownItem>
-                    <NavDropdownItem href="#">Adventure</NavDropdownItem>
-                    <NavDropdownItem href="#">Comedy</NavDropdownItem>
-                    <NavDropdownItem href="#">Drama</NavDropdownItem>
-                    <NavDropdownItem href="#">Sci-Fi</NavDropdownItem>
-                    <NavDropdownItem href="#">Show more...</NavDropdownItem>
+                    {visible.map((genre, i) => (
+                        <NavDropdownItem key={i} href="#">{genre}</NavDropdownItem>
+                    ))}
+                    <Collapse in={isOpen}>
+                        <div>
+                            {hidden.map((genre, i) => (
+                                <NavDropdownItem key={i} href="#">{genre}</NavDropdownItem>
+                            ))}
+                        </div>
+                    </Collapse>
+                    <NavDropdownItem onClick={toggleCollapse}>
+                        Show {isOpen ? "Less" : "More"}...
+                    </NavDropdownItem>
                 </div>
                 <div className="dropdown-col">
                     <NavDropdownHeader>Trending Topics</NavDropdownHeader>
@@ -45,24 +112,42 @@ function Dropdown({ title }) {
 
 
 export default function MyNavbar() {
+    let [isOpen, setIsOpen] = useState(false);
+
+    const toggleCollapse = (e) => {
+        setIsOpen(!isOpen);
+    }
+
     return (
-        <Navbar bg="light" expand="lg" className="fixed-top">
-            <Container>
-                <NavbarBrand href="#home">MTVDB</NavbarBrand>
-                <NavbarToggle aria-controls="basic-navbar-nav" />
-                <NavbarCollapse id="basic-navbar-nav" className="container justify-content-between">
-                    <Nav>
-                        <Dropdown title="Movies" />
-                        <Dropdown title="TV Shows" />
-                        <NavLink href="#near-you">Near You</NavLink>
-                    </Nav>
-                    <Nav>
-                        <NavLink href="#">Login</NavLink>
-                        <NavLink href="#">Lupa</NavLink>
-                        <NavLink href="#">Hamburguer</NavLink>
-                    </Nav>
-                </NavbarCollapse>
-            </Container>
-        </Navbar>
+        <div className="fixed-top">
+            <Navbar bg="light" expand="lg">
+                <Container>
+                    <NavbarBrand href="#home">MTVDB</NavbarBrand>
+                    <NavbarToggle aria-controls="basic-navbar-nav" />
+                    <NavbarCollapse id="basic-navbar-nav" className="container justify-content-between">
+                        <Nav>
+                            <Dropdown title="Movies" genres={MOVIE_GENRES} />
+                            <Dropdown title="TV Shows" genres={TV_GENRES} />
+                            <NavLink href="#near-you">Near You</NavLink>
+                        </Nav>
+                        <Nav>
+                            <NavLink href="#">Login</NavLink>
+                            <NavLink href="#" onClick={toggleCollapse}><i className="bi bi-search"></i> Search</NavLink>
+                            <NavLink href="#"><i className="bi bi-list"></i> More</NavLink>
+                        </Nav>
+                    </NavbarCollapse>
+                </Container>
+            </Navbar>
+            <div className="bg-light">
+                <Container>
+                    <Collapse in={isOpen}>
+                        <div className="w-100">
+                            <input type="text" className="form-control taller-input" placeholder="Search for a movie or TV show" />
+                            <div className="p-2"></div>
+                        </div>
+                    </Collapse>
+                </Container>
+            </div>
+        </div>
     );
 }
