@@ -1,0 +1,19 @@
+.dropdown-multicol {
+    display: flex;
+    flex-direction: row;
+}
+
+.dropdown-multicol>.dropdown-col {
+    vertical-align: top;
+}
+
+.dropdown-header {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: black;
+}
+
+.dropdown-divider {
+    margin-top: 0px;
+    margin-bottom: 0.5em;
+}
