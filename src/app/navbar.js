@@ -14,9 +14,7 @@ import NavDropdownItem from 'react-bootstrap/DropdownItem';
 import NavDropdownDivider from 'react-bootstrap/DropdownDivider';
 import NavDropdownHeader from 'react-bootstrap/DropdownHeader';
 
-import './navbar.scss';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
+import "./navbar.scss";
 
 
 const MOVIE_GENRES = [
@@ -77,7 +75,7 @@ function Dropdown({ title, genres }) {
 
     return (
         <NavDropdown title={title} href="#home">
-            <div className="dropdown-multicol animate slideIn">
+            <div className="dropdown-multicol">
                 <div className="dropdown-col">
                     <NavDropdownHeader>Genres</NavDropdownHeader>
                     <NavDropdownDivider />
@@ -131,7 +129,7 @@ export default function MyNavbar() {
                             <NavLink href="#near-you">Near You</NavLink>
                         </Nav>
                         <Nav>
-                            <NavLink href="#">Login</NavLink>
+                            <NavLink href="#"><i className="bi bi-person-circle"></i> Login</NavLink>
                             <NavLink href="#" onClick={toggleCollapse}><i className="bi bi-search"></i> Search</NavLink>
                             <NavLink href="#"><i className="bi bi-list"></i> More</NavLink>
                         </Nav>
@@ -142,6 +140,7 @@ export default function MyNavbar() {
                 <Container>
                     <Collapse in={isOpen}>
                         <div className="w-100">
+                            <div className="p-2"></div>
                             <input type="text" className="form-control taller-input" placeholder="Search for a movie or TV show" />
                             <div className="p-2"></div>
                         </div>

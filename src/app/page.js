@@ -1,6 +1,7 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import './page.scss';
+
 import MyNavbar from './navbar.js';
+
 
 export default function Home() {
   return (
