@@ -60,7 +60,7 @@ const TV_GENRES = [
 ];
 
 
-function Dropdown({ title, genres }) {
+function Dropdown({ type, title, genres }) {
     let visible = genres.slice(0, 5);
     let hidden = genres.slice(5);
 
@@ -71,6 +71,8 @@ function Dropdown({ title, genres }) {
         setIsOpen(!isOpen);
     }
 
+    let baseLink = `/filters?type=${type}`;
+
     return (
         <NavDropdown title={title} href="#home">
             <div className="dropdown-multicol">
@@ -78,12 +80,12 @@ function Dropdown({ title, genres }) {
                     <NavDropdownHeader>Genres</NavDropdownHeader>
                     <NavDropdownDivider />
                     {visible.map((genre, i) => (
-                        <NavDropdownItem key={i} href="#">{genre}</NavDropdownItem>
+                        <NavDropdownItem key={i} href={`${baseLink}&genre=${genre}`}>{genre}</NavDropdownItem>
                     ))}
                     <Collapse in={isOpen}>
                         <div>
                             {hidden.map((genre, i) => (
-                                <NavDropdownItem key={i} href="#">{genre}</NavDropdownItem>
+                                <NavDropdownItem key={i} href={`${baseLink}&genre=${genre}`}>{genre}</NavDropdownItem>
                             ))}
                         </div>
                     </Collapse>
@@ -94,12 +96,12 @@ function Dropdown({ title, genres }) {
                 <div className="dropdown-col">
                     <NavDropdownHeader>Trending Topics</NavDropdownHeader>
                     <NavDropdownDivider />
-                    <NavDropdownItem href="#">New {title}</NavDropdownItem>
-                    <NavDropdownItem href="#">Top {title}</NavDropdownItem>
-                    <NavDropdownItem href="#">Throwback {title}</NavDropdownItem>
-                    <NavDropdownItem href="#">Trending {title}</NavDropdownItem>
-                    <NavDropdownItem href="#">Popular {title}</NavDropdownItem>
-                    <NavDropdownItem href="#">Random {title}</NavDropdownItem>
+                    <NavDropdownItem href={`${baseLink}&sort=new`} >New {title}</NavDropdownItem>
+                    <NavDropdownItem href={`${baseLink}&sort=top`}>Top {title}</NavDropdownItem>
+                    <NavDropdownItem href={`${baseLink}&sort=throwback`}>Throwback {title}</NavDropdownItem>
+                    <NavDropdownItem href={`${baseLink}&sort=trending`}>Trending {title}</NavDropdownItem>
+                    <NavDropdownItem href={`${baseLink}&sort=popular`}>Popular {title}</NavDropdownItem>
+                    <NavDropdownItem href={`${baseLink}&sort=random`}>Random {title}</NavDropdownItem>
                 </div>
             </div>
         </NavDropdown>
@@ -122,8 +124,8 @@ export default function MyNavbar() {
                     <NavbarToggle aria-controls="basic-navbar-nav" />
                     <NavbarCollapse id="basic-navbar-nav" className="container justify-content-between">
                         <Nav>
-                            <Dropdown title="Movies" genres={MOVIE_GENRES} />
-                            <Dropdown title="TV Shows" genres={TV_GENRES} />
+                            <Dropdown type="movie" title="Movies" genres={MOVIE_GENRES} />
+                            <Dropdown type="tv" title="TV Shows" genres={TV_GENRES} />
                             <NavLink href="/nearyou">Near You</NavLink>
                         </Nav>
                         <Nav>
