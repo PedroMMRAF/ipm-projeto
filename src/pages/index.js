@@ -1,13 +1,14 @@
-import MyNavbar from '@/components/Navbar';
+import { Container } from 'react-bootstrap';
 
+import MyNavbar from '@/components/Navbar';
 
 export default function HomePage() {
   return (
     <div>
       <MyNavbar />
-      <div className="container mt-4">
+      <Container>
         <h2>Welcome to the modern movie database!</h2>
-      </div>
+      </Container>
     </div>
   )
 }

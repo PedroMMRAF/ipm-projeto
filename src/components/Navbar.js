@@ -9,55 +9,15 @@ import NavbarToggle from 'react-bootstrap/NavbarToggle';
 import NavbarCollapse from 'react-bootstrap/NavbarCollapse';
 import Nav from 'react-bootstrap/Nav';
 import NavLink from 'react-bootstrap/NavLink';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import NavDropdownItem from 'react-bootstrap/DropdownItem';
 import NavDropdownDivider from 'react-bootstrap/DropdownDivider';
 import NavDropdownHeader from 'react-bootstrap/DropdownHeader';
 
+import NavDropdownColumn from '@/components/NavDropdownColumn';
+import NavDropdownMultiColumn from '@/components/NavDropdownMultiColumn';
 
-const MOVIE_GENRES = [
-    "Action",
-    "Adventure",
-    "Animation",
-    "Biography",
-    "Comedy",
-    "Crime",
-    "Documentary",
-    "Drama",
-    "History",
-    "Horror",
-    "Mystery",
-    "Romance",
-    "Sci-Fi",
-    "Sport",
-    "Thriller",
-    "War",
-    "Western",
-];
-
-const TV_GENRES = [
-    "Action",
-    "Adventure",
-    "Biography",
-    "Comedy",
-    "Crime",
-    "Documentary",
-    "Drama",
-    "Historical",
-    "Horror",
-    "Medical",
-    "Mystery",
-    "Reality",
-    "Romance",
-    "Sci-Fi",
-    "Sitcom",
-    "Soap Opera",
-    "Sports",
-    "Talk Show",
-    "Thriller",
-    "War",
-    "Western",
-];
+import MOVIE_GENRES from '@/const/movie_genres';
+import TV_GENRES from '@/const/tv_genres';
 
 
 function Dropdown({ type, title, genres }) {
@@ -74,37 +34,35 @@ function Dropdown({ type, title, genres }) {
     let baseLink = `/filters?type=${type}`;
 
     return (
-        <NavDropdown title={title} href="#home">
-            <div className="dropdown-multicol">
-                <div className="dropdown-col">
-                    <NavDropdownHeader>Genres</NavDropdownHeader>
-                    <NavDropdownDivider />
-                    {visible.map((genre, i) => (
-                        <NavDropdownItem key={i} href={`${baseLink}&genre=${genre}`}>{genre}</NavDropdownItem>
-                    ))}
-                    <Collapse in={isOpen}>
-                        <div>
-                            {hidden.map((genre, i) => (
-                                <NavDropdownItem key={i} href={`${baseLink}&genre=${genre}`}>{genre}</NavDropdownItem>
-                            ))}
-                        </div>
-                    </Collapse>
-                    <NavDropdownItem onClick={toggleCollapse}>
-                        Show {isOpen ? "Less" : "More"}...
-                    </NavDropdownItem>
-                </div>
-                <div className="dropdown-col">
-                    <NavDropdownHeader>Trending Topics</NavDropdownHeader>
-                    <NavDropdownDivider />
-                    <NavDropdownItem href={`${baseLink}&sort=new`} >New {title}</NavDropdownItem>
-                    <NavDropdownItem href={`${baseLink}&sort=top`}>Top {title}</NavDropdownItem>
-                    <NavDropdownItem href={`${baseLink}&sort=throwback`}>Throwback {title}</NavDropdownItem>
-                    <NavDropdownItem href={`${baseLink}&sort=trending`}>Trending {title}</NavDropdownItem>
-                    <NavDropdownItem href={`${baseLink}&sort=popular`}>Popular {title}</NavDropdownItem>
-                    <NavDropdownItem href={`${baseLink}&sort=random`}>Random {title}</NavDropdownItem>
-                </div>
-            </div>
-        </NavDropdown>
+        <NavDropdownMultiColumn title={title} onToggle={() => setIsOpen(false)}>
+            <NavDropdownColumn>
+                <NavDropdownHeader>Genres</NavDropdownHeader>
+                <NavDropdownDivider />
+                {visible.map((genre, i) => (
+                    <NavDropdownItem key={i} href={`${baseLink}&genre=${genre}`}>{genre}</NavDropdownItem>
+                ))}
+                <Collapse in={isOpen}>
+                    <div>
+                        {hidden.map((genre, i) => (
+                            <NavDropdownItem key={i} href={`${baseLink}&genre=${genre}`}>{genre}</NavDropdownItem>
+                        ))}
+                    </div>
+                </Collapse>
+                <NavDropdownItem onClick={toggleCollapse}>
+                    Show {isOpen ? "Less" : "More"}...
+                </NavDropdownItem>
+            </NavDropdownColumn>
+            <NavDropdownColumn>
+                <NavDropdownHeader>Trending Topics</NavDropdownHeader>
+                <NavDropdownDivider />
+                <NavDropdownItem href={`${baseLink}&sort=new`} >New {title}</NavDropdownItem>
+                <NavDropdownItem href={`${baseLink}&sort=top`}>Top {title}</NavDropdownItem>
+                <NavDropdownItem href={`${baseLink}&sort=throwback`}>Throwback {title}</NavDropdownItem>
+                <NavDropdownItem href={`${baseLink}&sort=trending`}>Trending {title}</NavDropdownItem>
+                <NavDropdownItem href={`${baseLink}&sort=popular`}>Popular {title}</NavDropdownItem>
+                <NavDropdownItem href={`${baseLink}&sort=random`}>Random {title}</NavDropdownItem>
+            </NavDropdownColumn>
+        </NavDropdownMultiColumn>
     )
 }
 
