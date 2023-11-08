@@ -120,7 +120,7 @@ export default function MyNavbar() {
         <div className="fixed-top">
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <NavbarBrand href="#home">MTVDB</NavbarBrand>
+                    <NavbarBrand href="/">MTVDB</NavbarBrand>
                     <NavbarToggle aria-controls="basic-navbar-nav" />
                     <NavbarCollapse id="basic-navbar-nav" className="container justify-content-between">
                         <Nav>
