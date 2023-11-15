@@ -2,8 +2,8 @@ import React from 'react';
 import MyNavbar from '@/components/Navbar';
 import { Container, Form } from 'react-bootstrap';
 
-import MOVIE_GENRES from '@/const/movie_genres.json';
-import TV_GENRES from '@/const/tv_genres.json';
+import MOVIE_GENRES from '@/const/movie-genres.json';
+import TV_GENRES from '@/const/tv-genres.json';
 
 
 export default function FiltersPage() {
@@ -12,92 +12,100 @@ export default function FiltersPage() {
             <MyNavbar />
             <SearchFilterBox />
         </div>
-
     )
 }
 
+
 function SearchFilterBox() {
-    let [genres, setGenres] = React.useState([]);
+    let [genreElements, setGenreElements] = React.useState([]);
     let [selectedGenres, setSelectedGenres] = React.useState({});
 
-    let baseLink = `/filters`;
+    const updateGenreElements = (type, updatedGenres = {}) => {
+        // Select the correct genre list
+        const genres = type === 'tv' ? TV_GENRES : MOVIE_GENRES;
 
-    // Check the URL when the component mounts
+        // Update the selected genres
+        const newSelectedGenres = { ...selectedGenres, ...updatedGenres };
+        setSelectedGenres(newSelectedGenres);
+
+        // Update the genre elements
+        setGenreElements(genres.map((genre) => {
+            let checked = newSelectedGenres[genre] || false;
+            return <Form.Check key={genre} type="checkbox" label={genre} value={genre} onChange={changeGenre} checked={checked} />
+        }));
+
+        return newSelectedGenres;
+    }
+
+    let baseLink = '/filters';
+
+    // Change the URL without reloading the page
+    const updateUrl = (params) => {
+        const newUrl = `${baseLink}?${params.toString()}`;
+        window.history.pushState(null, '', newUrl);
+    }
+
+    // Update the page with the URL parameters
     React.useEffect(() => {
+        // Get the current URL parameters
         const params = new URLSearchParams(window.location.search);
-        const type = params.get('type');
-        const genre = params.get('genre');
-        const sort = params.get('sort');
+        const type = params.get('type') || 'movies';
+        const genresUrl = params.get('genres') || '';
+        const sort = params.get('sort') || '';
 
-        const activeGenres = type == 'tv' ? TV_GENRES : MOVIE_GENRES;
-        setGenres(activeGenres);
-
+        // Set the 'type' parameter
         document.getElementById("category").value = type;
 
-        if (genre) {
-            const urlGenres = genre.split(',');
-
-            document.getElementById("genreArray").childNodes.forEach((genreNode) => {
-                let checkbox = genreNode.getElementsByTagName('input')[0];
-                checkbox.checked = urlGenres.includes(genre);
-                console.log(genre);
-                console.log(urlGenres.includes(genre)); z
-            });
+        // Set the 'genre' parameter
+        const updatedGenres = {};
+        for (let genre of genresUrl.split(',')) {
+            updatedGenres[genre] = true;
         }
 
+        updateGenreElements(type, updatedGenres);
+
+        // Set the 'sort' parameter
         if (sort) {
             document.getElementById("sort").value = sort;
         }
     }, []);
 
     const changeType = (e) => {
-        setGenres(e.target.value === 'tv' ? TV_GENRES : MOVIE_GENRES);
+        updateGenreElements(e.target.value);
 
-        // Get the current URL parameters
         const params = new URLSearchParams(window.location.search);
+
         params.set('type', e.target.value);
 
-        // Change the URL without reloading the page
-        const newUrl = `${baseLink}?${params.toString()}`;
-        window.history.pushState(null, '', newUrl);
+        updateUrl(params);
     }
 
     const changeSort = (e) => {
-        const newSort = e.target.value;
-
-        // Get the current URL parameters
         const params = new URLSearchParams(window.location.search);
 
-        // Set the 'sort' parameter
-        params.set('sort', newSort);
+        params.set('sort', e.target.value);
 
-        // Change the URL without reloading the page
-        const newUrl = `${baseLink}?${params.toString()}`;
-        window.history.pushState(null, '', newUrl);
+        updateUrl(params);
     }
 
     const changeGenre = (e) => {
-        const genre = e.target.value;
-        const isChecked = e.target.checked;
+        const newSelectedGenres = updateGenreElements(
+            document.getElementById("category").value,
+            { [e.target.value]: e.target.checked }
+        );
 
-        const newGenres = { ...selectedGenres, [genre]: isChecked }
-        setSelectedGenres(newGenres);
+        console.log(newSelectedGenres);
 
-        // Get the current URL parameters
         const params = new URLSearchParams(window.location.search);
 
-        // Get the current genres
-        let genres = Object.entries(newGenres)
+        params.set('genres', Object.entries(newSelectedGenres)
             .filter(([_, isChecked]) => isChecked)
             .map(([genre, _]) => genre)
-            .join(',');
+            .join(','));
 
-        // Set the 'genres' parameter
-        params.set('genre', genres);
+        console.log(params.toString());
 
-        // Change the URL without reloading the page
-        const newUrl = `${baseLink}?${params.toString()}`;
-        window.history.pushState(null, '', newUrl);
+        updateUrl(params);
     }
 
     return (
@@ -134,11 +142,9 @@ function SearchFilterBox() {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                     <div style={{ fontWeight: 'bold' }}>Genres</div>
-                    <div id="genreArray" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                        {genres.map((genre) => (
-                            <div><input key={genre} type="checkbox" value={genre} onChange={changeGenre} /><label htmlFor={genre}>{genre}</label></div>
-                        ))}
-                    </div>
+                    <Form style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                        {genreElements}
+                    </Form>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                     <input type="text" placeholder="Location" style={{ width: '100%' }} />

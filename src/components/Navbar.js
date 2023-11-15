@@ -4,11 +4,7 @@ import React, { useState } from 'react';
 import Collapse from 'react-bootstrap/Collapse';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-import NavbarBrand from 'react-bootstrap/NavbarBrand';
-import NavbarToggle from 'react-bootstrap/NavbarToggle';
-import NavbarCollapse from 'react-bootstrap/NavbarCollapse';
 import Nav from 'react-bootstrap/Nav';
-import NavLink from 'react-bootstrap/NavLink';
 import NavDropdownItem from 'react-bootstrap/DropdownItem';
 import NavDropdownDivider from 'react-bootstrap/DropdownDivider';
 import NavDropdownHeader from 'react-bootstrap/DropdownHeader';
@@ -16,8 +12,8 @@ import NavDropdownHeader from 'react-bootstrap/DropdownHeader';
 import NavDropdownColumn from '@/components/NavDropdownColumn';
 import NavDropdownMultiColumn from '@/components/NavDropdownMultiColumn';
 
-import MOVIE_GENRES from '@/const/movie_genres';
-import TV_GENRES from '@/const/tv_genres';
+import MOVIE_GENRES from '@/const/movie-genres.json';
+import TV_GENRES from '@/const/tv-genres.json';
 
 
 function Dropdown({ type, title, genres }) {
@@ -39,12 +35,12 @@ function Dropdown({ type, title, genres }) {
                 <NavDropdownHeader>Genres</NavDropdownHeader>
                 <NavDropdownDivider />
                 {visible.map((genre, i) => (
-                    <NavDropdownItem key={i} href={`${baseLink}&genre=${genre}`}>{genre}</NavDropdownItem>
+                    <NavDropdownItem key={i} href={`${baseLink}&genres=${genre}`}>{genre}</NavDropdownItem>
                 ))}
                 <Collapse in={isOpen}>
                     <div>
                         {hidden.map((genre, i) => (
-                            <NavDropdownItem key={i} href={`${baseLink}&genre=${genre}`}>{genre}</NavDropdownItem>
+                            <NavDropdownItem key={i} href={`${baseLink}&genres=${genre}`}>{genre}</NavDropdownItem>
                         ))}
                     </div>
                 </Collapse>
@@ -78,20 +74,20 @@ export default function MyNavbar() {
         <div className="fixed-top">
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <NavbarBrand href="/">MTVDB</NavbarBrand>
-                    <NavbarToggle aria-controls="basic-navbar-nav" />
-                    <NavbarCollapse id="basic-navbar-nav" className="container justify-content-between">
+                    <Navbar.Brand href="/">MTVDB</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav" className="container justify-content-between">
                         <Nav>
                             <Dropdown type="movie" title="Movies" genres={MOVIE_GENRES} />
                             <Dropdown type="tv" title="TV Shows" genres={TV_GENRES} />
-                            <NavLink href="/nearyou">Near You</NavLink>
+                            <Nav.Link href="/near-you">Near You</Nav.Link>
                         </Nav>
                         <Nav>
-                            <NavLink href="#"><i className="bi bi-person-circle"></i> Login</NavLink>
-                            <NavLink href="#" onClick={toggleCollapse}><i className="bi bi-search"></i> Search</NavLink>
-                            <NavLink href="#"><i className="bi bi-list"></i> More</NavLink>
+                            <Nav.Link href="#"><i className="bi bi-person-circle"></i> Login</Nav.Link>
+                            <Nav.Link href="#" onClick={toggleCollapse}><i className="bi bi-search"></i> Search</Nav.Link>
+                            <Nav.Link href="#"><i className="bi bi-list"></i> More</Nav.Link>
                         </Nav>
-                    </NavbarCollapse>
+                    </Navbar.Collapse>
                 </Container>
             </Navbar>
             <div className="bg-light">
