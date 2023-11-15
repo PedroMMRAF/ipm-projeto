@@ -18,6 +18,7 @@ export default function FiltersPage() {
 
 function SearchFilterBox() {
     let [genres, setGenres] = React.useState(MOVIE_GENRES);
+
     let baseLink = `/filters`;
 
     // Check the URL when the component mounts
@@ -34,10 +35,13 @@ function SearchFilterBox() {
 
         if (genre) {
             const urlGenres = genre.split(',').sort();
-            urlGenres.forEach(urlGenre => {
-                const checkbox = document.getElementById(urlGenre);
+            let activeGenres = type == 'tv' ? TV_GENRES : MOVIE_GENRES;
+            activeGenres.forEach((genre) => {
+                const checkbox = document.getElementById(genre);
                 if (checkbox) {
-                    checkbox.checked = urlGenres.includes(urlGenre);
+                    checkbox.checked = urlGenres.includes(genre);
+                    console.log(genre);
+                    console.log(urlGenres.includes(genre));
                 }
             });
         }
@@ -45,8 +49,7 @@ function SearchFilterBox() {
         if (sort) {
             document.getElementById("sort").value = sort;
         }
-    }, [genres]);
-
+    }, []);
 
     const changeType = (e) => {
         let newType = e.target.value;
@@ -55,7 +58,7 @@ function SearchFilterBox() {
         }
         else if (newType == 'tvShows') {
             setGenres(TV_GENRES);
-            newType = 'tv'; // the URL parameter for TV shows is 'tv', not 'tvShows'
+            newType = 'tv';
         }
 
         // Get the current URL parameters
@@ -63,7 +66,13 @@ function SearchFilterBox() {
 
         // Set the 'type' parameter
         params.set('type', newType);
-
+        params.set('genre', '');
+        genres.forEach((genre) => {
+            const checkbox = document.getElementById(genre);
+            if (checkbox) {
+                checkbox.checked = false;
+            }
+        });
         // Change the URL without reloading the page
         const newUrl = `${baseLink}?${params.toString()}`;
         window.history.pushState(null, '', newUrl);
@@ -151,7 +160,7 @@ function SearchFilterBox() {
                 <div style={{ marginBottom: '10px' }}>
                     <div style={{ fontWeight: 'bold' }}>Genres</div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                        {genres.map((genre, index) => (
+                        {genres.map((genre) => (
                             <div><input type="checkbox" id={genre} value={genre} onChange={changeGenre} /><label htmlFor={genre}>{genre}</label></div>
                         ))}
                     </div>
