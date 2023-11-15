@@ -18,16 +18,96 @@ export default function FiltersPage() {
 
 function SearchFilterBox() {
     let [genres, setGenres] = React.useState(MOVIE_GENRES);
+    let baseLink = `/filters`;
 
-    const changeGenres = (e) => {
-        if (e.target.value == 'movies') {
+    // Check the URL when the component mounts
+    React.useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get('type');
+        const genre = params.get('genre');
+        const sort = params.get('sort');
+
+        if (type === 'tv') {
+            setGenres(TV_GENRES);
+            document.getElementById("category").value = 'tvShows';
+        }
+
+        if (genre) {
+            const urlGenres = genre.split(',').sort();
+            urlGenres.forEach(urlGenre => {
+                const checkbox = document.getElementById(urlGenre);
+                if (checkbox) {
+                    checkbox.checked = urlGenres.includes(urlGenre);
+                }
+            });
+        }
+
+        if (sort) {
+            document.getElementById("sort").value = sort;
+        }
+    }, [genres]);
+
+
+    const changeType = (e) => {
+        let newType = e.target.value;
+        if (newType == 'movies') {
             setGenres(MOVIE_GENRES);
         }
-        else if (e.target.value == 'tvShows') {
+        else if (newType == 'tvShows') {
             setGenres(TV_GENRES);
+            newType = 'tv'; // the URL parameter for TV shows is 'tv', not 'tvShows'
         }
+
+        // Get the current URL parameters
+        const params = new URLSearchParams(window.location.search);
+
+        // Set the 'type' parameter
+        params.set('type', newType);
+
+        // Change the URL without reloading the page
+        const newUrl = `${baseLink}?${params.toString()}`;
+        window.history.pushState(null, '', newUrl);
     }
 
+    const changeSort = (e) => {
+        const newSort = e.target.value;
+
+        // Get the current URL parameters
+        const params = new URLSearchParams(window.location.search);
+
+        // Set the 'sort' parameter
+        params.set('sort', newSort);
+
+        // Change the URL without reloading the page
+        const newUrl = `${baseLink}?${params.toString()}`;
+        window.history.pushState(null, '', newUrl);
+    }
+
+    const changeGenre = (e) => {
+        const genre = e.target.value;
+        const isChecked = e.target.checked;
+
+        // Get the current URL parameters
+        const params = new URLSearchParams(window.location.search);
+
+        // Get the current genres
+        let genres = params.get('genre') ? params.get('genre').split(',') : [];
+
+        if (isChecked) {
+            // Add the genre
+            genres.push(genre);
+        } else {
+            // Remove the genre
+            genres = genres.filter(g => g !== genre);
+        }
+
+        // Set the 'genres' parameter
+        params.set('genre', genres.join(','));
+
+        // Change the URL without reloading the page
+        const newUrl = `${baseLink}?${params.toString()}`;
+        window.history.pushState(null, '', newUrl);
+    }
     return (
         <Container>
             <div style={{
@@ -41,19 +121,19 @@ function SearchFilterBox() {
             }}>
                 <div style={{ marginBottom: '10px' }}>
                     <label htmlFor="category">Category</label>
-                    <select onChange={changeGenres} id="category" style={{ width: '100%', marginBottom: '10px' }}>
-                        <option value="movies">Movies</option>
-                        <option value="tvShows">TV Shows</option>
+                    <select onChange={changeType} id="category" style={{ width: '100%', marginBottom: '10px' }}>
+                        <option href={`${baseLink}&type=movies`} value="movies">Movies</option>
+                        <option href={`${baseLink}&type=tv`} value="tvShows">TV Shows</option>
                     </select>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                     <label htmlFor="sort">Sort By</label>
-                    <select id="sort" style={{ width: '100%', marginBottom: '10px' }}>
-                        <option value="mostPopular">Most Popular</option>
-                        <option value="highestRated">Top</option>
-                        <option value="newest">New</option>
-                        <option value="newest">Throwback</option>
-                        <option value="newest">Trending</option>
+                    <select onChange={changeSort} id="sort" style={{ width: '100%', marginBottom: '10px' }}>
+                        <option value="new">Newest</option>
+                        <option value="top">Best Rating</option>
+                        <option value="throwback">Throwback</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="trending">Trending</option>
                     </select>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
@@ -72,15 +152,18 @@ function SearchFilterBox() {
                     <div style={{ fontWeight: 'bold' }}>Genres</div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                         {genres.map((genre, index) => (
-                            <div><input type="checkbox" id={genre} /><label htmlFor={genre}>{genre}</label></div>
+                            <div><input type="checkbox" id={genre} value={genre} onChange={changeGenre} /><label htmlFor={genre}>{genre}</label></div>
                         ))}
                     </div>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                     <input type="text" placeholder="Location" style={{ width: '100%' }} />
                 </div>
+                <div>
+                    <button style={{ width: '100%', padding: '10px', backgroundColor: '#000', color: '#fff', border: 'none', borderRadius: '4px' }}>Search</button>
+                </div>
             </div>
-        </Container>
+        </Container >
     );
 };
 
