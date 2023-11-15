@@ -1,8 +1,8 @@
 [
     {
-        "Title": "Oppenheimer",
-        "Overview": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
-        "Author": {
+        "title": "Oppenheimer",
+        "overview": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
+        "author": {
             "name": "Christopher Nolan",
             "roles": [
                 "Director",
@@ -33,6 +33,38 @@
             {
                 "name": "Josh Hartnett",
                 "character": "Ernest Lawrence"
+            }
+        ],
+        "scenes": [
+            {
+                "name": "The Manhattan Project",
+                "location": "Los Alamos, New Mexico, USA",
+                "lat": 35.888599,
+                "lng": -106.306
+            },
+            {
+                "name": "The White House",
+                "location": "1600 Pennsylvania Avenue NW, Washington, District of Columbia, USA",
+                "lat": 38.897663,
+                "lng": -77.036575
+            },
+            {
+                "name": "The Pentagon",
+                "location": "Arlington, Virginia, USA",
+                "lat": 38.871857,
+                "lng": -77.056267
+            },
+            {
+                "name": "The University of California, Berkeley",
+                "location": "Berkeley, California, USA",
+                "lat": 37.871899,
+                "lng": -122.25854
+            },
+            {
+                "name": "The University of Chicago",
+                "location": "Chicago, Illinois, USA",
+                "lat": 41.789683,
+                "lng": -87.5997
             }
         ],
         "reviews": [
