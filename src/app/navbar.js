@@ -14,6 +14,8 @@ import NavDropdownItem from 'react-bootstrap/DropdownItem';
 import NavDropdownDivider from 'react-bootstrap/DropdownDivider';
 import NavDropdownHeader from 'react-bootstrap/DropdownHeader';
 
+import "./navbar.scss";
+
 
 const MOVIE_GENRES = [
     "Action",
@@ -124,7 +126,7 @@ export default function MyNavbar() {
                         <Nav>
                             <Dropdown title="Movies" genres={MOVIE_GENRES} />
                             <Dropdown title="TV Shows" genres={TV_GENRES} />
-                            <NavLink href="/nearyou2">Near You</NavLink>
+                            <NavLink href="near-you">Near You</NavLink>
                         </Nav>
                         <Nav>
                             <NavLink href="#"><i className="bi bi-person-circle"></i> Login</NavLink>
