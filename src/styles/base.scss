@@ -14,13 +14,15 @@ $light: #edebeb;
 @import "bootstrap-icons/font/bootstrap-icons";
 
 body {
-    padding-top: 50px;
+    padding-top: 100px;
     height: 1000px;
 }
 
 .dropdown-multicol {
     display: flex;
     flex-direction: row;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .dropdown-multicol>.dropdown-col {

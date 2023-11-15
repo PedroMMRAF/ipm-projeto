@@ -1,0 +1,46 @@
+[
+    {
+        "Title": "Oppenheimer",
+        "Overview": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
+        "Author": {
+            "name": "Christopher Nolan",
+            "roles": [
+                "Director",
+                "Writer"
+            ]
+        },
+        "actors": [
+            {
+                "name": "Cillian Murphy",
+                "character": "J. Robert Oppenheimer"
+            },
+            {
+                "name": "Emily Blunt",
+                "character": "Kitty Oppenheimer"
+            },
+            {
+                "name": "Matt Damon",
+                "character": "Leslie Groves"
+            },
+            {
+                "name": "Robert Downey Jr.",
+                "character": "Lewis Strauss"
+            },
+            {
+                "name": "Florence Pugh",
+                "character": "Jean Tatlock"
+            },
+            {
+                "name": "Josh Hartnett",
+                "character": "Ernest Lawrence"
+            }
+        ],
+        "reviews": [
+            {
+                "author": "Eu",
+                "review": "Achei muito bom",
+                "rating": "3"
+            }
+        ]
+    }
+]
