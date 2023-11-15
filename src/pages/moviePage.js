@@ -4,40 +4,47 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import React from 'react';
-import 'react-multi-carousel/lib/styles.css';
 import Card from 'react-bootstrap/Card';
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+import style from "@/styles/moviePage.module.css"
 import MOVIES from "@/const/movies.json"
 
 
 function Headline() {
     return (
-        <div className='header' style={{
+        <div className={style.div} style={{
             backgroundImage: "url('https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg')"
         }}>
-            <div className='cover' style={{ backgroundImage: "linear-gradient(to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84))" }}>
+            <div className={style.cover} style={{ backgroundImage: "linear-gradient(to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84))" }}>
                 <Container>
                     <div>
                         <Row>
-                            <Col xs={4} md={4} className='content'>
+                            <Col xs={4} md={4} className={style.content}>
                                 <div >
                                     <Image src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" style={{ height: "70vh" }} rounded />
                                 </div>
                             </Col>
-                            <Col xs={8} className='content'>
+                            <Col xs={8} className={style.content}>
                                 <div>
                                     <div>
                                         <h2>OppenHeimer</h2>
                                         <div>
-                                            <span>
+                                            <span className={style.span}>
                                                 R
                                             </span>
-                                            <span>
+                                            <span className={style.span}>
                                                 2023 US
                                             </span>
-                                            <span>
+                                            <span className={style.span}>
                                                 Drama, History
                                             </span>
-                                            <span>
+                                            <span className={style.span}>
                                                 3h 1m
                                             </span>
                                         </div>
@@ -53,7 +60,7 @@ function Headline() {
                                             <i class="bi bi-bookmark-plus"></i> Add To Watchlist
                                         </Col>
                                         <Col>
-                                            <i class="bi bi-star"></i> Review
+                                            <ModalPage />
                                         </Col>
                                     </Row>
                                     <div>
@@ -76,7 +83,7 @@ function Headline() {
                         </Row>
                     </div>
                 </Container>
-            </div>
+            </div >
         </div >
     )
 }
@@ -86,33 +93,9 @@ function Body() {
         <div>
             <div style={{ marginTop: "2%" }}>
                 <h3>Top Actors</h3>
-                <div class="carousel">
-                    <Row>
-                        <Col xs={2} className='carousel-col'>
-                            <Actor />
-                        </Col >
-                        <Col xs={2} className='carousel-col'>
-                            <Actor />
-                        </Col>
-                        <Col xs={2} className='carousel-col'>
-                            <Actor />
-                        </Col>
-                        <Col xs={2} className='carousel-col'>
-                            <Actor />
-                        </Col>
-                        <Col xs={2} className='carousel-col'>
-                            <Actor />
-                        </Col>
-                        <Col xs={2} className='carousel-col'>
-                            <Actor />
-                        </Col>
-                        <Col xs={2} className='carousel-col'>
-                            <Actor />
-                        </Col>
-                    </Row>
-                </div>
+                <SimpleSlider />
             </div>
-            <hr />
+            <hr className={style.hr} />
             <div>
                 {MOVIES[0]["reviews"].map((review, i) => (
                     <p>{review["review"]}</p>
@@ -125,7 +108,7 @@ function Body() {
 
 function Actor() {
     return (
-        <Card className='card'>
+        <Card className={style.card}>
             <Card.Body>
                 <Card.Title>Card Title</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
@@ -173,6 +156,70 @@ function Sidebody() {
     )
 }
 
+
+function ModalPage() {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <div variant="primary" onClick={handleShow}>
+                <i class="bi bi-star"></i> Review
+            </div>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+}
+
+
+function SimpleSlider() {
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 2,
+        slidesToScroll: 2
+    };
+    return (
+        <Slider {...settings}>
+            <div>
+                <h3>1</h3>
+            </div>
+            <div>
+                <h3>2</h3>
+            </div>
+            <div>
+                <h3>3</h3>
+            </div>
+            <div>
+                <h3>4</h3>
+            </div>
+            <div>
+                <h3>5</h3>
+            </div>
+            <div>
+                <h3>6</h3>
+            </div>
+        </Slider>
+    );
+}
+
 export default function NearYouPage() {
     return (
         <div>
@@ -183,7 +230,7 @@ export default function NearYouPage() {
                     <Col md={8}>
                         <Body />
                     </Col>
-                    <Col className='sidebody'>
+                    <Col className={style.sidebody}>
                         <Sidebody />
                     </Col>
                 </Row>
