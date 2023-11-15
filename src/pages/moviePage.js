@@ -6,7 +6,7 @@ import Image from 'react-bootstrap/Image';
 import React from 'react';
 import 'react-multi-carousel/lib/styles.css';
 import Card from 'react-bootstrap/Card';
-import MOVIES from "@/const/movies.json"
+import MOVIES from "@/const/movies.json";
 
 
 function Headline() {
