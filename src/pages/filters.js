@@ -1,6 +1,6 @@
 import React from 'react';
 import MyNavbar from '@/components/Navbar';
-import { Container } from 'react-bootstrap';
+import { Container, Form } from 'react-bootstrap';
 
 import MOVIE_GENRES from '@/const/movie_genres.json';
 import TV_GENRES from '@/const/tv_genres.json';
@@ -17,7 +17,9 @@ export default function FiltersPage() {
 }
 
 function SearchFilterBox() {
-    let [genres, setGenres] = React.useState(MOVIE_GENRES);
+    let [genres, setGenres] = React.useState([]);
+    let [selectedGenres, setSelectedGenres] = React.useState({});
+
     let baseLink = `/filters`;
 
     // Check the URL when the component mounts
@@ -27,42 +29,33 @@ function SearchFilterBox() {
         const genre = params.get('genre');
         const sort = params.get('sort');
 
-        if (type === 'tv') {
-            setGenres(TV_GENRES);
-            document.getElementById("category").value = 'tvShows';
-        }
+        const activeGenres = type == 'tv' ? TV_GENRES : MOVIE_GENRES;
+        setGenres(activeGenres);
+
+        document.getElementById("category").value = type;
 
         if (genre) {
-            const urlGenres = genre.split(',').sort();
-            urlGenres.forEach(urlGenre => {
-                const checkbox = document.getElementById(urlGenre);
-                if (checkbox) {
-                    checkbox.checked = urlGenres.includes(urlGenre);
-                }
+            const urlGenres = genre.split(',');
+
+            document.getElementById("genreArray").childNodes.forEach((genreNode) => {
+                let checkbox = genreNode.getElementsByTagName('input')[0];
+                checkbox.checked = urlGenres.includes(genre);
+                console.log(genre);
+                console.log(urlGenres.includes(genre)); z
             });
         }
 
         if (sort) {
             document.getElementById("sort").value = sort;
         }
-    }, [genres]);
-
+    }, []);
 
     const changeType = (e) => {
-        let newType = e.target.value;
-        if (newType == 'movies') {
-            setGenres(MOVIE_GENRES);
-        }
-        else if (newType == 'tvShows') {
-            setGenres(TV_GENRES);
-            newType = 'tv'; // the URL parameter for TV shows is 'tv', not 'tvShows'
-        }
+        setGenres(e.target.value === 'tv' ? TV_GENRES : MOVIE_GENRES);
 
         // Get the current URL parameters
         const params = new URLSearchParams(window.location.search);
-
-        // Set the 'type' parameter
-        params.set('type', newType);
+        params.set('type', e.target.value);
 
         // Change the URL without reloading the page
         const newUrl = `${baseLink}?${params.toString()}`;
@@ -87,43 +80,34 @@ function SearchFilterBox() {
         const genre = e.target.value;
         const isChecked = e.target.checked;
 
+        const newGenres = { ...selectedGenres, [genre]: isChecked }
+        setSelectedGenres(newGenres);
+
         // Get the current URL parameters
         const params = new URLSearchParams(window.location.search);
 
         // Get the current genres
-        let genres = params.get('genre') ? params.get('genre').split(',') : [];
-
-        if (isChecked) {
-            // Add the genre
-            genres.push(genre);
-        } else {
-            // Remove the genre
-            genres = genres.filter(g => g !== genre);
-        }
+        let genres = Object.entries(newGenres)
+            .filter(([_, isChecked]) => isChecked)
+            .map(([genre, _]) => genre)
+            .join(',');
 
         // Set the 'genres' parameter
-        params.set('genre', genres.join(','));
+        params.set('genre', genres);
 
         // Change the URL without reloading the page
         const newUrl = `${baseLink}?${params.toString()}`;
         window.history.pushState(null, '', newUrl);
     }
+
     return (
         <Container>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                maxWidth: '350px',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                margin: '10px',
-            }}>
+            <div className="d-flex flex-column p-2 border rounded mx-2" style={{ maxWidth: '350px' }}>
                 <div style={{ marginBottom: '10px' }}>
                     <label htmlFor="category">Category</label>
                     <select onChange={changeType} id="category" style={{ width: '100%', marginBottom: '10px' }}>
-                        <option href={`${baseLink}&type=movies`} value="movies">Movies</option>
-                        <option href={`${baseLink}&type=tv`} value="tvShows">TV Shows</option>
+                        <option value="movies">Movies</option>
+                        <option value="tv">TV Shows</option>
                     </select>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
@@ -150,9 +134,9 @@ function SearchFilterBox() {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                     <div style={{ fontWeight: 'bold' }}>Genres</div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                        {genres.map((genre, index) => (
-                            <div><input type="checkbox" id={genre} value={genre} onChange={changeGenre} /><label htmlFor={genre}>{genre}</label></div>
+                    <div id="genreArray" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                        {genres.map((genre) => (
+                            <div><input key={genre} type="checkbox" value={genre} onChange={changeGenre} /><label htmlFor={genre}>{genre}</label></div>
                         ))}
                     </div>
                 </div>
