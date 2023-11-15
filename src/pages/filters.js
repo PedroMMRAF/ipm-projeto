@@ -17,24 +17,48 @@ export default function FiltersPage() {
 
 
 function SearchFilterBox() {
-    let [genreElements, setGenreElements] = React.useState([]);
-    let [selectedGenres, setSelectedGenres] = React.useState({});
+    let [genreList, setGenreList] = React.useState(MOVIE_GENRES);
 
-    const updateGenreElements = (type, updatedGenres = {}) => {
-        // Select the correct genre list
-        const genres = type === 'tv' ? TV_GENRES : MOVIE_GENRES;
+    let checkboxesStates = {};
+    for (let genre of [...MOVIE_GENRES, ...TV_GENRES]) {
+        checkboxesStates[genre] = React.useState(false);
+    }
 
-        // Update the selected genres
-        const newSelectedGenres = { ...selectedGenres, ...updatedGenres };
-        setSelectedGenres(newSelectedGenres);
+    const changeType = (e) => {
+        setGenreList(e.target.value === 'tv' ? TV_GENRES : MOVIE_GENRES);
 
-        // Update the genre elements
-        setGenreElements(genres.map((genre) => {
-            let checked = newSelectedGenres[genre] || false;
-            return <Form.Check key={genre} type="checkbox" label={genre} value={genre} onChange={changeGenre} checked={checked} />
-        }));
+        for (let genre of [...MOVIE_GENRES, ...TV_GENRES]) {
+            checkboxesStates[genre][1](false);
+        }
 
-        return newSelectedGenres;
+        const params = new URLSearchParams(window.location.search);
+
+        params.set('type', e.target.value);
+        params.set('genres', '');
+
+        updateUrl(params);
+    }
+
+    const changeSort = (e) => {
+        const params = new URLSearchParams(window.location.search);
+
+        params.set('sort', e.target.value);
+
+        updateUrl(params);
+    }
+
+    const changeGenre = (e) => {
+        const params = new URLSearchParams(window.location.search);
+
+        checkboxesStates[e.target.value][1](e.target.checked);
+
+        if (e.target.checked) {
+            params.set('genres', params.get('genres') ? `${params.get('genres')},${e.target.value}` : e.target.value);
+        } else {
+            params.set('genres', params.get('genres').split(",").filter((genre) => genre !== e.target.value).join(","));
+        }
+
+        updateUrl(params);
     }
 
     let baseLink = '/filters';
@@ -50,60 +74,24 @@ function SearchFilterBox() {
         // Get the current URL parameters
         const params = new URLSearchParams(window.location.search);
         const type = params.get('type') || 'movies';
-        const genresUrl = params.get('genres') || '';
+        const genres = params.get('genres') || '';
         const sort = params.get('sort') || '';
 
         // Set the 'type' parameter
         document.getElementById("category").value = type;
+
         // Set the 'genre' parameter
-        const updatedGenres = {};
-        for (let genre of genresUrl.split(',')) {
-            updatedGenres[genre] = true;
+        for (let genre of genres.split(',')) {
+            checkboxesStates[genre][1](true);
         }
 
-        updateGenreElements(type, updatedGenres);
+        setGenreList(type === 'tv' ? TV_GENRES : MOVIE_GENRES);
 
         // Set the 'sort' parameter
         if (sort) {
             document.getElementById("sort").value = sort;
         }
     }, []);
-
-    const changeType = (e) => {
-        updateGenreElements(e.target.value);
-
-        const params = new URLSearchParams(window.location.search);
-
-        params.set('type', e.target.value);
-
-        updateUrl(params);
-    }
-
-    const changeSort = (e) => {
-        const params = new URLSearchParams(window.location.search);
-
-        params.set('sort', e.target.value);
-
-        updateUrl(params);
-    }
-
-    const changeGenre = (e) => {
-        const newSelectedGenres = updateGenreElements(
-            document.getElementById("category").value,
-            { [e.target.value]: e.target.checked }
-        );
-
-        console.log(newSelectedGenres);
-
-        const params = new URLSearchParams(window.location.search);
-
-        params.set('genres', Object.entries(newSelectedGenres)
-            .filter(([_, isChecked]) => isChecked)
-            .map(([genre, _]) => genre)
-            .join(','));
-
-        updateUrl(params);
-    }
 
     return (
         <Container>
@@ -140,7 +128,9 @@ function SearchFilterBox() {
                 <div style={{ marginBottom: '10px' }}>
                     <div style={{ fontWeight: 'bold' }}>Genres</div>
                     <Form style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                        {genreElements}
+                        {genreList.map((genre) => {
+                            return <Form.Check key={genre} type="checkbox" label={genre} value={genre} onChange={changeGenre} checked={checkboxesStates[genre][0]} />
+                        })}
                     </Form>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
