@@ -1,5 +1,9 @@
+import React from 'react';
 import MyNavbar from '@/components/Navbar';
 import { Container } from 'react-bootstrap';
+
+import MOVIE_GENRES from '@/const/movie_genres.json';
+import TV_GENRES from '@/const/tv_genres.json';
 
 
 export default function FiltersPage() {
@@ -13,6 +17,17 @@ export default function FiltersPage() {
 }
 
 function SearchFilterBox() {
+    let [genres, setGenres] = React.useState(MOVIE_GENRES);
+
+    const changeGenres = (e) => {
+        if (e.target.value == 'movies') {
+            setGenres(MOVIE_GENRES);
+        }
+        else if (e.target.value == 'tvShows') {
+            setGenres(TV_GENRES);
+        }
+    }
+
     return (
         <Container>
             <div style={{
@@ -26,7 +41,7 @@ function SearchFilterBox() {
             }}>
                 <div style={{ marginBottom: '10px' }}>
                     <label htmlFor="category">Category</label>
-                    <select id="category" style={{ width: '100%', marginBottom: '10px' }}>
+                    <select onChange={changeGenres} id="category" style={{ width: '100%', marginBottom: '10px' }}>
                         <option value="movies">Movies</option>
                         <option value="tvShows">TV Shows</option>
                     </select>
@@ -56,11 +71,9 @@ function SearchFilterBox() {
                 <div style={{ marginBottom: '10px' }}>
                     <div style={{ fontWeight: 'bold' }}>Genres</div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                        <div><input type="checkbox" id="action" /><label htmlFor="action">Action</label></div>
-                        <div><input type="checkbox" id="adventure" /><label htmlFor="adventure">Adventure</label></div>
-                        <div><input type="checkbox" id="comedy" /><label htmlFor="comedy">Comedy</label></div>
-                        <div><input type="checkbox" id="drama" /><label htmlFor="drama">Drama</label></div>
-                        {/* More genres */}
+                        {genres.map((genre, index) => (
+                            <div><input type="checkbox" id={genre} /><label htmlFor={genre}>{genre}</label></div>
+                        ))}
                     </div>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
