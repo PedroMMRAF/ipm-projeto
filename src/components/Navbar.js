@@ -78,7 +78,7 @@ export default function MyNavbar() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" className="container justify-content-between">
                         <Nav>
-                            <Dropdown type="movie" title="Movies" genres={MOVIE_GENRES} />
+                            <Dropdown type="movies" title="Movies" genres={MOVIE_GENRES} />
                             <Dropdown type="tv" title="TV Shows" genres={TV_GENRES} />
                             <Nav.Link href="/near-you">Near You</Nav.Link>
                         </Nav>

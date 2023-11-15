@@ -55,7 +55,7 @@ function SearchFilterBox() {
 
         // Set the 'type' parameter
         document.getElementById("category").value = type;
-
+        console.log(type);
         // Set the 'genre' parameter
         const updatedGenres = {};
         for (let genre of genresUrl.split(',')) {
