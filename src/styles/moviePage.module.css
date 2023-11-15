@@ -1,0 +1,53 @@
+div.header {
+    border-bottom: 1px solid var(--primaryColor);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 75vh;
+}
+
+.cover {
+    color: white;
+    height: 75vh;
+}
+
+.content {
+    margin-top: 2.5vh;
+}
+
+span {
+    padding-left: 1vh;
+}
+
+.carousel {
+    height: 30vh;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    margin-left: -10px;
+    margin-top: -10px;
+    padding-bottom: 10px;
+}
+
+.card {
+    margin: 10px 6px 10px 10px;
+    padding-bottom: 10px;
+    border-radius: var(--imageBorderRadius);
+    overflow: hidden;
+    width: 17vh;
+    height: 25vh;
+}
+
+.carousel-col {
+    padding-left: 1%;
+}
+
+hr {
+    margin-top: 5%;
+}
+
+.sidebody {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10vh;
+    padding-left: 15vh;
+}
