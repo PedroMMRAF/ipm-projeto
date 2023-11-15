@@ -1,0 +1,11 @@
+.blue-marker {
+    width: 32px; /* Adjust the width and height as needed */
+    height: 32px;
+    background-color: blue;
+    border-radius: 50%; /* Makes the marker a circle */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* Text color */
+    font-weight: bold;
+  }
