@@ -14,7 +14,7 @@ div.header {
     margin-top: 2.5vh;
 }
 
-span {
+span.filler {
     padding-left: 1vh;
 }
 
@@ -37,11 +37,11 @@ span {
     height: 25vh;
 }
 
-.carousel-col {
+.carouselCol {
     padding-left: 1%;
 }
 
-hr {
+hr.hr {
     margin-top: 5%;
 }
 
