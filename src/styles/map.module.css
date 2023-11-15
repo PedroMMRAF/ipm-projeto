@@ -1,0 +1,81 @@
+.card {
+    position: relative;
+    min-width: 200px;
+    max-width: 200px;
+    max-height: 300px;
+    margin-right: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+.cardImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(255, 255, 255, 0);
+    border-radius: 10px;
+}
+
+.overlay:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 1);
+}
+
+.cardText {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    padding: 10px;
+    font-size: 20px;
+    z-index: 3;
+}
+
+.cardDeck {
+    -ms-overflow-style: none;
+    overflow-y: auto;
+    height: 80vh;
+}
+
+.cardDeck::-webkit-scrollbar {
+    display: none;
+}
+
+.expandedMovie {
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    /* Adjust as needed */
+    background: #fff;
+    z-index: 9999;
+    overflow-y: auto;
+}
+
+.expandedMovie img {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    /* Remove border-radius for expanded image */
+}
+.map{
+    width: 50%;
+    height: 30%;
+}
