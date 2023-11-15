@@ -55,7 +55,6 @@ function SearchFilterBox() {
 
         // Set the 'type' parameter
         document.getElementById("category").value = type;
-        console.log(type);
         // Set the 'genre' parameter
         const updatedGenres = {};
         for (let genre of genresUrl.split(',')) {
@@ -102,8 +101,6 @@ function SearchFilterBox() {
             .filter(([_, isChecked]) => isChecked)
             .map(([genre, _]) => genre)
             .join(','));
-
-        console.log(params.toString());
 
         updateUrl(params);
     }
