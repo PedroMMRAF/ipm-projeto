@@ -24,8 +24,10 @@ function SearchFilterBox() {
         checkboxesStates[genre] = React.useState(false);
     }
 
+    let [type, setType] = React.useState('movies');
+
     const changeType = (e) => {
-        setGenreList(e.target.value === 'tv' ? TV_GENRES : MOVIE_GENRES);
+        setType(e.target.value);
 
         for (let genre of [...MOVIE_GENRES, ...TV_GENRES]) {
             checkboxesStates[genre][1](false);
@@ -75,17 +77,17 @@ function SearchFilterBox() {
         const params = new URLSearchParams(window.location.search);
         const type = params.get('type') || 'movies';
         const genres = params.get('genres') || '';
-        const sort = params.get('sort') || '';
+        const sort = params.get('sort') || 'popular';
 
         // Set the 'type' parameter
-        document.getElementById("category").value = type;
+        setType(type);
 
         // Set the 'genre' parameter
-        for (let genre of genres.split(',')) {
-            checkboxesStates[genre][1](true);
+        if (genres) {
+            for (let genre of genres.split(',')) {
+                checkboxesStates[genre][1](true);
+            }
         }
-
-        setGenreList(type === 'tv' ? TV_GENRES : MOVIE_GENRES);
 
         // Set the 'sort' parameter
         if (sort) {
@@ -95,10 +97,10 @@ function SearchFilterBox() {
 
     return (
         <Container>
-            <div className="d-flex flex-column p-2 border rounded mx-2" style={{ maxWidth: '350px' }}>
+            <Form className="d-flex flex-column p-2 border rounded mx-2" style={{ maxWidth: '350px' }}>
                 <div style={{ marginBottom: '10px' }}>
                     <label htmlFor="category">Category</label>
-                    <select onChange={changeType} id="category" style={{ width: '100%', marginBottom: '10px' }}>
+                    <select onChange={changeType} value={type} id="category" style={{ width: '100%', marginBottom: '10px' }}>
                         <option value="movies">Movies</option>
                         <option value="tv">TV Shows</option>
                     </select>
@@ -113,33 +115,27 @@ function SearchFilterBox() {
                         <option value="trending">Trending</option>
                     </select>
                 </div>
-                <div style={{ marginBottom: '10px' }}>
-                    <div style={{ marginBottom: '5px' }}>
-                        <label>Release year</label>
-                        <input type="text" style={{ width: '100%' }} />
-                    </div>
-                    <div style={{ marginBottom: '5px' }}>
-                        <label>From</label>
-                        <input type="text" style={{ width: '45%', marginRight: '10%' }} />
-                        <label>To</label>
-                        <input type="text" style={{ width: '45%' }} />
-                    </div>
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                    <div style={{ fontWeight: 'bold' }}>Genres</div>
-                    <Form style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                        {genreList.map((genre) => {
-                            return <Form.Check key={genre} type="checkbox" label={genre} value={genre} onChange={changeGenre} checked={checkboxesStates[genre][0]} />
-                        })}
-                    </Form>
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                    <input type="text" placeholder="Location" style={{ width: '100%' }} />
-                </div>
-                <div>
-                    <button style={{ width: '100%', padding: '10px', backgroundColor: '#000', color: '#fff', border: 'none', borderRadius: '4px' }}>Search</button>
-                </div>
-            </div>
+
+                <Form.Label style={{ fontWeight: 'bold', marginTop: '10px' }}>Release year</Form.Label>
+                <Form.Group style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Form.Label>From</Form.Label>
+                    <Form.Control type="text" style={{ width: '45%', marginRight: '10%' }} />
+                    <Form.Label>To</Form.Label>
+                    <Form.Control type="text" style={{ width: '45%' }} />
+                </Form.Group>
+
+                <Form.Label style={{ fontWeight: 'bold', marginTop: '10px' }}>Genres</Form.Label>
+                <Form.Group style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                    {(type === 'tv' ? TV_GENRES : MOVIE_GENRES).map((genre) => {
+                        return <Form.Check key={genre} label={genre} value={genre} onChange={changeGenre} checked={checkboxesStates[genre][0]} />
+                    })}
+                </Form.Group>
+
+                <Form.Label style={{ fontWeight: 'bold', marginTop: '10px' }}>Location</Form.Label>
+                <Form.Control type="text" placeholder="Location" style={{ width: '100%' }} />
+
+                <Form.Control style={{ fontWeight: 'bold', marginTop: '10px' }} type="button" value='Search' />
+            </Form>
         </Container >
     );
 };
