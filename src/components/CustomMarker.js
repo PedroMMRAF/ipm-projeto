@@ -12,7 +12,7 @@ const CustomMarker = ({ color, position, onClick }) => {
             fillColor: color,
             fillOpacity: 1,
             strokeWeight: 0,
-            scale: 0.04,
+            scale: 0.045,
         },
         onClick: onClick,
     };
@@ -21,3 +21,5 @@ const CustomMarker = ({ color, position, onClick }) => {
 };
 
 export default CustomMarker;
+
+
