@@ -128,7 +128,7 @@ function SearchFilterBox() {
     }, []);
 
     return (
-        <Container style={{ marginLeft: "20px" }}>
+        <Container style={{ marginLeft: "20px", position: 'fixed' }} >
             {
                 <Form
                     className="d-flex flex-column p-2 border rounded mx-2"
