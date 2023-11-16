@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-import styles from "./Navbar.module.css";
+import styles from "./PageNavbar.module.css";
 
 import TV_GENRES from "@/const/tv-genres.json";
 import MOVIE_GENRES from "@/const/movie-genres.json";
@@ -98,7 +98,7 @@ function Dropdown({ type, title, genres }) {
     );
 }
 
-export default function MyNavbar() {
+export default function PageNavbar() {
     let [isOpen, setIsOpen] = useState(false);
 
     const toggleCollapse = (e) => {
@@ -106,57 +106,61 @@ export default function MyNavbar() {
     };
 
     return (
-        <div className="fixed-top">
-            <Navbar bg="light" expand="lg">
-                <Container>
-                    <Navbar.Brand href="/">MTVDB</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse
-                        id="basic-navbar-nav"
-                        className="container justify-content-between"
-                    >
-                        <Nav>
-                            <Dropdown
-                                type="movies"
-                                title="Movies"
-                                genres={MOVIE_GENRES}
-                            />
-                            <Dropdown
-                                type="tv"
-                                title="TV Shows"
-                                genres={TV_GENRES}
-                            />
-                            <Nav.Link href="/near-you">Near You</Nav.Link>
-                        </Nav>
-                        <Nav>
-                            <Nav.Link href="#">
-                                <i className="bi bi-person-circle"></i> Login
-                            </Nav.Link>
-                            <Nav.Link href="#" onClick={toggleCollapse}>
-                                <i className="bi bi-search"></i> Search
-                            </Nav.Link>
-                            <Nav.Link href="#">
-                                <i className="bi bi-list"></i> More
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-            <div className="bg-light">
-                <Container>
-                    <Collapse in={isOpen}>
-                        <div className="w-100">
-                            <div className="p-2"></div>
-                            <input
-                                type="text"
-                                className="form-control taller-input"
-                                placeholder="Search for a movie or TV show"
-                            />
-                            <div className="p-2"></div>
-                        </div>
-                    </Collapse>
-                </Container>
+        <>
+            <div className={styles.spacing}></div>
+            <div className="fixed-top">
+                <Navbar bg="light" expand="lg">
+                    <Container>
+                        <Navbar.Brand href="/">MTVDB</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse
+                            id="basic-navbar-nav"
+                            className="container justify-content-between"
+                        >
+                            <Nav>
+                                <Dropdown
+                                    type="movies"
+                                    title="Movies"
+                                    genres={MOVIE_GENRES}
+                                />
+                                <Dropdown
+                                    type="tv"
+                                    title="TV Shows"
+                                    genres={TV_GENRES}
+                                />
+                                <Nav.Link href="/near-you">Near You</Nav.Link>
+                            </Nav>
+                            <Nav>
+                                <Nav.Link href="#">
+                                    <i className="bi bi-person-circle"></i>{" "}
+                                    Login
+                                </Nav.Link>
+                                <Nav.Link href="#" onClick={toggleCollapse}>
+                                    <i className="bi bi-search"></i> Search
+                                </Nav.Link>
+                                <Nav.Link href="#">
+                                    <i className="bi bi-list"></i> More
+                                </Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
+                <div className="bg-light">
+                    <Container>
+                        <Collapse in={isOpen}>
+                            <div className="w-100">
+                                <div className="p-2"></div>
+                                <input
+                                    type="text"
+                                    className="form-control taller-input"
+                                    placeholder="Search for a movie or TV show"
+                                />
+                                <div className="p-2"></div>
+                            </div>
+                        </Collapse>
+                    </Container>
+                </div>
             </div>
-        </div>
+        </>
     );
 }

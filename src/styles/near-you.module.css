@@ -84,8 +84,12 @@
 }
 
 .pageLink {
-    text-align: center;
-    margin-left: 150px;
-    margin-top: 100px;
-    transform: scale(1.5);
+    font-size: 20px;
+}
+
+.closeButton {
+    position: relative;
+    bottom: 450px;
+    left: 10px;
+    cursor: pointer;
 }

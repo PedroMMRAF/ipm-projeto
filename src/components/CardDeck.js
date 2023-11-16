@@ -8,12 +8,16 @@ const CardDeck = {
             <div className="container-fluid py-2">
                 <div
                     className={
-                        "d-flex flex-row flex-nowrap overflow-auto " +
+                        "d-flex flex-row overflow-auto " +
                         styles.cardDeckHorizontal
                     }
                 >
-                    {movies.map((movie) => (
-                        <MovieCard {...movie} />
+                    {movies.map((movie, index) => (
+                        <MovieCard
+                            key={index}
+                            {...movie}
+                            onClick={() => onMovieClick(movie)}
+                        />
                     ))}
                 </div>
             </div>
@@ -23,12 +27,17 @@ const CardDeck = {
         return (
             <div className="container-fluid px-2">
                 <div
-                    className={"d-flex flex-column " + styles.cardDeckVertical}
+                    className={
+                        "align-items-center d-flex flex-column overflow-auto " +
+                        styles.cardDeckVertical
+                    }
                 >
-                    {movies.map((movie) => (
+                    {movies.map((movie, index) => (
                         <MovieCard
+                            key={index}
                             {...movie}
                             onClick={() => onMovieClick(movie)}
+                            className="mb-3"
                         />
                     ))}
                 </div>

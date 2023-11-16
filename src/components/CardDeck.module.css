@@ -4,11 +4,10 @@
 }
 
 .cardDeckVertical {
-    overflow-y: auto;
     height: 80vh;
 }
 
 .cardDeckHorizontal::-webkit-scrollbar,
-.cardDeckVertical::-webkit-scrollbar-thumb {
+.cardDeckVertical::-webkit-scrollbar {
     display: none;
 }

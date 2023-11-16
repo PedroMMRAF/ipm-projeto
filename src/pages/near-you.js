@@ -1,17 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { InfoWindow } from "@react-google-maps/api";
 
-import styles from "@/styles/map.module.css";
+import styles from "@/styles/near-you.module.css";
 
-import MyNavbar from "@/components/Navbar";
 import CardDeck from "@/components/CardDeck";
 import CustomMarker from "@/components/CustomMarker";
 import GoogleMapComponent from "@/components/GoogleMapComponent";
 
 import MOVIES from "@/const/movies.json";
+import MovieCard from "@/components/MovieCard";
+import PageNavbar from "@/components/PageNavbar";
 
 const center = { lat: 38.66004943847656, lng: -9.203119277954102 };
+
+function SelectedMovie({ selectedMovie, closeMovie }) {
+    if (!selectedMovie) return <></>;
+
+    return (
+        <>
+            <MovieCard {...selectedMovie} width={300} />
+            <button
+                className={styles.closeButton}
+                onClick={closeMovie}
+                style={{ zIndex: 1000 }}
+            >
+                X
+            </button>
+            <a href="/movie-page">
+                <div className={styles.pageLink}>Redirect to Movie Page</div>
+            </a>
+        </>
+    );
+}
 
 export default function NearYouPage() {
     const [infoWindow, setInfoWindow] = useState(null);
@@ -58,46 +79,36 @@ export default function NearYouPage() {
     }, [showLocationPopup]);
 
     return (
-        <div>
+        <>
             <title>Movies Near You</title>
-            <h2 className="text-center">Movies near You</h2>
-            <MyNavbar />
-            <Container fluid>
+            <PageNavbar />
+            <Container fluid className="justify-content-md-center">
                 <Row>
-                    <div className="col-3">
+                    <h2 className="text-center">Movies near You</h2>
+                </Row>
+
+                <Row>
+                    <Col>
                         <CardDeck.Vertical
                             onMovieClick={selectMovie}
                             movies={MOVIES}
                         />
-                    </div>
-
-                    <div className={`col-9 ${styles.map}`}>
+                    </Col>
+                    <Col xs={1} className={styles.map}>
                         <GoogleMapComponent center={center}>
                             <CustomMarker
                                 onClick={() => locationPopUp(center)}
                                 color="red"
                                 position={center}
                             />
-                            <CustomMarker
-                                onClick={() => selectMovieFromPin(MOVIES[0])}
-                                color="blue"
-                                position={MOVIES[0].marker}
-                            />
-                            <CustomMarker
-                                onClick={() => selectMovieFromPin(MOVIES[1])}
-                                color="blue"
-                                position={MOVIES[1].marker}
-                            />
-                            <CustomMarker
-                                onClick={() => selectMovieFromPin(MOVIES[2])}
-                                color="blue"
-                                position={MOVIES[2].marker}
-                            />
-                            <CustomMarker
-                                onClick={() => selectMovieFromPin(MOVIES[3])}
-                                color="blue"
-                                position={MOVIES[3].marker}
-                            />
+                            {MOVIES.map((movie, index) => (
+                                <CustomMarker
+                                    key={index}
+                                    onClick={() => selectMovieFromPin(movie)}
+                                    color="blue"
+                                    position={movie.marker}
+                                />
+                            ))}
 
                             {infoWindow && (
                                 <InfoWindow
@@ -108,41 +119,15 @@ export default function NearYouPage() {
                                 </InfoWindow>
                             )}
                         </GoogleMapComponent>
-                    </div>
-
-                    {selectedMovie && (
-                        <div className="col-2">
-                            <div className={styles.expandedMovie}>
-                                <img
-                                    src={selectedMovie.image}
-                                    alt={selectedMovie.title}
-                                />
-                                <div className={styles.overlay}>
-                                    <div className={styles.cardText}>
-                                        {selectedMovie.title}
-                                    </div>
-                                </div>
-                            </div>
-                            <button
-                                style={{
-                                    position: "relative",
-                                    bottom: "450px",
-                                    left: "10px",
-                                    cursor: "pointer",
-                                }}
-                                onClick={closeMovie}
-                            >
-                                X
-                            </button>
-                            <a href="/moviePage">
-                                <div className={styles.pageLink}>
-                                    Redirect to Movie Page
-                                </div>
-                            </a>
-                        </div>
-                    )}
+                    </Col>
+                    <Col className="align-items-center">
+                        <SelectedMovie
+                            selectedMovie={selectedMovie}
+                            closeMovie={closeMovie}
+                        />
+                    </Col>
                 </Row>
             </Container>
-        </div>
+        </>
     );
 }

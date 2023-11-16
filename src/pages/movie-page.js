@@ -13,10 +13,31 @@ import {
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import style from "@/styles/moviePage.module.css";
-import MyNavbar from "@/components/Navbar";
+import PageNavbar from "@/components/PageNavbar";
+
+import style from "@/styles/movie-page.module.css";
 
 import MOVIES from "@/const/movies.json";
+
+export default function MoviePage() {
+    return (
+        <>
+            <title>Movie Page</title>
+            <PageNavbar />
+            <Headline />
+            <Container>
+                <Row>
+                    <Col md={8}>
+                        <Body />
+                    </Col>
+                    <Col className={style.sidebody}>
+                        <Sidebody />
+                    </Col>
+                </Row>
+            </Container>
+        </>
+    );
+}
 
 function Headline() {
     return (
@@ -237,24 +258,5 @@ function SimpleSlider() {
                 <h3>6</h3>
             </div>
         </Slider>
-    );
-}
-
-export default function NearYouPage() {
-    return (
-        <div>
-            <MyNavbar />
-            <Headline />
-            <Container>
-                <Row>
-                    <Col md={8}>
-                        <Body />
-                    </Col>
-                    <Col className={style.sidebody}>
-                        <Sidebody />
-                    </Col>
-                </Row>
-            </Container>
-        </div>
     );
 }

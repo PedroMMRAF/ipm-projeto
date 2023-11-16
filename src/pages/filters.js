@@ -1,16 +1,17 @@
 import React from "react";
-import MyNavbar from "@/components/Navbar";
 import { Container, Form } from "react-bootstrap";
 import MOVIE_GENRES from "@/const/movie-genres.json";
 import TV_GENRES from "@/const/tv-genres.json";
 import { Dropdown } from "react-bootstrap";
+import PageNavbar from "@/components/PageNavbar";
 
 export default function FiltersPage() {
     return (
-        <div>
-            <MyNavbar />
+        <>
+            <title>Search</title>
+            <PageNavbar />
             <SearchFilterBox />
-        </div>
+        </>
     );
 }
 
