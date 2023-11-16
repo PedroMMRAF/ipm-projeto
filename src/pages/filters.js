@@ -174,12 +174,12 @@ function SearchFilterBox() {
                                 {sort === "new"
                                     ? "Newest"
                                     : sort === "top"
-                                        ? "Best Rating"
-                                        : sort === "throwback"
-                                            ? "Throwback"
-                                            : sort === "popular"
-                                                ? "Most Popular"
-                                                : "Trending"}
+                                      ? "Best Rating"
+                                      : sort === "throwback"
+                                        ? "Throwback"
+                                        : sort === "popular"
+                                          ? "Most Popular"
+                                          : "Trending"}
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu style={{ width: "100%" }}>
