@@ -1,33 +1,46 @@
-import MyNavbar from '@/components/Navbar';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Image from 'react-bootstrap/Image';
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import MyNavbar from '@/components/Navbar'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Image from 'react-bootstrap/Image'
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import { useState } from 'react'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
-import style from "@/styles/moviePage.module.css"
-import MOVIES from "@/const/movies.json"
-
+import style from '@/styles/moviePage.module.css'
+import MOVIES from '@/const/movies.json'
 
 function Headline() {
     return (
-        <div className={style.div} style={{
-            backgroundImage: "url('https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg')"
-        }}>
-            <div className={style.cover} style={{ backgroundImage: "linear-gradient(to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84))" }}>
+        <div
+            className={style.div}
+            style={{
+                backgroundImage:
+                    "url('https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg')",
+            }}
+        >
+            <div
+                className={style.cover}
+                style={{
+                    backgroundImage:
+                        'linear-gradient(to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84))',
+                }}
+            >
                 <Container>
                     <div>
                         <Row>
                             <Col xs={4} md={4} className={style.content}>
-                                <div >
-                                    <Image src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" style={{ height: "70vh" }} rounded />
+                                <div>
+                                    <Image
+                                        src='https://www.themoviedb.org/t/p/w300_and_h450_bestv2/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg'
+                                        style={{ height: '70vh' }}
+                                        rounded
+                                    />
                                 </div>
                             </Col>
                             <Col xs={8} className={style.content}>
@@ -50,14 +63,14 @@ function Headline() {
                                         </div>
                                     </div>
                                     <Row>
-                                        <Col sm={2}>
-
-                                        </Col>
+                                        <Col sm={2}></Col>
                                         <Col xs={2}>
-                                            <i class="bi bi-play"></i> Play Trailer
+                                            <i class='bi bi-play'></i> Play
+                                            Trailer
                                         </Col>
                                         <Col xs={3}>
-                                            <i class="bi bi-bookmark-plus"></i> Add To Watchlist
+                                            <i class='bi bi-bookmark-plus'></i>{' '}
+                                            Add To Watchlist
                                         </Col>
                                         <Col>
                                             <ModalPage />
@@ -68,7 +81,10 @@ function Headline() {
                                         <h3>Overview</h3>
                                         <div>
                                             <p>
-                                                The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.
+                                                The story of J. Robert
+                                                Oppenheimer's role in the
+                                                development of the atomic bomb
+                                                during World War II.
                                             </p>
                                         </div>
                                         <Container>
@@ -83,44 +99,45 @@ function Headline() {
                         </Row>
                     </div>
                 </Container>
-            </div >
-        </div >
+            </div>
+        </div>
     )
 }
 
 function Body() {
     return (
         <div>
-            <div style={{ marginTop: "2%" }}>
+            <div style={{ marginTop: '2%' }}>
                 <h3>Top Actors</h3>
                 <SimpleSlider />
             </div>
             <hr className={style.hr} />
             <div>
-                {MOVIES[0]["reviews"].map((review, i) => (
-                    <p>{review["review"]}</p>
+                {MOVIES[0]['reviews'].map((review, i) => (
+                    <p>{review['review']}</p>
                 ))}
             </div>
         </div>
     )
 }
 
-
 function Actor() {
     return (
         <Card className={style.card}>
             <Card.Body>
                 <Card.Title>Card Title</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
+                <Card.Subtitle className='mb-2 text-muted'>
+                    Card Subtitle
+                </Card.Subtitle>
                 <Card.Text>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card's content.
                 </Card.Text>
-                <Card.Link href="#">Card Link</Card.Link>
-                <Card.Link href="#">Another Link</Card.Link>
+                <Card.Link href='#'>Card Link</Card.Link>
+                <Card.Link href='#'>Another Link</Card.Link>
             </Card.Body>
         </Card>
-    );
+    )
 }
 
 function Sidebody() {
@@ -156,37 +173,37 @@ function Sidebody() {
     )
 }
 
-
 function ModalPage() {
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false)
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     return (
         <>
-            <div variant="primary" onClick={handleShow}>
-                <i class="bi bi-star"></i> Review
+            <div variant='primary' onClick={handleShow}>
+                <i class='bi bi-star'></i> Review
             </div>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+                <Modal.Body>
+                    Woohoo, you are reading this text in a modal!
+                </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant='secondary' onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant='primary' onClick={handleClose}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
             </Modal>
         </>
-    );
+    )
 }
-
 
 function SimpleSlider() {
     var settings = {
@@ -194,8 +211,8 @@ function SimpleSlider() {
         infinite: true,
         speed: 500,
         slidesToShow: 2,
-        slidesToScroll: 2
-    };
+        slidesToScroll: 2,
+    }
     return (
         <Slider {...settings}>
             <div>
@@ -217,7 +234,7 @@ function SimpleSlider() {
                 <h3>6</h3>
             </div>
         </Slider>
-    );
+    )
 }
 
 export default function NearYouPage() {
