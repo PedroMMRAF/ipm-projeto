@@ -1,4 +1,4 @@
-import styles from "@/styles/MovieCard.module.css";
+import styles from "./MovieCard.module.css";
 
 export default function MovieCard({ title, image, onClick }) {
     return (

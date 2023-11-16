@@ -1,13 +1,3 @@
-.cardDeck {
-    -ms-overflow-style: none;
-    overflow-y: auto;
-    height: 80vh;
-}
-
-.cardDeck::-webkit-scrollbar {
-    display: none;
-}
-
 .expandedMovie {
     position: relative;
     top: 0;

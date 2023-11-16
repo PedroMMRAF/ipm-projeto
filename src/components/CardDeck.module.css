@@ -1,0 +1,14 @@
+.cardDeckHorizontal,
+.cardDeckVertical {
+    -ms-overflow-style: none;
+}
+
+.cardDeckVertical {
+    overflow-y: auto;
+    height: 80vh;
+}
+
+.cardDeckHorizontal::-webkit-scrollbar,
+.cardDeckVertical::-webkit-scrollbar-thumb {
+    display: none;
+}
