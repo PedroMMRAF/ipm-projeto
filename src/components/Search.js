@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 export default function SearchComponent() {
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
 
     useEffect(() => {
@@ -9,7 +9,7 @@ export default function SearchComponent() {
             // Debounce the search for better performance (optional)
             const timeoutId = setTimeout(() => {
                 // Fetch search results from your data source or API
-                fetchResults(query).then(data => {
+                fetchResults(query).then((data) => {
                     setResults(data);
                 });
             }, 500);
@@ -27,8 +27,8 @@ export default function SearchComponent() {
         // This is a placeholder for demonstration
         return [
             // Mocked search results
-            { id: 1, name: 'Result 1' },
-            { id: 2, name: 'Result 2' },
+            { id: 1, name: "Result 1" },
+            { id: 2, name: "Result 2" },
             // ... more results
         ];
     };
@@ -53,4 +53,4 @@ export default function SearchComponent() {
             </div>
         </div>
     );
-};
+}
