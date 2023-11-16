@@ -1,11 +1,11 @@
 // components/GoogleMap.js
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
 const containerStyle = {
   width: '100%',
   height: '85vh',
 };
-const darkMapStyles =[
+const darkMapStyles = [
   {
     stylers: [
       { hue: '#ff1a00' },
@@ -49,18 +49,14 @@ export default function GoogleMapComponent({ center, children }) {
     <LoadScript googleMapsApiKey="***REMOVED***">
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={{
-          lat: center[0],
-          lng: center[1],
-        }}
+        center={center}
         zoom={11}
         options={{
           styles: darkMapStyles,
         }}
-       
       >
         {children}
       </GoogleMap>
     </LoadScript>
   );
-};
+}

@@ -78,14 +78,14 @@
     width: 100%;
     height: auto;
     border-radius: 0;
-    /* Remove border-radius for expanded image */
 }
-.map{
+
+.map {
     width: 50%;
     height: 70%;
 }
 
-.pageLink{
+.pageLink {
     text-align: center;
     margin-left: 150px;
     margin-top: 100px;
