@@ -2,9 +2,8 @@ import MovieCard from "@/components/MovieCard";
 
 import styles from "./CardDeck.module.css";
 
-
 const CardDeck = {
-    Horizontal: ({ movies }) => {
+    Horizontal: ({ onMovieClick, movies }) => {
         return (
             <div className="container-fluid py-2">
                 <div
@@ -20,9 +19,22 @@ const CardDeck = {
             </div>
         );
     },
-    Vertical: () => {
-
-    }
-}
+    Vertical: ({ onMovieClick, movies }) => {
+        return (
+            <div className="container-fluid px-2">
+                <div
+                    className={"d-flex flex-column " + styles.cardDeckVertical}
+                >
+                    {movies.map((movie) => (
+                        <MovieCard
+                            {...movie}
+                            onClick={() => onMovieClick(movie)}
+                        />
+                    ))}
+                </div>
+            </div>
+        );
+    },
+};
 
 export default CardDeck;

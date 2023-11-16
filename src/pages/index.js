@@ -3,7 +3,6 @@ import { Container } from "react-bootstrap";
 import MyNavbar from "@/components/Navbar";
 import CardDeck from "@/components/CardDeck";
 
-
 let MOVIES = [];
 
 for (let i = 1; i < 21; i++) {
@@ -13,7 +12,6 @@ for (let i = 1; i < 21; i++) {
         image: "https://via.placeholder.com/200x300",
     });
 }
-
 
 export default function HomePage() {
     return (

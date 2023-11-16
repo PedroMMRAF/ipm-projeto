@@ -10,7 +10,6 @@ import styles from "./Navbar.module.css";
 import TV_GENRES from "@/const/tv-genres.json";
 import MOVIE_GENRES from "@/const/movie-genres.json";
 
-
 function NavDropdownMultiColumn({ children, ...params }) {
     return (
         <NavDropdown {...params}>

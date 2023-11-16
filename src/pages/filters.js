@@ -128,7 +128,7 @@ function SearchFilterBox() {
     }, []);
 
     return (
-        <Container style={{ marginLeft: "20px", position: 'fixed' }} >
+        <Container style={{ marginLeft: "20px", position: "fixed" }}>
             {
                 <Form
                     className="d-flex flex-column p-2 border rounded mx-2"
@@ -174,12 +174,12 @@ function SearchFilterBox() {
                                 {sort === "new"
                                     ? "Newest"
                                     : sort === "top"
-                                        ? "Best Rating"
-                                        : sort === "throwback"
-                                            ? "Throwback"
-                                            : sort === "popular"
-                                                ? "Most Popular"
-                                                : "Trending"}
+                                      ? "Best Rating"
+                                      : sort === "throwback"
+                                        ? "Throwback"
+                                        : sort === "popular"
+                                          ? "Most Popular"
+                                          : "Trending"}
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu style={{ width: "100%" }}>

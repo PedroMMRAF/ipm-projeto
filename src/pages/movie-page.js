@@ -1,6 +1,14 @@
 import Slider from "react-slick";
 import React, { useState } from "react";
-import { Col, Row, Image, Card, Button, Modal, Container } from "react-bootstrap";
+import {
+    Col,
+    Row,
+    Image,
+    Card,
+    Button,
+    Modal,
+    Container,
+} from "react-bootstrap";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,7 +17,6 @@ import style from "@/styles/moviePage.module.css";
 import MyNavbar from "@/components/Navbar";
 
 import MOVIES from "@/const/movies.json";
-
 
 function Headline() {
     return (
