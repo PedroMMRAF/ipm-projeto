@@ -1,19 +1,15 @@
-import MyNavbar from "@/components/Navbar";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import React from "react";
-import Card from "react-bootstrap/Card";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import Slider from "react-slick";
+import React, { useState } from "react";
+import { Col, Row, Image, Card, Button, Modal, Container } from "react-bootstrap";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import style from "@/styles/moviePage.module.css";
+import MyNavbar from "@/components/Navbar";
+
 import MOVIES from "@/const/movies.json";
+
 
 function Headline() {
     return (

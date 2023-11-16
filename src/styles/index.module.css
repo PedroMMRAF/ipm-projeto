@@ -1,7 +1,0 @@
-.cardDeck {
-    -ms-overflow-style: none;
-}
-
-.cardDeck::-webkit-scrollbar {
-    display: none;
-}

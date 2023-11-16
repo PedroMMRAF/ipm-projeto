@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import Collapse from "react-bootstrap/Collapse";
 import Container from "react-bootstrap/Container";
@@ -7,10 +5,11 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-import styles from "@/styles/Navbar.module.css";
+import styles from "./Navbar.module.css";
 
-import MOVIE_GENRES from "@/const/movie-genres.json";
 import TV_GENRES from "@/const/tv-genres.json";
+import MOVIE_GENRES from "@/const/movie-genres.json";
+
 
 function NavDropdownMultiColumn({ children, ...params }) {
     return (
