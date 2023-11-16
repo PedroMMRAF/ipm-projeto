@@ -1,27 +1,27 @@
-import { Container } from 'react-bootstrap'
+import { Container } from "react-bootstrap";
 
-import MyNavbar from '@/components/Navbar'
-import MovieCard from '@/components/MovieCard'
+import MyNavbar from "@/components/Navbar";
+import MovieCard from "@/components/MovieCard";
 
-import styles from '@/styles/index.module.css'
+import styles from "@/styles/index.module.css";
 
-let MOVIES = []
+let MOVIES = [];
 
 for (let i = 1; i < 21; i++) {
     MOVIES.push({
         key: `movie-${i}`,
         title: `Movie ${i}`,
-        image: 'https://via.placeholder.com/200x300',
-    })
+        image: "https://via.placeholder.com/200x300",
+    });
 }
 
 function CardDeck() {
     // horizontally scrollable card deck
     return (
-        <div className='container-fluid py-2'>
+        <div className="container-fluid py-2">
             <div
                 className={
-                    'd-flex flex-row flex-nowrap overflow-auto ' +
+                    "d-flex flex-row flex-nowrap overflow-auto " +
                     styles.cardDeck
                 }
             >
@@ -30,7 +30,7 @@ function CardDeck() {
                 ))}
             </div>
         </div>
-    )
+    );
 }
 
 export default function HomePage() {
@@ -52,5 +52,5 @@ export default function HomePage() {
                 <CardDeck />
             </Container>
         </div>
-    )
+    );
 }
