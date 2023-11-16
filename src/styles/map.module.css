@@ -51,7 +51,10 @@
     -ms-overflow-style: none;
     overflow-y: auto;
     height: 80vh;
+    margin-left: 200px;
+    transform: scale(1.1);
 }
+
 
 .cardDeck::-webkit-scrollbar {
     display: none;
@@ -62,11 +65,13 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: 50%;
+    width: 70%;
     /* Adjust as needed */
     background: #fff;
     z-index: 9999;
     overflow-y: auto;
+    margin-left: 150px;
+    transform: scale(1.3);
 }
 
 .expandedMovie img {
@@ -77,5 +82,12 @@
 }
 .map{
     width: 50%;
-    height: 30%;
+    height: 70%;
+}
+
+.pageLink{
+    text-align: center;
+    margin-left: 150px;
+    margin-top: 100px;
+    transform: scale(1.5);
 }

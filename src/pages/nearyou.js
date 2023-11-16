@@ -2,7 +2,7 @@ import MyNavbar from '@/components/Navbar';
 import GoogleMapComponent from '@/components/GoogleMapComponent';
 import CustomMarker from '@/components/CustomMarker';
 import { InfoWindow } from '@react-google-maps/api';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import styles from '@/styles/map.module.css';
 
@@ -13,13 +13,14 @@ const marker1 = [38.673900, -9.166215];
 const marker2 = [38.728175, -9.140576];
 const marker3 = [38.703505, -9.351862];
 const marker4 = [38.735913, -9.264491];
-let Movies=[[38.673900, -9.166215],[38.728175, -9.140576],[38.703505, -9.351862],[38.735913, -9.264491]]
+let Movies = [[38.673900, -9.166215], [38.728175, -9.140576], [38.703505, -9.351862], [38.735913, -9.264491]]
 
 // ... (other imports)
 
 export default function NearYouPage() {
   const [infoWindow, setInfoWindow] = useState(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [showLocationPopup, setShowLocationPopup] = useState(true);
 
   const locationPopUp = (markerPosition) => {
     setInfoWindow({
@@ -28,10 +29,10 @@ export default function NearYouPage() {
     });
   };
 
-  const MoviePopUp = (movie,markerPosition) => {
+  const MoviePopUp = (movie, markerPosition) => {
     setInfoWindow({
       position: { lat: markerPosition[0], lng: markerPosition[1] },
-      content: movie.title +' Was Filmed Here!',
+      content: movie.title + ' Was Filmed Here!',
     });
   };
 
@@ -41,35 +42,46 @@ export default function NearYouPage() {
 
   const selectMovie = (movie) => {
     setSelectedMovie(movie);
-    MoviePopUp(movie,Movies[movie.key])
-    
+    MoviePopUp(movie, Movies[movie.key])
+
   };
-  const selectMovieFromPin= (movie,position) =>{
+  const selectMovieFromPin = (movie, position) => {
     setSelectedMovie(movie);
-   
+    MoviePopUp(movie, Movies[movie.key])
+
   }
 
   const closeMovie = () => {
     setSelectedMovie(null);
   };
 
+  useEffect(() => {
+    if (showLocationPopup) {
+      alert('In order to use this feature, we need your location. Click OK if you agree.');
+      setShowLocationPopup(false);
+    }
+  }, [showLocationPopup]);
+
   return (
+
     <div>
-      <h2>Movies near You</h2>
+      <title>Movies Near You</title>
+      <h2 className="text-center">Movies near You</h2>
       <MyNavbar />
       <Container fluid>
         <Row>
+
           <div className="col-3">
             <CardDeck onMovieClick={selectMovie} />
           </div>
-        
-          <div className={styles.map}>
+
+          <div className={`col-9 ${styles.map}`}>
             <GoogleMapComponent center={center}>
               <CustomMarker onClick={() => locationPopUp(center)} color="red" position={center} />
-              <CustomMarker onClick={() => selectMovieFromPin(MOVIES[0],marker1)} color="blue" position={marker1} />
-              <CustomMarker onClick={() => selectMovieFromPin(MOVIES[1],marker2)} color="blue" position={marker2} />
-              <CustomMarker onClick={() => selectMovieFromPin(MOVIES[2],marker3)} color="blue" position={marker3} />
-              <CustomMarker onClick={() => selectMovieFromPin(MOVIES[3],marker4)} color="blue" position={marker4} />
+              <CustomMarker onClick={() => selectMovieFromPin(MOVIES[0], marker1)} color="blue" position={marker1} />
+              <CustomMarker onClick={() => selectMovieFromPin(MOVIES[1], marker2)} color="blue" position={marker2} />
+              <CustomMarker onClick={() => selectMovieFromPin(MOVIES[2], marker3)} color="blue" position={marker3} />
+              <CustomMarker onClick={() => selectMovieFromPin(MOVIES[3], marker4)} color="blue" position={marker4} />
 
               {infoWindow && (
                 <InfoWindow
@@ -81,16 +93,28 @@ export default function NearYouPage() {
               )}
             </GoogleMapComponent>
           </div>
-          
+
           {selectedMovie && (
+            
             <div className='col-2'>
-            <div className={styles.expandedMovie}>
-              <img src={selectedMovie.image} alt={selectedMovie.title} onClick={closeMovie} />
-              <div className={styles.overlay}>
-                <div className={styles.cardText}>{selectedMovie.title}</div>
+              <div className={styles.expandedMovie}>
+              <img src={selectedMovie.image} alt={selectedMovie.title}  />
+                <div className={styles.overlay}  >
+                  <div className={styles.cardText}>{selectedMovie.title}</div>
+                </div>
               </div>
+              <button style={{
+              position: 'relative',
+              bottom: '450px',
+              left: '10px',
+              cursor: 'pointer',
+            }} onClick={closeMovie}>X</button>
+              <a  href="/moviePage">
+              <div className={styles.pageLink}>Redirect to Movie Page</div>
+              </a>
             </div>
-            </div>
+          
+            
           )}
         </Row>
       </Container>
@@ -149,10 +173,10 @@ function MovieCard({ title, image, onClick }) {
 function CardDeck({ onMovieClick }) {
   return (
     <div className="container-fluid px-2">
-      
+
       <div className={`d-flex flex-column ${styles.cardDeck}`}>
         {MOVIES.map((movie) => (
-          <MovieCard {...movie}  onClick={() => onMovieClick(movie)} />
+          <MovieCard {...movie} onClick={() => onMovieClick(movie)} />
         ))}
       </div>
     </div>
