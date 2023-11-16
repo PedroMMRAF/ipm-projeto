@@ -1,9 +1,9 @@
-import React from 'react'
-import MyNavbar from '@/components/Navbar'
-import { Container, Form } from 'react-bootstrap'
-
-import MOVIE_GENRES from '@/const/movie-genres.json'
-import TV_GENRES from '@/const/tv-genres.json'
+import React from 'react';
+import MyNavbar from '@/components/Navbar';
+import { Container, Form } from 'react-bootstrap';
+import MOVIE_GENRES from '@/const/movie-genres.json';
+import TV_GENRES from '@/const/tv-genres.json';
+import { Dropdown } from 'react-bootstrap';
 
 export default function FiltersPage() {
     return (
@@ -15,17 +15,38 @@ export default function FiltersPage() {
 }
 
 function SearchFilterBox() {
-    let [genreList, setGenreList] = React.useState(MOVIE_GENRES)
 
     let checkboxesStates = {}
     for (let genre of [...MOVIE_GENRES, ...TV_GENRES]) {
         checkboxesStates[genre] = React.useState(false)
     }
+    const [fromYear, setFromYear] = React.useState('');
+    const [toYear, setToYear] = React.useState('');
+    const [location, setLocation] = React.useState('');
+    let [type, setType] = React.useState('movies');
+    let [sort, setSort] = React.useState('popular');
 
-    let [type, setType] = React.useState('movies')
+    const changeFromYear = (value) => {
+        setFromYear(value);
+        const params = new URLSearchParams(window.location.search);
+        params.set('from', value);
+        updateUrl(params);
+    }
 
-    const changeType = (e) => {
-        setType(e.target.value)
+    const changeToYear = (value) => {
+        setToYear(value);
+        const params = new URLSearchParams(window.location.search);
+        params.set('to', value);
+        updateUrl(params);
+    }
+    const changeLocation = (value) => {
+        setLocation(value);
+        const params = new URLSearchParams(window.location.search);
+        params.set('location', value);
+        updateUrl(params);
+    }
+    const changeType = (value) => {
+        setType(value);
 
         for (let genre of [...MOVIE_GENRES, ...TV_GENRES]) {
             checkboxesStates[genre][1](false)
@@ -33,16 +54,16 @@ function SearchFilterBox() {
 
         const params = new URLSearchParams(window.location.search)
 
-        params.set('type', e.target.value)
-        params.set('genres', '')
+        params.set('type', value);
+        params.set('genres', '');
 
         updateUrl(params)
     }
 
-    const changeSort = (e) => {
-        const params = new URLSearchParams(window.location.search)
-
-        params.set('sort', e.target.value)
+    const changeSort = (value) => {
+        const params = new URLSearchParams(window.location.search);
+        setSort(value);
+        params.set('sort', value);
 
         updateUrl(params)
     }
@@ -69,8 +90,7 @@ function SearchFilterBox() {
                     .join(','),
             )
         }
-
-        updateUrl(params)
+        updateUrl(params);
     }
 
     let baseLink = '/filters'
@@ -84,11 +104,13 @@ function SearchFilterBox() {
     // Update the page with the URL parameters
     React.useEffect(() => {
         // Get the current URL parameters
-        const params = new URLSearchParams(window.location.search)
-        const type = params.get('type') || 'movies'
-        const genres = params.get('genres') || ''
-        const sort = params.get('sort') || 'popular'
-
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get('type') || 'movies';
+        const genres = params.get('genres') || '';
+        const sort = params.get('sort') || 'popular';
+        const from = params.get('from') || '';
+        const to = params.get('to') || '';
+        const location = params.get('location') || '';
         // Set the 'type' parameter
         setType(type)
 
@@ -98,59 +120,77 @@ function SearchFilterBox() {
                 checkboxesStates[genre][1](true)
             }
         }
-
         // Set the 'sort' parameter
-        if (sort) {
-            document.getElementById('sort').value = sort
-        }
-    }, [])
+        setSort(sort);
+        // Set the 'from' parameter
+        setFromYear(from);
+        // Set the 'to' parameter
+        setToYear(to);
+        // Set the 'location' parameter
+        setLocation(location);
+    }, []);
 
     return (
-        <Container>
-            <Form
-                className='d-flex flex-column p-2 border rounded mx-2'
-                style={{ maxWidth: '350px' }}
-            >
-                <div style={{ marginBottom: '10px' }}>
-                    <label htmlFor='category'>Category</label>
-                    <select
-                        onChange={changeType}
-                        value={type}
-                        id='category'
-                        style={{ width: '100%', marginBottom: '10px' }}
-                    >
-                        <option value='movies'>Movies</option>
-                        <option value='tv'>TV Shows</option>
-                    </select>
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                    <label htmlFor='sort'>Sort By</label>
-                    <select
-                        onChange={changeSort}
-                        id='sort'
-                        style={{ width: '100%', marginBottom: '10px' }}
-                    >
-                        <option value='new'>Newest</option>
-                        <option value='top'>Best Rating</option>
-                        <option value='throwback'>Throwback</option>
-                        <option value='popular'>Most Popular</option>
-                        <option value='trending'>Trending</option>
-                    </select>
-                </div>
+        <Container style={{ marginLeft: "20px" }}>
+            {<Form className="d-flex flex-column p-2 border rounded mx-2" style={{ maxWidth: '350px' }}>
+                <Form.Label style={{ fontWeight: 'bold' }} htmlFor="category">Category</Form.Label>
+                <Form.Group style={{ marginBottom: '10px' }}>
+                    <Dropdown>
+                        <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                            {type === 'movies' ? 'Movies' : 'TV Shows'}
+                        </Dropdown.Toggle>
 
-                <Form.Label style={{ fontWeight: 'bold', marginTop: '10px' }}>
-                    Release year
-                </Form.Label>
-                <Form.Group
-                    style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
-                    <Form.Label>From</Form.Label>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => changeType('movies')}>Movies</Dropdown.Item>
+                            <Dropdown.Item onClick={() => changeType('tv')}>TV Shows</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Form.Group>
+                <label htmlFor="sort" style={{ fontWeight: 'bold' }}>Sort By</label>
+                <Form.Group style={{ marginBottom: '10px' }}>
+                    <Dropdown onSelect={changeSort}>
+                        <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: '100%' }}>
+                            {sort === 'new' ? 'Newest' : sort === 'top' ? 'Best Rating' : sort === 'throwback' ? 'Throwback' : sort === 'popular' ? 'Most Popular' : 'Trending'}
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu style={{ width: '100%' }}>
+                            <Dropdown.Item eventKey="new">Newest</Dropdown.Item>
+                            <Dropdown.Item eventKey="top">Best Rating</Dropdown.Item>
+                            <Dropdown.Item eventKey="throwback">Throwback</Dropdown.Item>
+                            <Dropdown.Item eventKey="popular">Most Popular</Dropdown.Item>
+                            <Dropdown.Item eventKey="trending">Trending</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Form.Group>
+
+                <Form.Label style={{ fontWeight: 'bold', marginTop: '10px' }}>Release year</Form.Label>
+                <Form.Group style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Form.Label style={{ marginRight: '10px' }}>From</Form.Label>
                     <Form.Control
-                        type='text'
+                        type="text"
+                        maxLength="4"
+                        onChange={(event) => changeFromYear(event.target.value)}
+                        value={fromYear}
+                        onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                            }
+                        }}
                         style={{ width: '45%', marginRight: '10%' }}
                     />
-                    <Form.Label>To</Form.Label>
-                    <Form.Control type='text' style={{ width: '45%' }} />
+                    <Form.Label style={{ marginRight: '10px' }}>To</Form.Label>
+                    <Form.Control
+                        type="text"
+                        maxLength="4"
+                        onChange={(event) => changeToYear(event.target.value)}
+                        value={toYear}
+                        onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                            }
+                        }}
+                        style={{ width: '45%', marginRight: '10%' }}
+                    />
                 </Form.Group>
 
                 <Form.Label style={{ fontWeight: 'bold', marginTop: '10px' }}>
@@ -176,20 +216,13 @@ function SearchFilterBox() {
                     })}
                 </Form.Group>
 
-                <Form.Label style={{ fontWeight: 'bold', marginTop: '10px' }}>
-                    Location
-                </Form.Label>
-                <Form.Control
-                    type='text'
-                    placeholder='Location'
-                    style={{ width: '100%' }}
-                />
-                <Form.Control
-                    style={{ fontWeight: 'bold', marginTop: '10px' }}
-                    type='button'
-                    value='Search'
-                />
-            </Form>
-        </Container>
-    )
-}
+                <Form.Label style={{ fontWeight: 'bold', marginTop: '10px' }}>Location</Form.Label>
+                <Form.Control type="text" value={location} onChange={(event) => changeLocation(event.target.value)} placeholder="Location" style={{ width: '100%' }} />
+
+                <Form.Control style={{ fontWeight: 'bold', marginTop: '10px' }} type="button" value='Search' />
+            </Form>}
+        </Container >
+    );
+};
+
+
