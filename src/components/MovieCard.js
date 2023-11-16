@@ -1,4 +1,4 @@
-import styles from '@/styles/MovieCard.module.css'
+import styles from "@/styles/MovieCard.module.css";
 
 export default function MovieCard({ title, image, onClick }) {
     return (
@@ -8,5 +8,5 @@ export default function MovieCard({ title, image, onClick }) {
                 <div className={styles.cardText}>{title}</div>
             </div>
         </div>
-    )
+    );
 }
