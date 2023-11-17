@@ -1,0 +1,31 @@
+.dropdownMulticol {
+    display: flex;
+    flex-direction: row;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.dropdownMulticol > .dropdownCol {
+    vertical-align: top;
+}
+
+.dropdownDivider {
+    margin-top: 0px;
+    margin-bottom: 0.5em;
+}
+
+.navRow {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dropdownHeader {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: black;
+}
+
+.spacing {
+    height: 5em;
+}
