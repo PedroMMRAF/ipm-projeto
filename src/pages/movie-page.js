@@ -1,7 +1,7 @@
-import MyNavbar from '@/components/Navbar';
+import MyNavbar from '@/components/PageNavbar';
 
-import React from 'react';
-import { useState } from 'react';
+
+import { useState, React } from 'react';
 
 import {
     Col,
@@ -25,7 +25,7 @@ import {
 
 import PropTypes from "prop-types";
 
-import styles from "@/styles/moviePage.module.css"
+import styles from "@/styles/movie-page.module.css"
 import MOVIES from "@/const/movies.json"
 
 export default function MoviePage() {
@@ -94,7 +94,7 @@ function Headline() {
                                         <Row>
 
                                             <Col xs={3}>
-                                                <svg style={{ height: "8vh", width: "8vw", color: "yellow" }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="ipc-icon ipc-icon--star sc-bde20123-4 frBGmx" viewBox="0 0 24 24" fill="currentColor" role="presentation"><path d="M12 17.27l4.15 2.51c.76.46 1.69-.22 1.49-1.08l-1.1-4.72 3.67-3.18c.67-.58.31-1.68-.57-1.75l-4.83-.41-1.89-4.46c-.34-.81-1.5-.81-1.84 0L9.19 8.63l-4.83.41c-.88.07-1.24 1.17-.57 1.75l3.67 3.18-1.1 4.72c-.2.86.73 1.54 1.49 1.08l4.15-2.5z"></path></svg>
+                                                <svg style={{ height: "8vh", width: "8vw", color: "yellow" }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="ipc-icon ipc-icon--star sc-bde20123-4 frBGmx" viewBox="0 0 24 24" fill="currentColor" role="presentation"><path d="M12 17.27l4.15 2.51c.76.46 1.69-.22 1.49-1.08l-1.1-4.72 3.67-3.18c.67-.58.31-1.68-.57-1.75l-4.83-.41-1.89-4.46c-.34-.81-1.5-.81-1.84 0L9.19 8.63l-4.83.41c-.88.07-1.24 1.17-.57 1.75l3.67 3.18-1.1 4.72c-.2.86.73 1.54 1.49 1.08l4.15-2.5z"></path></svg>
                                                 <span style={{ marginLeft: "-1.5vw" }}>
                                                     {rating}/5
                                                 </span>
@@ -104,7 +104,7 @@ function Headline() {
                                             </Col>
                                             <Col xs={3}>
                                                 <div style={{ marginTop: "2vh", marginLeft: "-5vw", cursor: "pointer" }}>
-                                                    <i class="bi bi-bookmark-plus"></i> Add To Watchlist
+                                                    <i className="bi bi-bookmark-plus"></i> Add To Watchlist
                                                 </div>
                                             </Col>
                                             <Col xs={3}>
@@ -163,7 +163,7 @@ function ReviewCard({ author, review, rating, image }) {
         <Card style={{ marginTop: "2vh" }}>
             <Card.Header><Image src={image} style={{ width: "2.5vw", height: "5vh", borderRadius: "50%", marginRight: "1vw" }} />  <b style={{ fontSize: "110%" }}>A review by {author} </b></Card.Header>
             <Card.Body>
-                <Card.Title><Chip label={<i class="bi bi-star-fill"><span style={{ marginLeft: "0.5vw" }}>{rating}</span></i>} /></Card.Title>
+                <Card.Title><Chip label={<i className="bi bi-star-fill"><span style={{ marginLeft: "0.5vw" }}>{rating}</span></i>} /></Card.Title>
                 <Card.Text>
                     {review}
                 </Card.Text>
@@ -191,30 +191,30 @@ function Sidebody() {
         <div>
             <Container>
                 <div>
-                    <p>
+                    <div>
                         <strong>
                             <bdi>Status</bdi>
                         </strong>
                         <p>{MOVIES[0]["status"]}</p>
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <strong>
                             <bdi>Original Language</bdi>
                         </strong>
                         <p>{MOVIES[0]["original-language"]}</p>
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <strong>
                             <bdi>Budget</bdi>
                         </strong>
                         <p>{MOVIES[0]["budget"]}</p>
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <strong>
                             <bdi>Revenue</bdi>
                         </strong>
                         <p>{MOVIES[0]["revenue"]}</p>
-                    </p>
+                    </div>
                 </div>
             </Container>
         </div>
@@ -277,7 +277,7 @@ function ReviewModal() {
     return (
         <>
             <div variant="primary" onClick={handleShow} style={{ marginTop: "2vh", marginLeft: "-5vw", cursor: "pointer" }}>
-                <i class="bi bi-star"></i> Review
+                <i className="bi bi-star"></i> Review
             </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -314,7 +314,7 @@ function TrailerModal() {
     return (
         <>
             <div onClick={handleShow} style={{ marginTop: "2vh", marginLeft: "-2vw", cursor: "pointer" }}>
-                <i class="bi bi-play"></i> Play Trailer
+                <i className="bi bi-play"></i> Play Trailer
             </div>
             <Modal show={show} onHide={handleClose} size='lg' style={{ display: "flex" }}>
                 <Modal.Body>
