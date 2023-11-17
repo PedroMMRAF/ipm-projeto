@@ -1,4 +1,4 @@
-div.header {
+.div {
     border-bottom: 1px solid var(--primaryColor);
     background-size: cover;
     background-repeat: no-repeat;
@@ -14,7 +14,7 @@ div.header {
     margin-top: 2.5vh;
 }
 
-span.filler {
+.span {
     padding-left: 1vh;
 }
 
@@ -33,16 +33,21 @@ span.filler {
     padding-bottom: 10px;
     border-radius: var(--imageBorderRadius);
     overflow: hidden;
-    width: 17vh;
-    height: 25vh;
+    width: 11vw;
+    height: 38vh;
+}
+
+.title {
+    margin-top: -1vh;
+    font-size: large;
 }
 
 .carouselCol {
     padding-left: 1%;
 }
 
-hr.hr {
-    margin-top: 5%;
+.hr {
+    margin-top: 8vh;
 }
 
 .sidebody {

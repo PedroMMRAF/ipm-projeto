@@ -1,46 +1,94 @@
 [
     {
-        "Title": "Oppenheimer",
-        "Overview": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
-        "Author": {
-            "name": "Christopher Nolan",
-            "roles": [
-                "Director",
-                "Writer"
-            ]
-        },
+        "title": "Oppenheimer",
+        "quote": "The world forever changes.",
+        "overview": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
+        "colab": [
+            {
+                "name": "Christopher Nolan",
+                "roles": [
+                    "Director,",
+                    " Writer"
+                ]
+            }
+        ],
+        "trailer": "uYPbbksJxIg",
+        "poster": "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg",
+        "cover": "linear-gradient(to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84))",
         "actors": [
             {
                 "name": "Cillian Murphy",
-                "character": "J. Robert Oppenheimer"
+                "character": "J. Robert Oppenheimer",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/3DZAf9CwXmfV2HZOEdqeZAGTndV.jpg"
             },
             {
                 "name": "Emily Blunt",
-                "character": "Kitty Oppenheimer"
+                "character": "Kitty Oppenheimer",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/nPJXaRMvu1vh3COG16GzmdsBySQ.jpg"
             },
             {
                 "name": "Matt Damon",
-                "character": "Leslie Groves"
+                "character": "Leslie Groves",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/At3JgvaNeEN4Z4ESKlhhes85Xo3.jpg"
             },
             {
                 "name": "Robert Downey Jr.",
-                "character": "Lewis Strauss"
+                "character": "Lewis Strauss",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/im9SAqJPZKEbVZGmjXuLI4O7RvM.jpg"
             },
             {
                 "name": "Florence Pugh",
-                "character": "Jean Tatlock"
+                "character": "Jean Tatlock",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/421cSReX2Fktldac8SyY2k0yLwY.jpg"
             },
             {
                 "name": "Josh Hartnett",
-                "character": "Ernest Lawrence"
+                "character": "Ernest Lawrence",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/dCfu2EN7FjISACcjilaJu7evwEc.jpg"
             }
         ],
         "reviews": [
             {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Eu",
+                "review": "Achei muito bom",
+                "rating": "3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Eu",
+                "review": "Achei muito bom",
+                "rating": "3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Eu",
+                "review": "Achei muito bom",
+                "rating": "3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Eu",
+                "review": "Achei muito bom",
+                "rating": "3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Eu",
+                "review": "Achei muito bom",
+                "rating": "3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
                 "author": "Eu",
                 "review": "Achei muito bom",
                 "rating": "3"
             }
-        ]
+        ],
+        "status": "Released",
+        "original-language": "English",
+        "budget": "$100,000,000.00",
+        "revenue": "$948,900,000.00"
     }
 ]
