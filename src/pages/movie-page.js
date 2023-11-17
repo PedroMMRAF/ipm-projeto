@@ -3,30 +3,49 @@ import MyNavbar from '@/components/Navbar';
 import React from 'react';
 import { useState } from 'react';
 
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Image from 'react-bootstrap/Image';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import {
+    Col,
+    Row,
+    Image,
+    Card,
+    Button,
+    Modal,
+    Container,
+} from "react-bootstrap";
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import Rating from '@mui/material/Rating'
-import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
+import {
+    Rating,
+    Typography,
+    Chip,
+} from '@mui/material';
 
 import PropTypes from "prop-types";
 
 import styles from "@/styles/moviePage.module.css"
 import MOVIES from "@/const/movies.json"
 
-const fs = require("fs")
-fs.readFileSync("@/const/movies.json")
+export default function MoviePage() {
+    return (
+        <div>
+            <MyNavbar />
+            <Headline />
+            <Container>
+                <Row>
+                    <Col md={9} sm={9}>
+                        <Body />
+                    </Col>
+                    <Col className={styles.sidebody} md={3} sm={3}>
+                        <Sidebody />
+                    </Col>
+                </Row>
+            </Container>
+        </div>
+    )
+}
 
 // The element containing everything within the movie background image
 function Headline() {
@@ -331,21 +350,4 @@ function Player() {
     );
 }
 
-export default function NearYouPage() {
-    return (
-        <div>
-            <MyNavbar />
-            <Headline />
-            <Container>
-                <Row>
-                    <Col md={9} sm={9}>
-                        <Body />
-                    </Col>
-                    <Col className={styles.sidebody} md={3} sm={3}>
-                        <Sidebody />
-                    </Col>
-                </Row>
-            </Container>
-        </div>
-    )
-}
+
