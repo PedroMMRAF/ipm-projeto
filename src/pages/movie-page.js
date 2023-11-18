@@ -1,7 +1,7 @@
 import MyNavbar from '@/components/PageNavbar';
 
 
-import { useState, React } from 'react';
+import { useState, React, useEffect } from 'react';
 
 import {
     Col,
@@ -12,6 +12,8 @@ import {
     Modal,
     Container,
 } from "react-bootstrap";
+
+import ReactDOM from 'react-dom';
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -27,6 +29,8 @@ import PropTypes from "prop-types";
 
 import styles from "@/styles/movie-page.module.css"
 import MOVIES from "@/const/movies.json"
+
+let rating;
 
 export default function MoviePage() {
     return (
@@ -49,14 +53,31 @@ export default function MoviePage() {
 
 // The element containing everything within the movie background image
 function Headline() {
+    const [review, setReview] = useState(null);
 
-    let rating = 0;
+    useEffect(() => {
+        const storedReview = localStorage.getItem("review");
+        if (storedReview) {
+            setReview(JSON.parse(storedReview));
+        }
+    }, []);
 
+    rating = 0;
     MOVIES[0]["reviews"].map((review, i) => (
         rating += parseInt(review["rating"])
     ))
 
-    rating = rating / MOVIES[0]["reviews"].length
+    if (!review) {
+        rating = rating / MOVIES[0]["reviews"].length
+    } else {
+        rating = (rating + review["rating"]) / (MOVIES[0]["reviews"].length + 1)
+    }
+
+    const addToWatchlist = () => {
+        let bookmarkList = []
+        bookmarkList[0] = MOVIES[0]
+        localStorage.setItem("bookmarks", JSON.stringify(bookmarkList))
+    }
 
     return (
         <div className={styles.div} style={{
@@ -103,7 +124,7 @@ function Headline() {
                                                 <TrailerModal />
                                             </Col>
                                             <Col xs={3}>
-                                                <div style={{ marginTop: "2vh", marginLeft: "-5vw", cursor: "pointer" }}>
+                                                <div style={{ marginTop: "2vh", marginLeft: "-5vw", cursor: "pointer" }} onClick={addToWatchlist}>
                                                     <i className="bi bi-bookmark-plus"></i> Add To Watchlist
                                                 </div>
                                             </Col>
@@ -142,6 +163,37 @@ function Headline() {
 
 // Left side of the page minus headline
 function Body() {
+    const [review, setReview] = useState(null);
+
+    useEffect(() => {
+        const storedReview = localStorage.getItem("review");
+        if (storedReview) {
+            setReview(JSON.parse(storedReview));
+        }
+    }, []);
+
+    if (!review) {
+        return (
+            <div>
+                <div style={{ marginTop: "2%" }}>
+                    <h3>Top Actors</h3>
+                    <SimpleSlider />
+                </div>
+                <hr className={styles.hr} />
+                <div className='reviewList' style={{ overflowY: "auto", maxHeight: "90vh" }}>
+                    {MOVIES[0]["reviews"].map((review, i) => (
+                        <ReviewCard
+                            author={review["author"]}
+                            review={review["review"]}
+                            rating={review["rating"]}
+                            image={review["profile-image"]}
+                        />
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div>
             <div style={{ marginTop: "2%" }}>
@@ -149,18 +201,29 @@ function Body() {
                 <SimpleSlider />
             </div>
             <hr className={styles.hr} />
-            <div style={{ overflowY: "auto", maxHeight: "90vh" }}>
+            <div className='reviewList' style={{ overflowY: "auto", maxHeight: "90vh" }}>
+                <ReviewCard
+                    author={review["author"]}
+                    review={review["review"]}
+                    rating={review["rating"]}
+                    image={review["profile-image"]}
+                />
                 {MOVIES[0]["reviews"].map((review, i) => (
-                    <ReviewCard author={review["author"]} review={review["review"]} rating={review["rating"]} image={review["profile-image"]} />
+                    <ReviewCard
+                        author={review["author"]}
+                        review={review["review"]}
+                        rating={review["rating"]}
+                        image={review["profile-image"]}
+                    />
                 ))}
             </div>
-        </div >
-    )
+        </div>
+    );
 }
 
 function ReviewCard({ author, review, rating, image }) {
     return (
-        <Card style={{ marginTop: "2vh" }}>
+        <Card style={{ marginTop: "2vh", marginBottom: "2vh" }}>
             <Card.Header><Image src={image} style={{ width: "2.5vw", height: "5vh", borderRadius: "50%", marginRight: "1vw" }} />  <b style={{ fontSize: "110%" }}>A review by {author} </b></Card.Header>
             <Card.Body>
                 <Card.Title><Chip label={<i className="bi bi-star-fill"><span style={{ marginLeft: "0.5vw" }}>{rating}</span></i>} /></Card.Title>
@@ -263,13 +326,13 @@ function ReviewModal() {
     const handleClose = () => {
         setShow(false)
         let review = document.getElementById("textarea").value
-        console.log()
-        MOVIES[0]["reviews"].push({
+
+        localStorage.setItem("review", JSON.stringify({
             "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
             "author": "eu",
             "review": review,
             "rating": value
-        })
+        }))
     };
     const handleShow = () => setShow(true);
 
