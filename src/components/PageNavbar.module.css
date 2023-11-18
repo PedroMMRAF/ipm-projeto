@@ -29,3 +29,9 @@
 .spacing {
     height: 5em;
 }
+
+.collapse {
+    overflow: hidden;
+    height: 0px;
+    transition: height 0.3s ease-out;
+}

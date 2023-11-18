@@ -1,13 +1,43 @@
+.scrollableHorizontal {
+    display: flex;
+    width: 100%;
+}
+
+.scrollableVertical {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: 100%;
+}
+
 .cardDeckHorizontal,
 .cardDeckVertical {
     -ms-overflow-style: none;
+    display: flex;
+    border-radius: 1em;
+    width: 100%;
 }
 
 .cardDeckVertical {
-    height: 80vh;
+    flex-direction: column;
 }
 
 .cardDeckHorizontal::-webkit-scrollbar,
 .cardDeckVertical::-webkit-scrollbar {
     display: none;
+}
+
+.scrollButton {
+    border-radius: 1em;
+    border: 1px solid var(--bs-gray-500);
+    background-color: var(--bs-white);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.scrollButton:hover {
+    background-color: var(--bs-gray-200);
+}
+
+.scrollableVertical {
+    display: flex;
 }

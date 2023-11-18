@@ -1,70 +1,9 @@
-.card {
-    position: relative;
-    min-width: 200px;
-    max-width: 200px;
-    max-height: 300px;
-    margin-right: 1px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.cardImg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2;
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease;
-    background-color: rgba(0, 0, 0, 0);
-    color: rgba(255, 255, 255, 0);
-    border-radius: 10px;
-}
-
-.overlay:hover {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: rgba(255, 255, 255, 1);
-}
-
-.cardText {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    padding: 10px;
-    font-size: 20px;
-    z-index: 3;
-}
-
-.cardDeck {
-    -ms-overflow-style: none;
-    overflow-y: auto;
-    height: 80vh;
-    margin-left: 200px;
-    transform: scale(1.1);
-}
-
-.cardDeck::-webkit-scrollbar {
-    display: none;
-}
-
-.expandedMovie {
+/* .expandedMovie {
     position: relative;
     top: 0;
     right: 0;
     bottom: 0;
     width: 70%;
-    /* Adjust as needed */
     background: #fff;
     z-index: 9999;
     overflow-y: auto;
@@ -76,58 +15,45 @@
     width: 100%;
     height: auto;
     border-radius: 0;
+} */
+
+.page {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
 }
 
 .map {
-    position: relative;
+    display: flex;
+    flex-direction: row;
     width: 100%;
-    height: 70%;
+    min-height: 50%;
+    flex-grow: 1;
 }
-
-.pageLink {
-    font-size: 20px;
-}
-
-.closeButton {
-    position: relative;
-    bottom: 450px;
-    left: 10px;
-    cursor: pointer;
-}
-
-
-
-  
-  .main-content-shift {
-    margin-left: 25%; /* Adjust the value based on your sidebar width */
-  }
-  
-  .sidebar {
-    transition: width 0.5s;
-  }
-
-  .sidebarLeft {
-    position: absolute;
-    top: 10;
-    left: 20;
-    width: 200px; /* Adjust the width as needed */
-    height: 100%;
-    background-color: #fff; /* Adjust the background color */
-    z-index: 1000;
-    overflow-y: auto; /* Enable vertical scrolling if needed */
-    padding: 0px; /* Adjust padding as needed */
-}
-
-
 
 .sidebarRight {
-    position: absolute;
-    top: 10;
-    right: 0;
-    width: 200px; /* Adjust the width as needed */
+    display: flex;
+    width: fit-content;
+    padding: 2rem;
+}
+
+.button {
     height: 100%;
-    background-color: #fff; /* Adjust the background color */
-    z-index: 1000;
-    overflow-y: auto; /* Enable vertical scrolling if needed */
-    padding: 20px; /* Adjust padding as needed */
+    background-color: var(--bs-gray-200);
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.button:hover {
+    background-color: var(--bs-gray-400);
+}
+
+.button:focus {
+    outline: 2px solid var(--bs-gray-400);
 }

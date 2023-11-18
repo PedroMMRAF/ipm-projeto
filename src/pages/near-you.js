@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Nav, Button } from "react-bootstrap";
 import { InfoWindow } from "@react-google-maps/api";
 
@@ -14,17 +14,39 @@ import PageNavbar from "@/components/PageNavbar";
 
 const center = { lat: 38.66004943847656, lng: -9.203119277954102 };
 
-function SelectedMovie({ selectedMovie, closeMovie }) {
-    if (!selectedMovie) return <></>;
+function AnimatingWidth({ children, condition, style, ...props }) {
+    const ref = useRef(null);
+
+    useEffect(() => {
+        let frameId;
+
+        const handleResize = () => {
+            if (ref.current) {
+                ref.current.style.minWidth = condition
+                    ? [...ref.current.children].reduce((acc, child) => acc + child.clientWidth, 0) + "px"
+                    : "0px";
+            }
+            frameId = requestAnimationFrame(handleResize);
+        };
+
+        handleResize();
+
+        return () => cancelAnimationFrame(frameId);
+    }, [condition]);
 
     return (
-        <>
-            <MovieCard {...selectedMovie} width={300} />
-
-            <a href="/movie-page">
-                <div className={styles.pageLink}>Redirect to Movie Page</div>
-            </a>
-        </>
+        <div
+            ref={ref}
+            style={{
+                overflow: "hidden",
+                width: 0,
+                transition: "min-width 0.2s ease-in-out",
+                ...style,
+            }}
+            {...props}
+        >
+            {children}
+        </div>
     );
 }
 
@@ -32,15 +54,15 @@ export default function NearYouPage() {
     const [infoWindow, setInfoWindow] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [showLocationPopup, setShowLocationPopup] = useState(true);
-    const [leftsidebarOpen, setleftSidebarOpen] = useState(true);
-    const [rightsidebarOpen, setrightSidebarOpen] = useState(false);
-
+    const [leftSidebarOpen, setleftSidebarOpen] = useState(true);
+    const [rightSidebarOpen, setrightSidebarOpen] = useState(false);
 
     const toggleLeftSidebar = () => {
-        setleftSidebarOpen(!leftsidebarOpen);
+        setleftSidebarOpen(!leftSidebarOpen);
     };
+
     const toggleRightSidebar = () => {
-        setrightSidebarOpen(!rightsidebarOpen);
+        setrightSidebarOpen(!rightSidebarOpen);
     };
 
     const locationPopUp = (marker) => {
@@ -62,106 +84,75 @@ export default function NearYouPage() {
     };
 
     const selectMovie = (movie) => {
-        setSelectedMovie(movie);
         moviePopUp(movie);
-        if(selectedMovie ==null)
-        toggleRightSidebar()
-    };
-    const selectMovieFromPin = (movie) => {
         setSelectedMovie(movie);
-        if(selectedMovie ==null)
-        toggleRightSidebar()
+        if (!rightSidebarOpen) toggleRightSidebar();
     };
 
     const closeMovie = () => {
-        setSelectedMovie(null);
-        toggleRightSidebar()
+        toggleRightSidebar();
     };
 
     useEffect(() => {
         if (showLocationPopup) {
-            alert(
-                "In order to use this feature, we need your location. Click OK if you agree.",
-            );
+            alert("In order to use this feature, we need your location. Click OK if you agree.");
             setShowLocationPopup(false);
         }
     }, [showLocationPopup]);
 
     return (
-        <>
-
-
-
+        <div className={styles.page}>
             <title>Movies Near You</title>
+
             <PageNavbar />
-            <Container fluid className="justify-content-md-center">
-                <Row>
-                    <h2 className="text-center">Movies near You</h2>
-                </Row>
 
-                <Row>
-                    <div className={styles.map }>
-                    <Button onClick={toggleLeftSidebar}>
-                            Show {leftsidebarOpen ? "Less" : "More"}...
-                            </Button>
-                        <GoogleMapComponent center={center}>
-                            
-                            {leftsidebarOpen && (<div  className={styles.sidebarLeft}>
-                                {/* Left Sidebar */}
-                                <CardDeck.Vertical
-                                    onMovieClick={selectMovie}
-                                    movies={MOVIES}
-                                />
-                            </div >)}
-                            <CustomMarker
-                                onClick={() => locationPopUp(center)}
-                                color="red"
-                                position={center}
-                            />
-                            {MOVIES.map((movie, index) => (
-                                <CustomMarker
-                                    key={index}
-                                    onClick={() => selectMovieFromPin(movie)}
-                                    color="blue"
-                                    position={movie.marker}
-                                />
-                            ))}
+            {/* <h2 className="text-center">Movies near You</h2> */}
 
-                            {infoWindow && (
-                                <InfoWindow
-                                    position={infoWindow.position}
-                                    onCloseClick={closeInfoWindow}
-                                >
-                                    <div>{infoWindow.content}</div>
-                                </InfoWindow>
-                            )}
+            <div className={styles.map}>
+                <AnimatingWidth condition={leftSidebarOpen}>
+                    <CardDeck.Vertical
+                        style={{ padding: "1rem" }}
+                        cardItems={MOVIES}
+                        childItem={(movie) => <MovieCard {...movie} onClick={() => selectMovie(movie)} />}
+                    />
+                </AnimatingWidth>
 
-                            {rightsidebarOpen && (
-                                <div xs={3} className={styles.sidebarRight}>
-                                    {/* Right Sidebar */}
-                                    <Button variant="danger" onClick={closeMovie}>
-                                        Close Movie
-                                    </Button>
-                                    <SelectedMovie
-                                        selectedMovie={selectedMovie}
-                                        closeMovie={closeMovie}
-                                    />
-                                </div>
-                            )}
-                        </GoogleMapComponent>
+                <button className={styles.button} onClick={toggleLeftSidebar}>
+                    {leftSidebarOpen ? <i className="bi bi-chevron-left"></i> : <i className="bi bi-chevron-right"></i>}
+                </button>
 
+                <GoogleMapComponent center={center} onClick={closeInfoWindow}>
+                    <CustomMarker onClick={() => locationPopUp(center)} color="red" position={center} />
+                    {MOVIES.map((movie, index) => (
+                        <CustomMarker
+                            key={index}
+                            onClick={() => selectMovie(movie)}
+                            color="lightblue"
+                            position={movie.marker}
+                        />
+                    ))}
+                    {infoWindow && (
+                        <InfoWindow position={infoWindow.position} onCloseClick={closeInfoWindow}>
+                            <div>{infoWindow.content}</div>
+                        </InfoWindow>
+                    )}
+                </GoogleMapComponent>
+
+                <AnimatingWidth condition={rightSidebarOpen} style={{ display: "flex" }}>
+                    <button className={styles.button} onClick={closeMovie}>
+                        <i className="bi bi-x-lg"></i>
+                    </button>
+                    <div className={styles.sidebarRight}>
+                        <MovieCard
+                            {...selectedMovie}
+                            width={300}
+                            onClick={() => {
+                                window.location.href = "/movie-page";
+                            }}
+                        />
                     </div>
-
-
-
-                </Row>
-
-
-
-
-
-
-            </Container>
-        </>
+                </AnimatingWidth>
+            </div>
+        </div>
     );
 }

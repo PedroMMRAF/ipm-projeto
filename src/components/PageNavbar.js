@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Collapse from "react-bootstrap/Collapse";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
@@ -9,6 +9,7 @@ import styles from "./PageNavbar.module.css";
 
 import TV_GENRES from "@/const/tv-genres.json";
 import MOVIE_GENRES from "@/const/movie-genres.json";
+import { Form } from "react-bootstrap";
 
 function NavDropdownMultiColumn({ children, ...params }) {
     return (
@@ -42,98 +43,86 @@ function Dropdown({ type, title, genres }) {
     return (
         <NavDropdownMultiColumn title={title} onToggle={() => setIsOpen(false)}>
             <NavDropdownColumn>
-                <NavDropdown.Header className={styles.dropdownHeader}>
-                    Genres
-                </NavDropdown.Header>
+                <NavDropdown.Header className={styles.dropdownHeader}>Genres</NavDropdown.Header>
                 <NavDropdown.Divider className={styles.dropdownDivider} />
                 {visible.map((genre, i) => (
-                    <NavDropdown.Item
-                        key={i}
-                        href={`${baseLink}&genres=${genre}`}
-                    >
+                    <NavDropdown.Item key={i} href={`${baseLink}&genres=${genre}`}>
                         {genre}
                     </NavDropdown.Item>
                 ))}
                 <Collapse in={isOpen}>
                     <div>
                         {hidden.map((genre, i) => (
-                            <NavDropdown.Item
-                                key={i}
-                                href={`${baseLink}&genres=${genre}`}
-                            >
+                            <NavDropdown.Item key={i} href={`${baseLink}&genres=${genre}`}>
                                 {genre}
                             </NavDropdown.Item>
                         ))}
                     </div>
                 </Collapse>
-                <NavDropdown.Item onClick={toggleCollapse}>
-                    Show {isOpen ? "Less" : "More"}...
-                </NavDropdown.Item>
+                <NavDropdown.Item onClick={toggleCollapse}>Show {isOpen ? "Less" : "More"}...</NavDropdown.Item>
             </NavDropdownColumn>
             <NavDropdownColumn>
-                <NavDropdown.Header className={styles.dropdownHeader}>
-                    Trending Topics
-                </NavDropdown.Header>
+                <NavDropdown.Header className={styles.dropdownHeader}>Trending Topics</NavDropdown.Header>
                 <NavDropdown.Divider className={styles.dropdownDivider} />
-                <NavDropdown.Item href={`${baseLink}&sort=new`}>
-                    New {title}
-                </NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=top`}>
-                    Top {title}
-                </NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=throwback`}>
-                    Throwback {title}
-                </NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=trending`}>
-                    Trending {title}
-                </NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=popular`}>
-                    Popular {title}
-                </NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=random`}>
-                    Random {title}
-                </NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=new`}>New {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=top`}>Top {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=throwback`}>Throwback {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=trending`}>Trending {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=popular`}>Popular {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=random`}>Random {title}</NavDropdown.Item>
             </NavDropdownColumn>
         </NavDropdownMultiColumn>
     );
 }
 
 export default function PageNavbar() {
-    let [isOpen, setIsOpen] = useState(false);
+    const [isCollapsed, setCollapsed] = useState(true);
+    const contentRef = useRef(null);
+    const topRef = useRef(null);
+    const navRef = useRef(null);
 
-    const toggleCollapse = (e) => {
-        setIsOpen(!isOpen);
+    const toggleCollapse = () => {
+        setCollapsed(!isCollapsed);
+
+        if (contentRef.current) {
+            contentRef.current.style.height = isCollapsed ? `${contentRef.current.scrollHeight}px` : "0px";
+        }
     };
+
+    useEffect(() => {
+        let animationFrame;
+
+        const synchronizeHeight = () => {
+            if (navRef.current && topRef.current) {
+                topRef.current.style.minHeight = window.getComputedStyle(navRef.current).height;
+                animationFrame = requestAnimationFrame(synchronizeHeight);
+            }
+        };
+
+        synchronizeHeight();
+
+        return () => {
+            cancelAnimationFrame(animationFrame);
+        };
+    }, []);
 
     return (
         <>
-            <div className={styles.spacing}></div>
-            <div className="fixed-top">
+            <div ref={topRef}></div>
+            <div ref={navRef} className="fixed-top">
                 <Navbar bg="light" expand="lg">
                     <Container>
                         <Navbar.Brand href="/">MTVDB</Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse
-                            id="basic-navbar-nav"
-                            className="container justify-content-between"
-                        >
+                        <Navbar.Collapse id="basic-navbar-nav" className="container justify-content-between">
                             <Nav>
-                                <Dropdown
-                                    type="movies"
-                                    title="Movies"
-                                    genres={MOVIE_GENRES}
-                                />
-                                <Dropdown
-                                    type="tv"
-                                    title="TV Shows"
-                                    genres={TV_GENRES}
-                                />
+                                <Dropdown type="movies" title="Movies" genres={MOVIE_GENRES} />
+                                <Dropdown type="tv" title="TV Shows" genres={TV_GENRES} />
                                 <Nav.Link href="/near-you">Near You</Nav.Link>
                             </Nav>
                             <Nav>
                                 <Nav.Link href="#">
-                                    <i className="bi bi-person-circle"></i>{" "}
-                                    Login
+                                    <i className="bi bi-person-circle"></i> Login
                                 </Nav.Link>
                                 <Nav.Link href="#" onClick={toggleCollapse}>
                                     <i className="bi bi-search"></i> Search
@@ -145,20 +134,14 @@ export default function PageNavbar() {
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
-                <div className="bg-light">
-                    <Container>
-                        <Collapse in={isOpen}>
-                            <div className="w-100">
-                                <div className="p-2"></div>
-                                <input
-                                    type="text"
-                                    className="form-control taller-input"
-                                    placeholder="Search for a movie or TV show"
-                                />
-                                <div className="p-2"></div>
-                            </div>
-                        </Collapse>
-                    </Container>
+                <div ref={contentRef} className={"bg-light " + styles.collapse}>
+                    <Form className="container my-3">
+                        <Form.Control
+                            type="text"
+                            className="taller-input"
+                            placeholder="Search for a movie or TV show"
+                        />
+                    </Form>
                 </div>
             </div>
         </>
