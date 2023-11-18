@@ -12,11 +12,8 @@ import {
     Container,
 } from "react-bootstrap";
 
-import ReactDOM from 'react-dom';
-
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import CardDeck from "@/components/CardDeck";
+import ActorCard from "@/components/ActorCard";
 
 import { Rating, Typography, Chip } from "@mui/material";
 
@@ -24,8 +21,6 @@ import PropTypes from "prop-types";
 
 import styles from "@/styles/movie-page.module.css"
 import MOVIES from "@/const/movies.json"
-
-let rating;
 
 export default function MoviePage() {
     return (
@@ -57,7 +52,7 @@ function Headline() {
         }
     }, []);
 
-    rating = 0;
+    let rating = 0;
     MOVIES[0]["reviews"].map((review, i) => (
         rating += parseInt(review["rating"])
     ))
@@ -187,7 +182,7 @@ function Body() {
             <div>
                 <div style={{ marginTop: "2%" }}>
                     <h3>Top Actors</h3>
-                    <SimpleSlider />
+                    <CardDeck.Horizontal cardItems={MOVIES[0]["actors"]} childItem={(actor) => <ActorCard {...actor} />} />
                 </div>
                 <hr className={styles.hr} />
                 <div className='reviewList' style={{ overflowY: "auto", maxHeight: "90vh" }}>
@@ -208,7 +203,7 @@ function Body() {
         <div>
             <div style={{ marginTop: "2%" }}>
                 <h3>Top Actors</h3>
-                <SimpleSlider />
+                <CardDeck.Horizontal cardItems={MOVIES[0]["actors"]} childItem={(actor) => <ActorCard {...actor} />} />
             </div>
             <hr className={styles.hr} />
             <div className='reviewList' style={{ overflowY: "auto", maxHeight: "90vh" }}>
@@ -225,17 +220,9 @@ function Body() {
                         rating={review["rating"]}
                         image={review["profile-image"]}
                     />
-                    <ReviewCard
-                        author={review["author"]}
-                        review={review["review"]}
-                        rating={review["rating"]}
-                        image={review["profile-image"]}
-                    />
                 ))}
             </div>
         </div>
-    );
-        </div >
     );
 }
 
@@ -254,21 +241,6 @@ function ReviewCard({ author, review, rating, image }) {
                     />
                 </Card.Title>
                 <Card.Text>{review}</Card.Text>
-            </Card.Body>
-        </Card>
-    );
-}
-
-// Card containing each actor
-function Actor({ name, character, image }) {
-    return (
-        <Card className={styles.card}>
-            <Card.Img variant="top" src={image} style={{ height: "25vh" }} />
-            <Card.Body>
-                <Card.Title className={styles.title}>{name}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted" style={{ fontSize: "small" }}>
-                    {character}
-                </Card.Subtitle>
             </Card.Body>
         </Card>
     );
@@ -307,33 +279,6 @@ function Sidebody() {
                 </div>
             </Container>
         </div>
-    );
-}
-
-// Slider arrow settings
-function SliderArrow(props) {
-    const { className, style, onClick } = props;
-    return <div className={`${className} ${style.arrow}`} style={{ background: "black" }} onClick={onClick} />;
-}
-
-// Slider with actors
-function SimpleSlider() {
-    var settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 2,
-        nextArrow: <SliderArrow />,
-        prevArrow: <SliderArrow />,
-    };
-
-    return (
-        <Slider {...settings}>
-            {MOVIES[0]["actors"].map((actor, i) => (
-                <Actor name={actor["name"]} character={actor["character"]} image={actor["image"]} />
-            ))}
-        </Slider>
     );
 }
 
