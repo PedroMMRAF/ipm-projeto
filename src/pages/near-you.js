@@ -20,11 +20,7 @@ function SelectedMovie({ selectedMovie, closeMovie }) {
     return (
         <>
             <MovieCard {...selectedMovie} width={300} />
-            <button
-                className={styles.closeButton}
-                onClick={closeMovie}
-                style={{ zIndex: 1000 }}
-            >
+            <button className={styles.closeButton} onClick={closeMovie} style={{ zIndex: 1000 }}>
                 X
             </button>
             <a href="/movie-page">
@@ -71,9 +67,7 @@ export default function NearYouPage() {
 
     useEffect(() => {
         if (showLocationPopup) {
-            alert(
-                "In order to use this feature, we need your location. Click OK if you agree.",
-            );
+            alert("In order to use this feature, we need your location. Click OK if you agree.");
             setShowLocationPopup(false);
         }
     }, [showLocationPopup]);
@@ -82,25 +76,27 @@ export default function NearYouPage() {
         <>
             <title>Movies Near You</title>
             <PageNavbar />
-            <Container fluid className="justify-content-md-center">
+            <Container fluid>
                 <Row>
-                    <h2 className="text-center">Movies near You</h2>
+                    <Col>
+                        <h2 className="text-center">Movies near You</h2>
+                    </Col>
                 </Row>
 
                 <Row>
                     <Col>
                         <CardDeck.Vertical
-                            onMovieClick={selectMovie}
-                            movies={MOVIES}
+                            style={{
+                                marginLeft: "auto",
+                                marginRight: 0,
+                            }}
+                            cardItems={MOVIES}
+                            childItem={(movie) => <MovieCard {...movie} onClick={() => selectMovie(movie)} />}
                         />
                     </Col>
                     <Col xs={1} className={styles.map}>
                         <GoogleMapComponent center={center}>
-                            <CustomMarker
-                                onClick={() => locationPopUp(center)}
-                                color="red"
-                                position={center}
-                            />
+                            <CustomMarker onClick={() => locationPopUp(center)} color="red" position={center} />
                             {MOVIES.map((movie, index) => (
                                 <CustomMarker
                                     key={index}
@@ -111,20 +107,14 @@ export default function NearYouPage() {
                             ))}
 
                             {infoWindow && (
-                                <InfoWindow
-                                    position={infoWindow.position}
-                                    onCloseClick={closeInfoWindow}
-                                >
+                                <InfoWindow position={infoWindow.position} onCloseClick={closeInfoWindow}>
                                     <div>{infoWindow.content}</div>
                                 </InfoWindow>
                             )}
                         </GoogleMapComponent>
                     </Col>
                     <Col className="align-items-center">
-                        <SelectedMovie
-                            selectedMovie={selectedMovie}
-                            closeMovie={closeMovie}
-                        />
+                        <SelectedMovie selectedMovie={selectedMovie} closeMovie={closeMovie} />
                     </Col>
                 </Row>
             </Container>
