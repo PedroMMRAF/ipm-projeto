@@ -45,11 +45,10 @@ const CardDeck = {
             </div>
         );
     },
-    Vertical: ({ className, style = {}, cardItems = [], childItem }) => {
+    Vertical: ({ className, style = {}, cardItems = [], childItem, ...params }) => {
         const containerRef = useRef(null);
 
         // Smooth scrolling with easing
-
         const scroll = (scrollStep) => {
             const container = containerRef.current;
 
@@ -62,7 +61,7 @@ const CardDeck = {
         };
 
         return (
-            <div className={className + " " + styles.scrollableVertical} style={style}>
+            <div {...params} className={styles.scrollableVertical + " " + className} style={style}>
                 <button style={{ marginBottom: "1rem" }} className={styles.scrollButton} onClick={() => scroll(-1)}>
                     <i className="bi bi-arrow-up"></i>
                 </button>

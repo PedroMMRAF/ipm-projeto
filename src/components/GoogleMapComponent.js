@@ -3,7 +3,7 @@ import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
 const containerStyle = {
     width: "100%",
-    height: "85vh",
+    height: "100%",
 };
 const darkMapStyles = [
     {
@@ -42,7 +42,7 @@ const darkMapStyles = [
     },
 ];
 
-export default function GoogleMapComponent({ center, children }) {
+export default function GoogleMapComponent({ center, children, ...props }) {
     return (
         <LoadScript googleMapsApiKey="***REMOVED***">
             <GoogleMap
@@ -52,6 +52,7 @@ export default function GoogleMapComponent({ center, children }) {
                 options={{
                     styles: darkMapStyles,
                 }}
+                {...props}
             >
                 {children}
             </GoogleMap>

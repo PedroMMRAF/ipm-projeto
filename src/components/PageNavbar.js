@@ -94,7 +94,7 @@ export default function PageNavbar() {
 
         const synchronizeHeight = () => {
             if (navRef.current && topRef.current) {
-                topRef.current.style.height = window.getComputedStyle(navRef.current).height;
+                topRef.current.style.minHeight = window.getComputedStyle(navRef.current).height;
                 animationFrame = requestAnimationFrame(synchronizeHeight);
             }
         };

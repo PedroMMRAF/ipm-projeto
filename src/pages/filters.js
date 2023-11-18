@@ -78,12 +78,7 @@ function SearchFilterBox() {
         checkboxesStates[e.target.value][1](e.target.checked);
 
         if (e.target.checked) {
-            params.set(
-                "genres",
-                params.get("genres")
-                    ? `${params.get("genres")},${e.target.value}`
-                    : e.target.value,
-            );
+            params.set("genres", params.get("genres") ? `${params.get("genres")},${e.target.value}` : e.target.value);
         } else {
             params.set(
                 "genres",
@@ -131,34 +126,19 @@ function SearchFilterBox() {
     return (
         <Container style={{ marginLeft: "20px", position: "fixed" }}>
             {
-                <Form
-                    className="d-flex flex-column p-2 border rounded mx-2"
-                    style={{ maxWidth: "350px" }}
-                >
-                    <Form.Label
-                        style={{ fontWeight: "bold" }}
-                        htmlFor="category"
-                    >
+                <Form className="d-flex flex-column p-2 border rounded mx-2" style={{ maxWidth: "350px" }}>
+                    <Form.Label style={{ fontWeight: "bold" }} htmlFor="category">
                         Category
                     </Form.Label>
                     <Form.Group style={{ marginBottom: "10px" }}>
                         <Dropdown>
-                            <Dropdown.Toggle
-                                variant="primary"
-                                id="dropdown-basic"
-                            >
+                            <Dropdown.Toggle variant="primary" id="dropdown-basic">
                                 {type === "movies" ? "Movies" : "TV Shows"}
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item
-                                    onClick={() => changeType("movies")}
-                                >
-                                    Movies
-                                </Dropdown.Item>
-                                <Dropdown.Item onClick={() => changeType("tv")}>
-                                    TV Shows
-                                </Dropdown.Item>
+                                <Dropdown.Item onClick={() => changeType("movies")}>Movies</Dropdown.Item>
+                                <Dropdown.Item onClick={() => changeType("tv")}>TV Shows</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Form.Group>
@@ -167,11 +147,7 @@ function SearchFilterBox() {
                     </label>
                     <Form.Group style={{ marginBottom: "10px" }}>
                         <Dropdown onSelect={changeSort}>
-                            <Dropdown.Toggle
-                                variant="primary"
-                                id="dropdown-basic"
-                                style={{ width: "100%" }}
-                            >
+                            <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
                                 {sort === "new"
                                     ? "Newest"
                                     : sort === "top"
@@ -184,45 +160,27 @@ function SearchFilterBox() {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu style={{ width: "100%" }}>
-                                <Dropdown.Item eventKey="new">
-                                    Newest
-                                </Dropdown.Item>
-                                <Dropdown.Item eventKey="top">
-                                    Best Rating
-                                </Dropdown.Item>
-                                <Dropdown.Item eventKey="throwback">
-                                    Throwback
-                                </Dropdown.Item>
-                                <Dropdown.Item eventKey="popular">
-                                    Most Popular
-                                </Dropdown.Item>
-                                <Dropdown.Item eventKey="trending">
-                                    Trending
-                                </Dropdown.Item>
+                                <Dropdown.Item eventKey="new">Newest</Dropdown.Item>
+                                <Dropdown.Item eventKey="top">Best Rating</Dropdown.Item>
+                                <Dropdown.Item eventKey="throwback">Throwback</Dropdown.Item>
+                                <Dropdown.Item eventKey="popular">Most Popular</Dropdown.Item>
+                                <Dropdown.Item eventKey="trending">Trending</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Form.Group>
 
-                    <Form.Label
-                        style={{ fontWeight: "bold", marginTop: "10px" }}
-                    >
-                        Release year
-                    </Form.Label>
+                    <Form.Label style={{ fontWeight: "bold", marginTop: "10px" }}>Release year</Form.Label>
                     <Form.Group
                         style={{
                             display: "flex",
                             justifyContent: "space-between",
                         }}
                     >
-                        <Form.Label style={{ marginRight: "10px" }}>
-                            From
-                        </Form.Label>
+                        <Form.Label style={{ marginRight: "10px" }}>From</Form.Label>
                         <Form.Control
                             type="text"
                             maxLength="4"
-                            onChange={(event) =>
-                                changeFromYear(event.target.value)
-                            }
+                            onChange={(event) => changeFromYear(event.target.value)}
                             value={fromYear}
                             onKeyPress={(event) => {
                                 if (!/[0-9]/.test(event.key)) {
@@ -231,15 +189,11 @@ function SearchFilterBox() {
                             }}
                             style={{ width: "45%", marginRight: "10%" }}
                         />
-                        <Form.Label style={{ marginRight: "10px" }}>
-                            To
-                        </Form.Label>
+                        <Form.Label style={{ marginRight: "10px" }}>To</Form.Label>
                         <Form.Control
                             type="text"
                             maxLength="4"
-                            onChange={(event) =>
-                                changeToYear(event.target.value)
-                            }
+                            onChange={(event) => changeToYear(event.target.value)}
                             value={toYear}
                             onKeyPress={(event) => {
                                 if (!/[0-9]/.test(event.key)) {
@@ -250,11 +204,7 @@ function SearchFilterBox() {
                         />
                     </Form.Group>
 
-                    <Form.Label
-                        style={{ fontWeight: "bold", marginTop: "10px" }}
-                    >
-                        Genres
-                    </Form.Label>
+                    <Form.Label style={{ fontWeight: "bold", marginTop: "10px" }}>Genres</Form.Label>
                     <Form.Group
                         style={{
                             display: "flex",
@@ -262,26 +212,20 @@ function SearchFilterBox() {
                             flexWrap: "wrap",
                         }}
                     >
-                        {(type === "tv" ? TV_GENRES : MOVIE_GENRES).map(
-                            (genre) => {
-                                return (
-                                    <Form.Check
-                                        key={genre}
-                                        label={genre}
-                                        value={genre}
-                                        onChange={changeGenre}
-                                        checked={checkboxesStates[genre][0]}
-                                    />
-                                );
-                            },
-                        )}
+                        {(type === "tv" ? TV_GENRES : MOVIE_GENRES).map((genre) => {
+                            return (
+                                <Form.Check
+                                    key={genre}
+                                    label={genre}
+                                    value={genre}
+                                    onChange={changeGenre}
+                                    checked={checkboxesStates[genre][0]}
+                                />
+                            );
+                        })}
                     </Form.Group>
 
-                    <Form.Label
-                        style={{ fontWeight: "bold", marginTop: "10px" }}
-                    >
-                        Location
-                    </Form.Label>
+                    <Form.Label style={{ fontWeight: "bold", marginTop: "10px" }}>Location</Form.Label>
                     <Form.Control
                         type="text"
                         value={location}
@@ -290,11 +234,7 @@ function SearchFilterBox() {
                         style={{ width: "100%" }}
                     />
 
-                    <Form.Control
-                        style={{ fontWeight: "bold", marginTop: "10px" }}
-                        type="button"
-                        value="Search"
-                    />
+                    <Form.Control style={{ fontWeight: "bold", marginTop: "10px" }} type="button" value="Search" />
                 </Form>
             }
         </Container>

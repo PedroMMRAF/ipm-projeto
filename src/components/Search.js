@@ -35,12 +35,7 @@ export default function SearchComponent() {
 
     return (
         <div>
-            <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search..."
-            />
+            <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search..." />
 
             <div>
                 {results.length > 0 && (

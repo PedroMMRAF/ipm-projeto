@@ -7,10 +7,7 @@
         "colab": [
             {
                 "name": "Christopher Nolan",
-                "roles": [
-                    "Director,",
-                    " Writer"
-                ]
+                "roles": ["Director,", " Writer"]
             }
         ],
         "trailer": "uYPbbksJxIg",
@@ -71,9 +68,7 @@
         "overview": "The tenth installment in the Fast Saga.",
         "author": {
             "name": "Justin Lin",
-            "roles": [
-                "Director"
-            ]
+            "roles": ["Director"]
         },
         "actors": [
             {
@@ -119,10 +114,7 @@
         "overview": "A film adaptation of the popular horror franchise.",
         "author": {
             "name": "Chris Columbus",
-            "roles": [
-                "Director",
-                "Writer"
-            ]
+            "roles": ["Director", "Writer"]
         },
         "actors": [
             {
@@ -187,10 +179,7 @@
         "overview": "A look at the rise of the radical right in contemporary Germany.",
         "author": {
             "name": "Fatih Akin",
-            "roles": [
-                "Director",
-                "Writer"
-            ]
+            "roles": ["Director", "Writer"]
         },
         "actors": [
             {
