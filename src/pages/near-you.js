@@ -85,11 +85,6 @@ export default function NearYouPage() {
 
     const selectMovie = (movie) => {
         moviePopUp(movie);
-        if (!rightSidebarOpen) toggleRightSidebar();
-    };
-
-    const selectMovieFromPin = (movie) => {
-        moviePopUp(movie);
         setSelectedMovie(movie);
         if (!rightSidebarOpen) toggleRightSidebar();
     };
@@ -131,7 +126,7 @@ export default function NearYouPage() {
                     {MOVIES.map((movie, index) => (
                         <CustomMarker
                             key={index}
-                            onClick={() => selectMovieFromPin(movie)}
+                            onClick={() => selectMovie(movie)}
                             color="lightblue"
                             position={movie.marker}
                         />
