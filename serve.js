@@ -4,8 +4,8 @@ const http = require("http");
 const https = require("https");
 
 const sslOptions = {
-    cert: fs.readFileSync("/etc/letsencrypt/live/nomifactory.bot.nu/fullchain.pem"),
-    key: fs.readFileSync("/etc/letsencrypt/live/nomifactory.bot.nu/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/mtvdb.bot.nu/fullchain.pem"),
+    key: fs.readFileSync("/etc/letsencrypt/live/mtvdb.bot.nu/privkey.pem"),
 };
 
 const app = next({ dev: false, hostname: "localhost", port: 443 });
