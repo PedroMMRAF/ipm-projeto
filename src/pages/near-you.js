@@ -152,6 +152,9 @@ export default function NearYouPage() {
                                     window.location.href = "/movie-page";
                                 }}
                             />
+                            <div style={{ textAlign: "center" }}>
+                            <a href="/moviepage" >Redirect To Movie Page</a >
+                            </div>
                         </div>
                     </div>
                 </AnimatingWidth>
