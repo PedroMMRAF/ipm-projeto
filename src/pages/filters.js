@@ -2,21 +2,61 @@ import React from "react";
 import { Dropdown, Container, Form, Button } from "react-bootstrap";
 
 import PageNavbar from "@/components/PageNavbar";
+import MOVIES from "@/const/movies.json";
+import MovieCard from "@/components/MovieCard";
 
 import TV_GENRES from "@/const/tv-genres.json";
 import MOVIE_GENRES from "@/const/movie-genres.json";
 
+function checkMovieGenre(movie, urlGenres) {
+    if (!urlGenres) {
+        return true;
+    }
+    const movieGenres = movie.genres;
+    for (let genre of urlGenres.split(",")) {
+        if (movieGenres.includes(genre)) {
+            return true;
+        }
+    }
+    return false;
+}
 export default function FiltersPage() {
+    const [activeMovies, setActiveMovies] = React.useState(MOVIES);
+    React.useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get("type") || "movies";
+        const urlGenres = params.get("genres") || "";
+        setActiveMovies(MOVIES.filter((movie) => movie.type === type && checkMovieGenre(movie, urlGenres)));
+    }, []);
     return (
         <>
             <title>Search</title>
             <PageNavbar />
-            <SearchFilterBox />
+            <div style={{ display: 'flex', minWidth: '0' }}>
+                <SearchFilterBox activeMovies={activeMovies} setActiveMovies={setActiveMovies} style={{ flexGrow: 0, flexShrink: 0 }} />
+                <div style={{
+                    flexGrow: 1,
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'flex-start',
+                    marginLeft: 'calc(-45% + 1rem)'
+                }}>
+                    {activeMovies.map((movie) => (
+                        <div style={{ width: 'calc(17% - 1rem)', margin: '0.2rem' }}>
+                            <MovieCard {...movie} onClick={() => {
+                                window.location.href = "/movie-page";
+                            }} />
+                        </div>
+                    ))}
+                </div>
+            </div>
         </>
     );
 }
 
-function SearchFilterBox() {
+
+
+function SearchFilterBox({ activeMovies, setActiveMovies }) {
     const [activeGenres, setActiveGenres] = React.useState({});
 
     const [fromYear, setFromYear] = React.useState("");
@@ -66,7 +106,9 @@ function SearchFilterBox() {
 
         updateUrl(params);
     };
-
+    const changeMovies = (movies) => {
+        setActiveMovies(movies);
+    }
     const changeGenre = (genre) => {
         const params = new URLSearchParams(window.location.search);
 
@@ -155,12 +197,12 @@ function SearchFilterBox() {
                                 {sort === "new"
                                     ? "Newest"
                                     : sort === "top"
-                                      ? "Best Rating"
-                                      : sort === "throwback"
-                                        ? "Throwback"
-                                        : sort === "popular"
-                                          ? "Most Popular"
-                                          : "Trending"}
+                                        ? "Best Rating"
+                                        : sort === "throwback"
+                                            ? "Throwback"
+                                            : sort === "popular"
+                                                ? "Most Popular"
+                                                : "Trending"}
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu style={{ width: "100%" }}>
@@ -220,7 +262,7 @@ function SearchFilterBox() {
 
                     <Form.Control
                         type="button"
-                        onClick={() => window.location.reload()}
+                        onClick={() => { window.location.reload(); }}
                         className="btn btn-primary"
                         value="Search"
                     />
