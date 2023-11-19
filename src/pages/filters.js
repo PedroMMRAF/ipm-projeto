@@ -16,11 +16,8 @@ export default function FiltersPage() {
 }
 
 function SearchFilterBox() {
-    let checkboxesStates = {};
+    const [activeGenres, setActiveGenres] = React.useState({});
 
-    for (let genre of [...MOVIE_GENRES, ...TV_GENRES]) {
-        checkboxesStates[genre] = React.useState(false);
-    }
 
     const [fromYear, setFromYear] = React.useState("");
     const [toYear, setToYear] = React.useState("");
@@ -52,9 +49,7 @@ function SearchFilterBox() {
     const changeType = (value) => {
         setType(value);
 
-        for (let genre of [...MOVIE_GENRES, ...TV_GENRES]) {
-            checkboxesStates[genre][1](false);
-        }
+        setActiveGenres({});
 
         const params = new URLSearchParams(window.location.search);
 
@@ -72,20 +67,24 @@ function SearchFilterBox() {
         updateUrl(params);
     };
 
-    const changeGenre = (e) => {
+    const changeGenre = (genre) => {
         const params = new URLSearchParams(window.location.search);
 
-        checkboxesStates[e.target.value][1](e.target.checked);
 
-        if (e.target.checked) {
-            params.set("genres", params.get("genres") ? `${params.get("genres")},${e.target.value}` : e.target.value);
+        setActiveGenres(prev => ({
+            ...prev,
+            [genre]: !prev[genre]
+        }));
+
+        if (!activeGenres[genre]) {
+            params.set("genres", params.get("genres") ? `${params.get("genres")},${genre}` : genre);
         } else {
             params.set(
                 "genres",
                 params
                     .get("genres")
                     .split(",")
-                    .filter((genre) => genre !== e.target.value)
+                    .filter((genrea) => genrea !== genre)
                     .join(","),
             );
         }
@@ -114,7 +113,10 @@ function SearchFilterBox() {
 
         if (genres) {
             for (let genre of genres.split(",")) {
-                checkboxesStates[genre][1](true);
+                setActiveGenres(prev => ({
+                    ...prev,
+                    [genre]: !prev[genre]
+                }));
             }
         }
         setSort(sort);
@@ -151,12 +153,12 @@ function SearchFilterBox() {
                                 {sort === "new"
                                     ? "Newest"
                                     : sort === "top"
-                                      ? "Best Rating"
-                                      : sort === "throwback"
-                                        ? "Throwback"
-                                        : sort === "popular"
-                                          ? "Most Popular"
-                                          : "Trending"}
+                                        ? "Best Rating"
+                                        : sort === "throwback"
+                                            ? "Throwback"
+                                            : sort === "popular"
+                                                ? "Most Popular"
+                                                : "Trending"}
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu style={{ width: "100%" }}>
@@ -212,17 +214,20 @@ function SearchFilterBox() {
                             flexWrap: "wrap",
                         }}
                     >
-                        {(type === "tv" ? TV_GENRES : MOVIE_GENRES).map((genre) => {
-                            return (
-                                <Form.Check
+                        <div className="d-flex flex-wrap">
+                            {(type === "tv" ? TV_GENRES : MOVIE_GENRES).map(genre => (
+                                <button
                                     key={genre}
-                                    label={genre}
-                                    value={genre}
-                                    onChange={changeGenre}
-                                    checked={checkboxesStates[genre][0]}
-                                />
-                            );
-                        })}
+                                    className={`btn ${activeGenres[genre] ? 'btn-primary' : 'btn-secondary'} m-2`}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        changeGenre(genre);
+                                    }}
+                                >
+                                    {genre}
+                                </button>
+                            ))}
+                        </div>
                     </Form.Group>
 
                     <Form.Label style={{ fontWeight: "bold", marginTop: "10px" }}>Location</Form.Label>
