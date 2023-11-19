@@ -1,6 +1,7 @@
 [
     {
         "title": "Oppenheimer",
+        "year": 2023,
         "genres": [
             "Biography",
             "Drama",
@@ -73,6 +74,7 @@
     },
     {
         "title": "Fast X",
+        "year": 2023,
         "image": "https://www.themoviedb.org/t/p/w220_and_h330_face/fiVW06jE7z9YnO4trhaMEdclSiC.jpg",
         "overview": "The tenth installment in the Fast Saga.",
         "author": {
@@ -125,6 +127,7 @@
     },
     {
         "type": "movies",
+        "year": 2023,
         "genres": [
             "Horror"
         ],
@@ -196,6 +199,7 @@
         ]
     },
     {
+        "year": 2023,
         "type": "movies",
         "genres": [
             "Drama",

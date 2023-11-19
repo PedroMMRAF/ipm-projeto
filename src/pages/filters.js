@@ -8,17 +8,37 @@ import MovieCard from "@/components/MovieCard";
 import TV_GENRES from "@/const/tv-genres.json";
 import MOVIE_GENRES from "@/const/movie-genres.json";
 
-function checkMovieGenre(movie, urlGenres) {
-    if (!urlGenres) {
+function checkMovieGenre(movie, activeGenres) {
+    let isAnyGenreActive = false;
+    for (let [genre, isActive] of Object.entries(activeGenres)) {
+        if (isActive) {
+            isAnyGenreActive = true;
+            break;
+        }
+    }
+    if (!isAnyGenreActive) {
         return true;
     }
     const movieGenres = movie.genres;
-    for (let genre of urlGenres.split(",")) {
+    for (let [genre, isActive] of Object.entries(activeGenres)) {
+        if (!isActive) {
+            continue;
+        }
         if (movieGenres.includes(genre)) {
             return true;
         }
     }
     return false;
+}
+
+function checkYear(movie, fromYear, toYear) {
+    if (!fromYear && !toYear)
+        return true;
+    if (!fromYear)
+        return movie.year <= toYear;
+    if (!toYear)
+        return movie.year >= fromYear;
+    return movie.year >= fromYear && movie.year <= toYear;
 }
 export default function FiltersPage() {
     const [activeMovies, setActiveMovies] = React.useState(MOVIES);
@@ -106,9 +126,6 @@ function SearchFilterBox({ activeMovies, setActiveMovies }) {
 
         updateUrl(params);
     };
-    const changeMovies = (movies) => {
-        setActiveMovies(movies);
-    }
     const changeGenre = (genre) => {
         const params = new URLSearchParams(window.location.search);
 
@@ -131,7 +148,9 @@ function SearchFilterBox({ activeMovies, setActiveMovies }) {
         }
         updateUrl(params);
     };
-
+    const applyFilters = ({ activeGenres }, { type }, { fromYear }, { toYear }) => {
+        setActiveMovies(MOVIES.filter((movie) => movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear)));
+    }
     let baseLink = "/filters";
 
     // Change the URL without reloading the page
@@ -262,7 +281,7 @@ function SearchFilterBox({ activeMovies, setActiveMovies }) {
 
                     <Form.Control
                         type="button"
-                        onClick={() => { window.location.reload(); }}
+                        onClick={() => { applyFilters({ activeGenres }, { type }, { fromYear }, { toYear }); }}
                         className="btn btn-primary"
                         value="Search"
                     />
