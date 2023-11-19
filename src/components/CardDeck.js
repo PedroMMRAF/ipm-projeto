@@ -1,14 +1,12 @@
 import React, { useRef } from "react";
 
-import MovieCard from "@/components/MovieCard";
+import { Button } from "react-bootstrap";
 
 import styles from "./CardDeck.module.css";
 
 const CardDeck = {
     Horizontal: ({ cardItems = [], childItem }) => {
         const containerRef = useRef(null);
-
-        // Smooth scrolling with easing
 
         const scroll = (scrollStep) => {
             const container = containerRef.current;
@@ -24,9 +22,14 @@ const CardDeck = {
 
         return (
             <div className={styles.scrollableHorizontal}>
-                <button style={{ marginRight: "1rem" }} className={styles.scrollButton} onClick={() => scroll(-1)}>
-                    <i className="bi bi-arrow-left"></i>
-                </button>
+                <Button
+                    variant="secondary"
+                    style={{ marginRight: "1rem" }}
+                    className={styles.scrollButton}
+                    onClick={() => scroll(-1)}
+                >
+                    <i className="bi bi-chevron-left"></i>
+                </Button>
                 <div ref={containerRef} className={"p-0 overflow-auto " + styles.cardDeckHorizontal}>
                     {cardItems.map((element, index) => (
                         <div
@@ -39,16 +42,20 @@ const CardDeck = {
                         </div>
                     ))}
                 </div>
-                <button style={{ marginLeft: "1rem" }} className={styles.scrollButton} onClick={() => scroll(1)}>
-                    <i className="bi bi-arrow-right"></i>
-                </button>
+                <Button
+                    variant="secondary"
+                    style={{ marginLeft: "1rem" }}
+                    className={styles.scrollButton}
+                    onClick={() => scroll(1)}
+                >
+                    <i className="bi bi-chevron-right"></i>
+                </Button>
             </div>
         );
     },
     Vertical: ({ className, style = {}, cardItems = [], childItem, ...params }) => {
         const containerRef = useRef(null);
 
-        // Smooth scrolling with easing
         const scroll = (scrollStep) => {
             const container = containerRef.current;
 
@@ -62,9 +69,14 @@ const CardDeck = {
 
         return (
             <div {...params} className={styles.scrollableVertical + " " + className} style={style}>
-                <button style={{ marginBottom: "1rem" }} className={styles.scrollButton} onClick={() => scroll(-1)}>
-                    <i className="bi bi-arrow-up"></i>
-                </button>
+                <Button
+                    variant="secondary"
+                    style={{ marginBottom: "1rem" }}
+                    className={styles.scrollButton}
+                    onClick={() => scroll(-1)}
+                >
+                    <i className="bi bi-chevron-up"></i>
+                </Button>
                 <div ref={containerRef} className={"p-0 overflow-auto " + styles.cardDeckVertical}>
                     {cardItems.map((element, index) => (
                         <div
@@ -77,9 +89,14 @@ const CardDeck = {
                         </div>
                     ))}
                 </div>
-                <button style={{ marginTop: "1rem" }} className={styles.scrollButton} onClick={() => scroll(1)}>
-                    <i className="bi bi-arrow-down"></i>
-                </button>
+                <Button
+                    variant="secondary"
+                    style={{ marginTop: "1rem" }}
+                    className={styles.scrollButton}
+                    onClick={() => scroll(1)}
+                >
+                    <i className="bi bi-chevron-down"></i>
+                </Button>
             </div>
         );
     },

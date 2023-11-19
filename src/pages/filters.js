@@ -1,9 +1,10 @@
 import React from "react";
-import { Container, Form } from "react-bootstrap";
-import MOVIE_GENRES from "@/const/movie-genres.json";
-import TV_GENRES from "@/const/tv-genres.json";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Container, Form, Button } from "react-bootstrap";
+
 import PageNavbar from "@/components/PageNavbar";
+
+import TV_GENRES from "@/const/tv-genres.json";
+import MOVIE_GENRES from "@/const/movie-genres.json";
 
 export default function FiltersPage() {
     return (
@@ -17,7 +18,6 @@ export default function FiltersPage() {
 
 function SearchFilterBox() {
     const [activeGenres, setActiveGenres] = React.useState({});
-
 
     const [fromYear, setFromYear] = React.useState("");
     const [toYear, setToYear] = React.useState("");
@@ -70,10 +70,9 @@ function SearchFilterBox() {
     const changeGenre = (genre) => {
         const params = new URLSearchParams(window.location.search);
 
-
-        setActiveGenres(prev => ({
+        setActiveGenres((prev) => ({
             ...prev,
-            [genre]: !prev[genre]
+            [genre]: !prev[genre],
         }));
 
         if (!activeGenres[genre]) {
@@ -113,9 +112,9 @@ function SearchFilterBox() {
 
         if (genres) {
             for (let genre of genres.split(",")) {
-                setActiveGenres(prev => ({
+                setActiveGenres((prev) => ({
                     ...prev,
-                    [genre]: !prev[genre]
+                    [genre]: !prev[genre],
                 }));
             }
         }
@@ -125,14 +124,18 @@ function SearchFilterBox() {
         setLocation(location);
     }, []);
 
+    const numericInputFilter = (event) => {
+        if (!/[0-9]/.test(event.key) && event.key !== "Backspace") {
+            event.preventDefault();
+        }
+    };
+
     return (
         <Container style={{ marginTop: "10px", marginLeft: "20px" }}>
             {
                 <Form className="d-flex flex-column p-2 border rounded mx-2" style={{ maxWidth: "350px" }}>
-                    <Form.Label style={{ fontWeight: "bold" }} htmlFor="category">
-                        Category
-                    </Form.Label>
-                    <Form.Group style={{ marginBottom: "10px" }}>
+                    <Form.Label className="fw-bold mb-1">Category</Form.Label>
+                    <Form.Group className="mb-3">
                         <Dropdown>
                             <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
                                 {type === "movies" ? "Movies" : "TV Shows"}
@@ -144,21 +147,20 @@ function SearchFilterBox() {
                             </Dropdown.Menu>
                         </Dropdown>
                     </Form.Group>
-                    <Form.Label htmlFor="sort" style={{ fontWeight: "bold" }}>
-                        Sort By
-                    </Form.Label>
-                    <Form.Group style={{ marginBottom: "10px" }} >
+
+                    <Form.Label className="mb-1 fw-bold">Sort By</Form.Label>
+                    <Form.Group className="mb-3">
                         <Dropdown onSelect={changeSort}>
                             <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
                                 {sort === "new"
                                     ? "Newest"
                                     : sort === "top"
-                                        ? "Best Rating"
-                                        : sort === "throwback"
-                                            ? "Throwback"
-                                            : sort === "popular"
-                                                ? "Most Popular"
-                                                : "Trending"}
+                                      ? "Best Rating"
+                                      : sort === "throwback"
+                                        ? "Throwback"
+                                        : sort === "popular"
+                                          ? "Most Popular"
+                                          : "Trending"}
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu style={{ width: "100%" }}>
@@ -169,81 +171,59 @@ function SearchFilterBox() {
                                 <Dropdown.Item eventKey="trending">Trending</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-
                     </Form.Group>
 
-                    <Form.Label style={{ fontWeight: "bold", marginTop: "10px" }}>Release year</Form.Label>
-                    <Form.Group
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <Form.Label style={{ marginRight: "10px" }}>From</Form.Label>
+                    <Form.Label className="mb-1 fw-bold">Release year</Form.Label>
+                    <Form.Group className="mb-3 align-items-center d-flex">
+                        <Form.Label className="me-2 my-0">From</Form.Label>
                         <Form.Control
                             type="text"
-                            maxLength="4"
                             onChange={(event) => changeFromYear(event.target.value)}
                             value={fromYear}
-                            onKeyPress={(event) => {
-                                if (!/[0-9]/.test(event.key)) {
-                                    event.preventDefault();
-                                }
-                            }}
-                            style={{ width: "45%", marginRight: "10%" }}
+                            onKeyDown={numericInputFilter}
                         />
 
-                        <Form.Label style={{ marginRight: "10px" }}>To</Form.Label>
+                        <Form.Label className="ms-3 me-2 my-0">To</Form.Label>
                         <Form.Control
                             type="text"
-                            maxLength="4"
                             onChange={(event) => changeToYear(event.target.value)}
                             value={toYear}
-                            onKeyPress={(event) => {
-                                if (!/[0-9]/.test(event.key)) {
-                                    event.preventDefault();
-                                }
-                            }}
-                            style={{ width: "45%", marginRight: "10%" }}
+                            onKeyDown={numericInputFilter}
                         />
                     </Form.Group>
-                    <hr />
 
-                    <Form.Label style={{ fontWeight: "bold", marginTop: "-10px" }}>Genres</Form.Label>
-                    <Form.Group
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            flexWrap: "wrap",
-                        }}
-                    >
-                        <div className="d-flex flex-wrap">
-                            {(type === "tv" ? TV_GENRES : MOVIE_GENRES).map(genre => (
-                                <button
-                                    key={genre}
-                                    className={`btn ${activeGenres[genre] ? 'btn-primary' : 'btn-secondary'} m-2`}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        changeGenre(genre);
-                                    }}
-                                >
-                                    {genre}
-                                </button>
-                            ))}
-                        </div>
+                    <Form.Label className="mb-1 fw-bold">Genres</Form.Label>
+                    <Form.Group className="mb-3 d-flex flex-wrap">
+                        {(type === "tv" ? TV_GENRES : MOVIE_GENRES).map((genre) => (
+                            <Button
+                                key={genre}
+                                variant={activeGenres[genre] ? "primary" : "secondary"}
+                                className="m-1 flex-fill"
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    changeGenre(genre);
+                                }}
+                            >
+                                {genre}
+                            </Button>
+                        ))}
                     </Form.Group>
-                    <hr />
 
-                    <Form.Label style={{ fontWeight: "bold", marginTop: "-10px" }}>Location</Form.Label>
+                    <Form.Label className="mb-1 fw-bold">Location</Form.Label>
                     <Form.Control
+                        className="mb-3"
                         type="text"
                         value={location}
                         onChange={(event) => changeLocation(event.target.value)}
                         placeholder="Location"
-                        style={{ width: "100%" }}
                     />
 
-                    <Form.Control style={{ fontWeight: "bold", marginTop: "15px" }} onClick={() => window.location.reload()} className="btn btn-primary" type="button" value="Search" />
+                    <Form.Control
+                        type="button"
+                        onClick={() => window.location.reload()}
+                        className="btn btn-primary"
+                        value="Search"
+                    />
                 </Form>
             }
         </Container>
