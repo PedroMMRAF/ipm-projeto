@@ -46,7 +46,15 @@ export default function FiltersPage() {
         const params = new URLSearchParams(window.location.search);
         const type = params.get("type") || "movies";
         const urlGenres = params.get("genres") || "";
-        setActiveMovies(MOVIES.filter((movie) => movie.type === type && checkMovieGenre(movie, urlGenres)));
+        const toYear = params.get("to") || "";
+        const fromYear = params.get("from") || "";
+        let activeGenres = {};
+        if (urlGenres) {
+            for (let genre of urlGenres.split(",")) {
+                activeGenres[genre] = true;
+            }
+        }
+        setActiveMovies(MOVIES.filter((movie) => movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear)));
     }, []);
     return (
         <>

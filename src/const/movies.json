@@ -3,8 +3,7 @@
         "title": "Oppenheimer",
         "year": 2023,
         "genres": [
-            "Biography",
-            "Drama",
+            "Thriller",
             "History"
         ],
         "image": "https://www.themoviedb.org/t/p/w220_and_h330_face/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
@@ -85,7 +84,8 @@
         },
         "type": "movies",
         "genres": [
-            "Action"
+            "Action",
+            "Adventure"
         ],
         "actors": [
             {
