@@ -126,7 +126,7 @@ function SearchFilterBox() {
     }, []);
 
     return (
-        <Container style={{ marginLeft: "20px", position: "fixed" }}>
+        <Container style={{ marginTop: "10px", marginLeft: "20px" }}>
             {
                 <Form className="d-flex flex-column p-2 border rounded mx-2" style={{ maxWidth: "350px" }}>
                     <Form.Label style={{ fontWeight: "bold" }} htmlFor="category">
@@ -169,6 +169,7 @@ function SearchFilterBox() {
                                 <Dropdown.Item eventKey="trending">Trending</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
+
                     </Form.Group>
 
                     <Form.Label style={{ fontWeight: "bold", marginTop: "10px" }}>Release year</Form.Label>
@@ -191,6 +192,8 @@ function SearchFilterBox() {
                             }}
                             style={{ width: "45%", marginRight: "10%" }}
                         />
+                        <hr />
+
                         <Form.Label style={{ marginRight: "10px" }}>To</Form.Label>
                         <Form.Control
                             type="text"
@@ -205,6 +208,7 @@ function SearchFilterBox() {
                             style={{ width: "45%", marginRight: "10%" }}
                         />
                     </Form.Group>
+                    <hr />
 
                     <Form.Label style={{ fontWeight: "bold", marginTop: "10px" }}>Genres</Form.Label>
                     <Form.Group
@@ -229,6 +233,7 @@ function SearchFilterBox() {
                             ))}
                         </div>
                     </Form.Group>
+                    <hr />
 
                     <Form.Label style={{ fontWeight: "bold", marginTop: "10px" }}>Location</Form.Label>
                     <Form.Control
