@@ -65,12 +65,12 @@ export default function FiltersPage() {
                 <div style={{
                     flexGrow: 1,
                     display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'flex-start',
-                    marginLeft: 'calc(-45% + 1rem)'
+                    flexWrap: 'nowrap',
+                    justifyContent: "space-between",
+                    marginLeft: 'calc(-60% + 1rem)'
                 }}>
                     {activeMovies.map((movie) => (
-                        <div style={{ width: 'calc(17% - 1rem)', margin: '0.2rem' }}>
+                        <div style={{ width: 'calc(16% - 1rem)', margin: '0.2rem' }}>
                             <MovieCard {...movie} onClick={() => {
                                 window.location.href = "/movie-page";
                             }} />
