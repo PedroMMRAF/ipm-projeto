@@ -6,13 +6,29 @@ import PageNavbar from "@/components/PageNavbar";
 
 import MOVIES from "@/const/movies.json";
 
+import styles from "@/styles/index.module.css";
+
 export default function HomePage() {
     return (
         <>
             <PageNavbar />
             <title>MTVDB</title>
+            <div
+                className={styles.banner}
+                onClick={() => {
+                    window.location.href = "/near-you";
+                }}
+            >
+                <div className={styles.titles}>
+                    <h1>MTVDB</h1>
+                    <h3>The Movie and TV Database</h3>
+                    <h5>
+                        <a href="/near-you">Check movies near you!</a>
+                    </h5>
+                </div>
+                <img src="/light_map.svg" />
+            </div>
             <Container className="my-5">
-                <h2>Welcome to the modern movie database!</h2>
                 <hr></hr>
                 <h3>Trending Movies</h3>
                 <CardDeck.Horizontal cardItems={MOVIES} childItem={(movie) => <MovieCard {...movie} />} />

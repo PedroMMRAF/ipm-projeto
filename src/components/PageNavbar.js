@@ -183,16 +183,19 @@ export default function PageNavbar() {
                                 <Nav.Link href="#" onClick={toggleCollapse}>
                                     <i className="bi bi-search"></i> Search
                                 </Nav.Link>
-                                <Nav.Link href="#">
-                                    <i className="bi bi-list"></i> More
-                                </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
 
                 <div ref={contentRef} className={"bg-light " + styles.collapse}>
-                    <Form className="container my-3">
+                    <Form
+                        className="container my-3"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            window.location.href = `/filters?search=${e.target[0].value}`;
+                        }}
+                    >
                         <Form.Control
                             type="text"
                             className="taller-input"

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown, Container, Form, Button } from "react-bootstrap";
 
-import PageNavbar from "@/components/PageNavbar";
-import MOVIES from "@/const/movies.json";
 import MovieCard from "@/components/MovieCard";
+import PageNavbar from "@/components/PageNavbar";
 
+import TV from "@/const/tv-shows.json";
 import TV_GENRES from "@/const/tv-genres.json";
+import MOVIES from "@/const/movies.json";
 import MOVIE_GENRES from "@/const/movie-genres.json";
+
+const MEDIA = [...MOVIES, ...TV];
 
 function checkMovieGenre(movie, activeGenres) {
     let isAnyGenreActive = false;
@@ -58,7 +61,7 @@ export default function FiltersPage() {
             }
         }
         setActiveMovies(
-            MOVIES.filter(
+            MEDIA.filter(
                 (movie) =>
                     movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear),
             ),
@@ -170,7 +173,7 @@ function SearchFilterBox({ setActiveMovies }) {
 
     const applyFilters = ({ activeGenres }, { type }, { fromYear }, { toYear }) => {
         setActiveMovies(
-            MOVIES.filter(
+            MEDIA.filter(
                 (movie) =>
                     movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear),
             ),

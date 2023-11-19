@@ -6,6 +6,8 @@ const containerStyle = {
     width: "100%",
     height: "100%",
 };
+
+/** @type {require("@react-google-maps/api").MapTypeStyle}*/
 const darkMapStyles = [
     {
         stylers: [
