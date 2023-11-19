@@ -41,7 +41,7 @@ function checkYear(movie, fromYear, toYear) {
     return movie.year >= fromYear && movie.year <= toYear;
 }
 export default function FiltersPage() {
-    const [activeMovies, setActiveMovies] = React.useState(MOVIES);
+    const [activeMovies, setActiveMovies] = React.useState([]);
     React.useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const type = params.get("type") || "movies";
