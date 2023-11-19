@@ -10,15 +10,18 @@ import MOVIE_GENRES from "@/const/movie-genres.json";
 
 function checkMovieGenre(movie, activeGenres) {
     let isAnyGenreActive = false;
+
     for (let [genre, isActive] of Object.entries(activeGenres)) {
         if (isActive) {
             isAnyGenreActive = true;
             break;
         }
     }
+
     if (!isAnyGenreActive) {
         return true;
     }
+
     const movieGenres = movie.genres;
     for (let [genre, isActive] of Object.entries(activeGenres)) {
         if (!isActive) {
@@ -28,20 +31,20 @@ function checkMovieGenre(movie, activeGenres) {
             return true;
         }
     }
+
     return false;
 }
 
 function checkYear(movie, fromYear, toYear) {
-    if (!fromYear && !toYear)
-        return true;
-    if (!fromYear)
-        return movie.year <= toYear;
-    if (!toYear)
-        return movie.year >= fromYear;
+    if (!fromYear && !toYear) return true;
+    if (!fromYear) return movie.year <= toYear;
+    if (!toYear) return movie.year >= fromYear;
     return movie.year >= fromYear && movie.year <= toYear;
 }
+
 export default function FiltersPage() {
     const [activeMovies, setActiveMovies] = React.useState([]);
+
     React.useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const type = params.get("type") || "movies";
@@ -54,26 +57,34 @@ export default function FiltersPage() {
                 activeGenres[genre] = true;
             }
         }
-        setActiveMovies(MOVIES.filter((movie) => movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear)));
+        setActiveMovies(
+            MOVIES.filter(
+                (movie) =>
+                    movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear),
+            ),
+        );
     }, []);
+
     return (
         <>
             <title>Search</title>
             <PageNavbar />
-            <div style={{ display: 'flex', minWidth: '0' }}>
-                <SearchFilterBox activeMovies={activeMovies} setActiveMovies={setActiveMovies} style={{ flexGrow: 0, flexShrink: 0 }} />
-                <div style={{
-                    flexGrow: 1,
-                    display: 'flex',
-                    flexWrap: 'nowrap',
-                    justifyContent: "space-between",
-                    marginLeft: 'calc(-60% + 1rem)'
-                }}>
+            <div style={{ display: "flex" }}>
+                <div style={{ flexShrink: 0 }}>
+                    <SearchFilterBox setActiveMovies={setActiveMovies} />
+                </div>
+                <div
+                    className="mt-2"
+                    style={{ flexGrow: 4, display: "flex", flexWrap: "wrap", alignContent: "flex-start" }}
+                >
                     {activeMovies.map((movie) => (
-                        <div style={{ width: 'calc(16% - 1rem)', margin: '0.2rem' }}>
-                            <MovieCard {...movie} onClick={() => {
-                                window.location.href = "/movie-page";
-                            }} />
+                        <div style={{ margin: "1rem" }}>
+                            <MovieCard
+                                {...movie}
+                                onClick={() => {
+                                    window.location.href = "/movie-page";
+                                }}
+                            />
                         </div>
                     ))}
                 </div>
@@ -82,9 +93,7 @@ export default function FiltersPage() {
     );
 }
 
-
-
-function SearchFilterBox({ activeMovies, setActiveMovies }) {
+function SearchFilterBox({ setActiveMovies }) {
     const [activeGenres, setActiveGenres] = React.useState({});
 
     const [fromYear, setFromYear] = React.useState("");
@@ -157,8 +166,13 @@ function SearchFilterBox({ activeMovies, setActiveMovies }) {
         updateUrl(params);
     };
     const applyFilters = ({ activeGenres }, { type }, { fromYear }, { toYear }) => {
-        setActiveMovies(MOVIES.filter((movie) => movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear)));
-    }
+        setActiveMovies(
+            MOVIES.filter(
+                (movie) =>
+                    movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear),
+            ),
+        );
+    };
     let baseLink = "/filters";
 
     // Change the URL without reloading the page
@@ -200,101 +214,101 @@ function SearchFilterBox({ activeMovies, setActiveMovies }) {
     };
 
     return (
-        <Container style={{ marginTop: "10px", marginLeft: "20px" }}>
-            {
-                <Form className="d-flex flex-column p-2 border rounded mx-2" style={{ maxWidth: "350px" }}>
-                    <Form.Label className="fw-bold mb-1">Category</Form.Label>
-                    <Form.Group className="mb-3">
-                        <Dropdown>
-                            <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
-                                {type === "movies" ? "Movies" : "TV Shows"}
-                            </Dropdown.Toggle>
+        <Container className="ms-4 mt-4 ps-0">
+            <Form className="p-2 m-0 d-flex flex-column border rounded" style={{ maxWidth: "350px" }}>
+                <Form.Label className="fw-bold mb-1">Category</Form.Label>
+                <Form.Group className="mb-3">
+                    <Dropdown>
+                        <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
+                            {type === "movies" ? "Movies" : "TV Shows"}
+                        </Dropdown.Toggle>
 
-                            <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => changeType("movies")}>Movies</Dropdown.Item>
-                                <Dropdown.Item onClick={() => changeType("tv")}>TV Shows</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Form.Group>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => changeType("movies")}>Movies</Dropdown.Item>
+                            <Dropdown.Item onClick={() => changeType("tv")}>TV Shows</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Form.Group>
 
-                    <Form.Label className="mb-1 fw-bold">Sort By</Form.Label>
-                    <Form.Group className="mb-3">
-                        <Dropdown onSelect={changeSort}>
-                            <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
-                                {sort === "new"
-                                    ? "Newest"
-                                    : sort === "top"
-                                        ? "Best Rating"
-                                        : sort === "throwback"
-                                            ? "Throwback"
-                                            : sort === "popular"
-                                                ? "Most Popular"
-                                                : "Trending"}
-                            </Dropdown.Toggle>
+                <Form.Label className="mb-1 fw-bold">Sort By</Form.Label>
+                <Form.Group className="mb-3">
+                    <Dropdown onSelect={changeSort}>
+                        <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
+                            {sort === "new"
+                                ? "Newest"
+                                : sort === "top"
+                                  ? "Best Rating"
+                                  : sort === "throwback"
+                                    ? "Throwback"
+                                    : sort === "popular"
+                                      ? "Most Popular"
+                                      : "Trending"}
+                        </Dropdown.Toggle>
 
-                            <Dropdown.Menu style={{ width: "100%" }}>
-                                <Dropdown.Item eventKey="new">Newest</Dropdown.Item>
-                                <Dropdown.Item eventKey="top">Best Rating</Dropdown.Item>
-                                <Dropdown.Item eventKey="throwback">Throwback</Dropdown.Item>
-                                <Dropdown.Item eventKey="popular">Most Popular</Dropdown.Item>
-                                <Dropdown.Item eventKey="trending">Trending</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Form.Group>
+                        <Dropdown.Menu style={{ width: "100%" }}>
+                            <Dropdown.Item eventKey="new">Newest</Dropdown.Item>
+                            <Dropdown.Item eventKey="top">Best Rating</Dropdown.Item>
+                            <Dropdown.Item eventKey="throwback">Throwback</Dropdown.Item>
+                            <Dropdown.Item eventKey="popular">Most Popular</Dropdown.Item>
+                            <Dropdown.Item eventKey="trending">Trending</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Form.Group>
 
-                    <Form.Label className="mb-1 fw-bold">Release year</Form.Label>
-                    <Form.Group className="mb-3 align-items-center d-flex">
-                        <Form.Label className="me-2 my-0">From</Form.Label>
-                        <Form.Control
-                            type="text"
-                            onChange={(event) => changeFromYear(event.target.value)}
-                            value={fromYear}
-                            onKeyDown={numericInputFilter}
-                        />
-
-                        <Form.Label className="ms-3 me-2 my-0">To</Form.Label>
-                        <Form.Control
-                            type="text"
-                            onChange={(event) => changeToYear(event.target.value)}
-                            value={toYear}
-                            onKeyDown={numericInputFilter}
-                        />
-                    </Form.Group>
-
-                    <Form.Label className="mb-1 fw-bold">Genres</Form.Label>
-                    <Form.Group className="mb-3 d-flex flex-wrap">
-                        {(type === "tv" ? TV_GENRES : MOVIE_GENRES).map((genre) => (
-                            <Button
-                                key={genre}
-                                variant={activeGenres[genre] ? "primary" : "secondary"}
-                                className="m-1 flex-fill"
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    changeGenre(genre);
-                                }}
-                            >
-                                {genre}
-                            </Button>
-                        ))}
-                    </Form.Group>
-
-                    <Form.Label className="mb-1 fw-bold">Location</Form.Label>
+                <Form.Label className="mb-1 fw-bold">Release year</Form.Label>
+                <Form.Group className="mb-3 align-items-center d-flex">
+                    <Form.Label className="me-2 my-0">From</Form.Label>
                     <Form.Control
-                        className="mb-3"
                         type="text"
-                        value={location}
-                        onChange={(event) => changeLocation(event.target.value)}
-                        placeholder="Location"
+                        onChange={(event) => changeFromYear(event.target.value)}
+                        value={fromYear}
+                        onKeyDown={numericInputFilter}
                     />
 
+                    <Form.Label className="ms-3 me-2 my-0">To</Form.Label>
                     <Form.Control
-                        type="button"
-                        onClick={() => { applyFilters({ activeGenres }, { type }, { fromYear }, { toYear }); }}
-                        className="btn btn-primary"
-                        value="Search"
+                        type="text"
+                        onChange={(event) => changeToYear(event.target.value)}
+                        value={toYear}
+                        onKeyDown={numericInputFilter}
                     />
-                </Form>
-            }
+                </Form.Group>
+
+                <Form.Label className="mb-1 fw-bold">Genres</Form.Label>
+                <Form.Group className="mb-3 d-flex flex-wrap">
+                    {(type === "tv" ? TV_GENRES : MOVIE_GENRES).map((genre) => (
+                        <Button
+                            key={genre}
+                            variant={activeGenres[genre] ? "primary" : "secondary"}
+                            className="m-1 flex-fill"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                changeGenre(genre);
+                            }}
+                        >
+                            {genre}
+                        </Button>
+                    ))}
+                </Form.Group>
+
+                <Form.Label className="mb-1 fw-bold">Location</Form.Label>
+                <Form.Control
+                    className="mb-3"
+                    type="text"
+                    value={location}
+                    onChange={(event) => changeLocation(event.target.value)}
+                    placeholder="Location"
+                />
+
+                <Form.Control
+                    type="button"
+                    onClick={() => {
+                        applyFilters({ activeGenres }, { type }, { fromYear }, { toYear });
+                    }}
+                    className="btn btn-primary"
+                    value="Search"
+                />
+            </Form>
         </Container>
     );
 }
