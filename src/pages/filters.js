@@ -134,7 +134,7 @@ function SearchFilterBox() {
                     </Form.Label>
                     <Form.Group style={{ marginBottom: "10px" }}>
                         <Dropdown>
-                            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                            <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
                                 {type === "movies" ? "Movies" : "TV Shows"}
                             </Dropdown.Toggle>
 
@@ -144,10 +144,10 @@ function SearchFilterBox() {
                             </Dropdown.Menu>
                         </Dropdown>
                     </Form.Group>
-                    <label htmlFor="sort" style={{ fontWeight: "bold" }}>
+                    <Form.Label htmlFor="sort" style={{ fontWeight: "bold" }}>
                         Sort By
-                    </label>
-                    <Form.Group style={{ marginBottom: "10px" }}>
+                    </Form.Label>
+                    <Form.Group style={{ marginBottom: "10px" }} >
                         <Dropdown onSelect={changeSort}>
                             <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
                                 {sort === "new"
@@ -192,7 +192,6 @@ function SearchFilterBox() {
                             }}
                             style={{ width: "45%", marginRight: "10%" }}
                         />
-                        <hr />
 
                         <Form.Label style={{ marginRight: "10px" }}>To</Form.Label>
                         <Form.Control
@@ -210,7 +209,7 @@ function SearchFilterBox() {
                     </Form.Group>
                     <hr />
 
-                    <Form.Label style={{ fontWeight: "bold", marginTop: "10px" }}>Genres</Form.Label>
+                    <Form.Label style={{ fontWeight: "bold", marginTop: "-10px" }}>Genres</Form.Label>
                     <Form.Group
                         style={{
                             display: "flex",
@@ -235,7 +234,7 @@ function SearchFilterBox() {
                     </Form.Group>
                     <hr />
 
-                    <Form.Label style={{ fontWeight: "bold", marginTop: "10px" }}>Location</Form.Label>
+                    <Form.Label style={{ fontWeight: "bold", marginTop: "-10px" }}>Location</Form.Label>
                     <Form.Control
                         type="text"
                         value={location}
@@ -244,7 +243,7 @@ function SearchFilterBox() {
                         style={{ width: "100%" }}
                     />
 
-                    <Form.Control style={{ fontWeight: "bold", marginTop: "10px" }} type="button" value="Search" />
+                    <Form.Control style={{ fontWeight: "bold", marginTop: "15px" }} onClick={() => window.location.reload()} className="btn btn-primary" type="button" value="Search" />
                 </Form>
             }
         </Container>
