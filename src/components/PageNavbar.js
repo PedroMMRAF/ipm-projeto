@@ -9,7 +9,7 @@ import styles from "./PageNavbar.module.css";
 
 import TV_GENRES from "@/const/tv-genres.json";
 import MOVIE_GENRES from "@/const/movie-genres.json";
-import { Form } from "react-bootstrap";
+import { Form,Button,Modal } from "react-bootstrap";
 
 function NavDropdownMultiColumn({ children, ...params }) {
     return (
@@ -64,12 +64,12 @@ function Dropdown({ type, title, genres }) {
             <NavDropdownColumn>
                 <NavDropdown.Header className={styles.dropdownHeader}>Trending Topics</NavDropdown.Header>
                 <NavDropdown.Divider className={styles.dropdownDivider} />
-                <NavDropdown.Item href={`${baseLink}&sort=new`}>New {title}</NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=top`}>Top {title}</NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=throwback`}>Throwback {title}</NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=trending`}>Trending {title}</NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=popular`}>Popular {title}</NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=random`}>Random {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=new`}><i class="bi bi-newspaper"></i>New {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=top`}><i class="bi bi-fire"></i>Top {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=throwback`}><i class="bi bi-archive-fill"></i>Throwback {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=trending`}><i class="bi bi-ticket-detailed"></i> Trending {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=popular`}><i class="bi bi-film"></i>Popular {title}</NavDropdown.Item>
+                <NavDropdown.Item href={`${baseLink}&sort=random`}><i class="bi bi-collection-fill"></i>Random {title}</NavDropdown.Item>
             </NavDropdownColumn>
         </NavDropdownMultiColumn>
     );
@@ -80,7 +80,81 @@ export default function PageNavbar() {
     const contentRef = useRef(null);
     const topRef = useRef(null);
     const navRef = useRef(null);
-
+    const logOutref= useRef(null);
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [loggedIn, setloggedIn] = useState(false);
+    const [showLogOut, setShowLogOut] = useState(false);
+    const LoginModal = ({ show, handleClose }) => {
+        const [username, setUsername] = useState('');
+        const [password, setPassword] = useState('');
+      
+        const handleLogin = () => {
+          setloggedIn(true);
+          console.log('Logging in with:', username, password);
+          // Close the modal after login
+          handleClose();
+        };
+        
+      
+        return (
+          <Modal show={show} onHide={handleClose} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Login</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group controlId="formUsername">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter your username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </Form.Group>
+      
+                <Form.Group controlId="formPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Form.Group>
+      
+                <Button variant="primary" onClick={handleLogin}>
+                  Login
+                </Button>
+              </Form>
+            </Modal.Body>
+          </Modal>
+        );
+      };
+      const handleShowLoginModal = () => {
+        if(!loggedIn){
+        setShowLoginModal(true);
+        console.log("TOOO");
+        }
+      };
+      const toggleCollapseLogOut = () => {
+        setShowLogOut(!showLogOut);
+        console.log(showLogOut)
+        if (logOutref.current) {
+            logOutref.current.style.height = showLogOut ? `${logOutref.current.scrollHeight}px` : "0px";
+          
+        }
+      }
+      const handleCloseShowLogOut = () => {
+        setShowLogOut(false);
+        setloggedIn(false);
+        toggleCollapseLogOut();
+      }
+    
+      const handleCloseLoginModal = () => {
+        setShowLoginModal(false);
+      
+      };
     const toggleCollapse = () => {
         setCollapsed(!isCollapsed);
 
@@ -121,8 +195,8 @@ export default function PageNavbar() {
                                 <Nav.Link href="/near-you">Near You</Nav.Link>
                             </Nav>
                             <Nav>
-                                <Nav.Link href="#">
-                                    <i className="bi bi-person-circle"></i> Login
+                                <Nav.Link href="#" onClick={loggedIn ? toggleCollapseLogOut : handleShowLoginModal}>
+                                    <i className="bi bi-person-circle"></i> {loggedIn ? "Account" : "Login"}
                                 </Nav.Link>
                                 <Nav.Link href="#" onClick={toggleCollapse}>
                                     <i className="bi bi-search"></i> Search
@@ -143,6 +217,10 @@ export default function PageNavbar() {
                         />
                     </Form>
                 </div>
+                  <div ref={logOutref} className={"bg-light " + styles.collapse}>
+                  <Button onClick={handleCloseShowLogOut}>Log Out</Button> 
+                </div>
+                {(showLoginModal && <LoginModal show={showLoginModal} handleClose={handleCloseLoginModal} />)}
             </div>
         </>
     );
