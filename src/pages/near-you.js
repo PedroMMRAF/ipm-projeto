@@ -143,13 +143,16 @@ export default function NearYouPage() {
                         <i className="bi bi-x-lg"></i>
                     </button>
                     <div className={styles.sidebarRight}>
-                        <MovieCard
-                            {...selectedMovie}
-                            width={300}
-                            onClick={() => {
-                                window.location.href = "/movie-page";
-                            }}
-                        />
+                        <div>
+                            <h2 className="text-center mb-3">Movie Details</h2>
+                            <MovieCard
+                                {...selectedMovie}
+                                style={{ width: "300px" }}
+                                onClick={() => {
+                                    window.location.href = "/movie-page";
+                                }}
+                            />
+                        </div>
                     </div>
                 </AnimatingWidth>
             </div>
