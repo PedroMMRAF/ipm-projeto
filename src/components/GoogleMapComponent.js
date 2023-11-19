@@ -1,6 +1,6 @@
 // components/GoogleMap.js
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
-import { googleMapsApiKey } from "@/const/config.json";
+import config from "@/const/config.json";
 
 const containerStyle = {
     width: "100%",
@@ -45,7 +45,7 @@ const darkMapStyles = [
 
 export default function GoogleMapComponent({ center, children, ...props }) {
     return (
-        <LoadScript googleMapsApiKey={googleMapsApiKey}>
+        <LoadScript googleMapsApiKey={config.googleMapsApiKey}>
             <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={center}
