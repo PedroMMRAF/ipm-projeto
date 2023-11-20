@@ -47,16 +47,19 @@ function checkYear(movie, fromYear, toYear) {
 function checkSearch(movie, search) {
     if (!search)
         return true;
-    if (movie.title.toLowerCase().includes(search.toLowerCase()))
+    search = search.toLowerCase();
+    if (movie.title.toLowerCase().includes(search))
         return true;
-    for (let actor of movie.actors) {
-        if (actor.name.toLowerCase().includes(search.toLowerCase()) || actor.character.toLowerCase().includes(search.toLowerCase()))
+
+    for (let actor of movie.actors)
+        if (actor.name.toLowerCase().includes(search) || actor.name.toLowerCase() === search || actor.character.toLowerCase().includes(search) || actor.character.toLowerCase() === search)
             return true;
-    }
+
     for (let writer of movie.writer)
-        if (writer.toLowerCase().includes(search.toLowerCase()))
+        if (writer.toLowerCase().includes(search) || writer.toLowerCase() === search)
             return true;
-    if (movie.director && movie.director.toLowerCase().includes(search.toLowerCase()))
+
+    if (movie.director && (movie.director.toLowerCase().includes(search) || movie.director.toLowerCase() === search))
         return true;
 
     return false;
