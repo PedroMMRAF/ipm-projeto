@@ -68,6 +68,14 @@ function checkType(movie, type) {
     if (type === "All") return true;
     return movie.type === type;
 }
+function checkLocation(movie, location) {
+    if (!location)
+        return true;
+    location = location.toLowerCase();
+    if (movie.country.toLowerCase().includes(location) || movie.country.toLowerCase() === location)
+        return true;
+    return false;
+}
 export default function FiltersPage() {
     const [activeMovies, setActiveMovies] = useState([]);
 
@@ -78,6 +86,7 @@ export default function FiltersPage() {
         const toYear = params.get("to") || "";
         const fromYear = params.get("from") || "";
         const search = params.get("search") || "";
+        const location = params.get("location") || "";
         let activeGenres = {};
         if (urlGenres) {
             for (let genre of urlGenres.split(",")) {
@@ -87,7 +96,7 @@ export default function FiltersPage() {
         setActiveMovies(
             MEDIA.filter(
                 (movie) =>
-                    checkType(movie, type) && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search)
+                    checkType(movie, type) && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search) && checkLocation(movie, location)
             ),
         );
     }, []);
@@ -201,11 +210,11 @@ function SearchFilterBox({ setActiveMovies }) {
         updateUrl(params);
     };
 
-    const applyFilters = ({ activeGenres }, { type }, { fromYear }, { toYear }, { search }) => {
+    const applyFilters = ({ activeGenres }, { type }, { fromYear }, { toYear }, { search }, { location }) => {
         setActiveMovies(
             MEDIA.filter(
                 (movie) =>
-                    checkType(movie, type) && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search)
+                    checkType(movie, type) && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search) && checkLocation(movie, location)
             ),
         );
     };
@@ -352,7 +361,7 @@ function SearchFilterBox({ setActiveMovies }) {
                 <Form.Control
                     type="button"
                     onClick={() => {
-                        applyFilters({ activeGenres }, { type }, { fromYear }, { toYear }, { search });
+                        applyFilters({ activeGenres }, { type }, { fromYear }, { toYear }, { search }, { location });
                     }}
                     className="btn btn-primary"
                     value="Apply Filters"
