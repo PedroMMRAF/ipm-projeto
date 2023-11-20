@@ -44,7 +44,17 @@ function checkYear(movie, fromYear, toYear) {
     if (!toYear) return movie.year >= fromYear;
     return movie.year >= fromYear && movie.year <= toYear;
 }
-
+function checkSearch(movie, search) {
+    if (!search)
+        return true;
+    if (movie.title.toLowerCase().includes(search.toLowerCase()))
+        return true;
+    for (let actor of movie.actors) {
+        if (actor.name.toLowerCase().includes(search.toLowerCase()) || actor.character.toLowerCase().includes(search.toLowerCase()))
+            return true;
+    }
+    return false;
+}
 export default function FiltersPage() {
     const [activeMovies, setActiveMovies] = useState([]);
 
@@ -54,6 +64,7 @@ export default function FiltersPage() {
         const urlGenres = params.get("genres") || "";
         const toYear = params.get("to") || "";
         const fromYear = params.get("from") || "";
+        const search = params.get("search") || "";
         let activeGenres = {};
         if (urlGenres) {
             for (let genre of urlGenres.split(",")) {
@@ -63,7 +74,7 @@ export default function FiltersPage() {
         setActiveMovies(
             MEDIA.filter(
                 (movie) =>
-                    movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear),
+                    movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search)
             ),
         );
     }, []);
@@ -98,7 +109,7 @@ export default function FiltersPage() {
 
 function SearchFilterBox({ setActiveMovies }) {
     const [activeGenres, setActiveGenres] = useState({});
-
+    const [search, setSearch] = useState("");
     const [fromYear, setFromYear] = useState("");
     const [toYear, setToYear] = useState("");
     const [location, setLocation] = useState("");
@@ -147,7 +158,13 @@ function SearchFilterBox({ setActiveMovies }) {
 
         updateUrl(params);
     };
+    const changeSearch = (value) => {
+        const params = new URLSearchParams(window.location.search);
+        setSearch(value);
+        params.set("search", value);
 
+        updateUrl(params);
+    };
     const changeGenre = (genre) => {
         const params = new URLSearchParams(window.location.search);
 
@@ -171,11 +188,11 @@ function SearchFilterBox({ setActiveMovies }) {
         updateUrl(params);
     };
 
-    const applyFilters = ({ activeGenres }, { type }, { fromYear }, { toYear }) => {
+    const applyFilters = ({ activeGenres }, { type }, { fromYear }, { toYear }, { search }) => {
         setActiveMovies(
             MEDIA.filter(
                 (movie) =>
-                    movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear),
+                    movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search)
             ),
         );
     };
@@ -197,7 +214,7 @@ function SearchFilterBox({ setActiveMovies }) {
         const from = params.get("from") || "";
         const to = params.get("to") || "";
         const location = params.get("location") || "";
-
+        const search = params.get("search") || "";
         setType(type);
 
         if (genres) {
@@ -212,6 +229,7 @@ function SearchFilterBox({ setActiveMovies }) {
         setFromYear(from);
         setToYear(to);
         setLocation(location);
+        setSearch(search);
     }, []);
 
     const numericInputFilter = (event) => {
@@ -223,6 +241,14 @@ function SearchFilterBox({ setActiveMovies }) {
     return (
         <Container className="ms-4 mt-4 ps-0">
             <Form className="p-2 m-0 d-flex flex-column border rounded" style={{ maxWidth: "350px" }}>
+                <Form.Label className="mb-1 fw-bold">Search</Form.Label>
+                <Form.Control
+                    className="mb-3"
+                    type="text"
+                    value={search}
+                    onChange={(event) => changeSearch(event.target.value)}
+                    placeholder="Search"
+                />
                 <Form.Label className="fw-bold mb-1">Category</Form.Label>
                 <Form.Group className="mb-3">
                     <Dropdown>
@@ -310,7 +336,7 @@ function SearchFilterBox({ setActiveMovies }) {
                 <Form.Control
                     type="button"
                     onClick={() => {
-                        applyFilters({ activeGenres }, { type }, { fromYear }, { toYear });
+                        applyFilters({ activeGenres }, { type }, { fromYear }, { toYear }, { search });
                     }}
                     className="btn btn-primary"
                     value="Search"

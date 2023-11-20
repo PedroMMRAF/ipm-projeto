@@ -22,7 +22,9 @@ import PropTypes from "prop-types";
 
 import styles from "@/styles/movie-page.module.css"
 import MOVIES from "@/const/movies.json"
+import TV from "@/const/tv-shows.json"
 
+const MEDIA = [...MOVIES, ...TV];
 
 export default function MoviePage() {
 
@@ -33,7 +35,7 @@ export default function MoviePage() {
         const fetchData = async () => {
             const params = new URLSearchParams(location.search);
             const title = params.get("title")
-            const foundMovie = MOVIES.find(movie => movie.title === title);
+            const foundMovie = MEDIA.find(movie => movie.title === title);
             setMovie(foundMovie);
             setLoading(false);
         };
