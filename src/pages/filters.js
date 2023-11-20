@@ -293,6 +293,7 @@ function SearchFilterBox({ setActiveMovies }) {
                     <Form.Label className="me-2 my-0">From</Form.Label>
                     <Form.Control
                         type="text"
+                        maxLength={4}
                         onChange={(event) => changeFromYear(event.target.value)}
                         value={fromYear}
                         onKeyDown={numericInputFilter}
@@ -301,6 +302,7 @@ function SearchFilterBox({ setActiveMovies }) {
                     <Form.Label className="ms-3 me-2 my-0">To</Form.Label>
                     <Form.Control
                         type="text"
+                        maxLength={4}
                         onChange={(event) => changeToYear(event.target.value)}
                         value={toYear}
                         onKeyDown={numericInputFilter}
