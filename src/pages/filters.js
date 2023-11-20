@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Dropdown, Container, Form, Button } from "react-bootstrap";
 
-import PageNavbar from "@/components/PageNavbar";
-import MOVIES from "@/const/movies.json";
 import MovieCard from "@/components/MovieCard";
+import PageNavbar from "@/components/PageNavbar";
 
+import TV from "@/const/tv-shows.json";
 import TV_GENRES from "@/const/tv-genres.json";
+import MOVIES from "@/const/movies.json";
 import MOVIE_GENRES from "@/const/movie-genres.json";
+
+const MEDIA = [...MOVIES, ...TV];
 
 function checkMovieGenre(movie, activeGenres) {
     let isAnyGenreActive = false;
@@ -43,9 +46,9 @@ function checkYear(movie, fromYear, toYear) {
 }
 
 export default function FiltersPage() {
-    const [activeMovies, setActiveMovies] = React.useState([]);
+    const [activeMovies, setActiveMovies] = useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const type = params.get("type") || "movies";
         const urlGenres = params.get("genres") || "";
@@ -58,7 +61,7 @@ export default function FiltersPage() {
             }
         }
         setActiveMovies(
-            MOVIES.filter(
+            MEDIA.filter(
                 (movie) =>
                     movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear),
             ),
@@ -94,14 +97,14 @@ export default function FiltersPage() {
 }
 
 function SearchFilterBox({ setActiveMovies }) {
-    const [activeGenres, setActiveGenres] = React.useState({});
+    const [activeGenres, setActiveGenres] = useState({});
 
-    const [fromYear, setFromYear] = React.useState("");
-    const [toYear, setToYear] = React.useState("");
-    const [location, setLocation] = React.useState("");
+    const [fromYear, setFromYear] = useState("");
+    const [toYear, setToYear] = useState("");
+    const [location, setLocation] = useState("");
 
-    let [type, setType] = React.useState("movies");
-    let [sort, setSort] = React.useState("popular");
+    let [type, setType] = useState("movies");
+    let [sort, setSort] = useState("popular");
 
     const changeFromYear = (value) => {
         setFromYear(value);
@@ -123,6 +126,7 @@ function SearchFilterBox({ setActiveMovies }) {
         params.set("location", value);
         updateUrl(params);
     };
+
     const changeType = (value) => {
         setType(value);
 
@@ -143,6 +147,7 @@ function SearchFilterBox({ setActiveMovies }) {
 
         updateUrl(params);
     };
+
     const changeGenre = (genre) => {
         const params = new URLSearchParams(window.location.search);
 
@@ -165,14 +170,16 @@ function SearchFilterBox({ setActiveMovies }) {
         }
         updateUrl(params);
     };
+
     const applyFilters = ({ activeGenres }, { type }, { fromYear }, { toYear }) => {
         setActiveMovies(
-            MOVIES.filter(
+            MEDIA.filter(
                 (movie) =>
                     movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear),
             ),
         );
     };
+
     let baseLink = "/filters";
 
     // Change the URL without reloading the page
@@ -182,7 +189,7 @@ function SearchFilterBox({ setActiveMovies }) {
     };
 
     // Update the page with the URL parameters
-    React.useEffect(() => {
+    useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const type = params.get("type") || "movies";
         const genres = params.get("genres") || "";
@@ -234,15 +241,15 @@ function SearchFilterBox({ setActiveMovies }) {
                 <Form.Group className="mb-3">
                     <Dropdown onSelect={changeSort}>
                         <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
-                            {sort === "new"
-                                ? "Newest"
-                                : sort === "top"
-                                    ? "Best Rating"
-                                    : sort === "throwback"
-                                        ? "Throwback"
-                                        : sort === "popular"
-                                            ? "Most Popular"
-                                            : "Trending"}
+                            {
+                                {
+                                    new: "Newest",
+                                    top: "Best Rating",
+                                    throwback: "Throwback",
+                                    popular: "Most Popular",
+                                    trending: "Trending",
+                                }[sort]
+                            }
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu style={{ width: "100%" }}>
