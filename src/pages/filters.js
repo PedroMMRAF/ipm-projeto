@@ -53,6 +53,9 @@ function checkSearch(movie, search) {
         if (actor.name.toLowerCase().includes(search.toLowerCase()) || actor.character.toLowerCase().includes(search.toLowerCase()))
             return true;
     }
+    for (let writer of movie.writer)
+        if (writer.toLowerCase().includes(search.toLowerCase()))
+            return true;
     return false;
 }
 export default function FiltersPage() {
