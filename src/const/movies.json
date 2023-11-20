@@ -177,10 +177,6 @@
         "imdbID": "tt11858890",
         "type": "movies",
         "dvd": "N/A",
-        "marker": {
-            "lat": 0,
-            "lng": 0
-        },
         "box-office": "$39,600,241",
         "budget": "$80,000,000.00",
         "production": "N/A",
