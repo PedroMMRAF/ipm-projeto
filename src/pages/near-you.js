@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Row, Col, Nav, Button } from "react-bootstrap";
+import { Container, Row, Col, Nav, Button, Modal, Form } from "react-bootstrap";
 import { InfoWindow } from "@react-google-maps/api";
-
+import { useNavigate } from 'react-router-dom';
 import styles from "@/styles/near-you.module.css";
 
 import CardDeck from "@/components/CardDeck";
@@ -50,12 +50,26 @@ function AnimatingWidth({ children, condition, style, ...props }) {
     );
 }
 
+
 export default function NearYouPage() {
     const [infoWindow, setInfoWindow] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [showLocationPopup, setShowLocationPopup] = useState(true);
     const [leftSidebarOpen, setleftSidebarOpen] = useState(true);
     const [rightSidebarOpen, setrightSidebarOpen] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const Movies= MOVIES.filter(movie => movie.marker!=undefined )
+
+    const handleAgree = () => {
+
+        setShowModal(false);
+    };
+
+    const handleDisagree = () => {
+
+        window.location.href = "/";
+    };
+
 
     const toggleLeftSidebar = () => {
         setleftSidebarOpen(!leftSidebarOpen);
@@ -92,19 +106,38 @@ export default function NearYouPage() {
     const closeMovie = () => {
         toggleRightSidebar();
     };
-
     useEffect(() => {
-        if (showLocationPopup) {
-            alert("In order to use this feature, we need your location. Click OK if you agree.");
-            setShowLocationPopup(false);
+        if (!showModal) {
+          setShowModal(true);
         }
-    }, [showLocationPopup]);
+      }, []);
+   
 
     return (
         <div className={styles.page}>
             <title>Movies Near You</title>
-
+            
             <PageNavbar />
+            
+            <Modal show={showModal} centered>
+                <Modal.Header >
+                    <Modal.Title>Location Permission</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Label className="p-0 m-2">
+                            In order to use this feature, we need your location. Click Agree if you agree.
+                        </Form.Label>
+
+                    </Form>
+                    <button className="mt-3 btn btn-primary" onClick={handleDisagree}>
+                        Disagree
+                    </button>
+                    <button className="mt-3 ms-1 btn btn-primary" onClick={handleAgree}>
+                        Agree
+                    </button>
+                </Modal.Body>
+            </Modal>
 
             {/* <h2 className="text-center">Movies near You</h2> */}
 
@@ -112,8 +145,10 @@ export default function NearYouPage() {
                 <AnimatingWidth condition={leftSidebarOpen}>
                     <CardDeck.Vertical
                         style={{ padding: "1rem" }}
-                        cardItems={MOVIES}
-                        childItem={(movie) => <MovieCard {...movie} onClick={() => selectMovie(movie)} />}
+                        cardItems={Movies}
+                        childItem={(movie) => 
+                        <MovieCard {...movie} onClick={() => selectMovie(movie)} />}
+                    
                     />
                 </AnimatingWidth>
 
@@ -153,12 +188,15 @@ export default function NearYouPage() {
                                 }}
                             />
                             <div style={{ textAlign: "center" }}>
-                                <a href="/moviepage" >Redirect To Movie Page</a >
+                                <Button onClick={() => {
+                                    window.location.href = `/movie-page?title=${selectedMovie.title}`;
+                                }} >Redirect To Movie Page</Button>
                             </div>
                         </div>
                     </div>
                 </AnimatingWidth>
             </div>
+
         </div>
     );
 }
