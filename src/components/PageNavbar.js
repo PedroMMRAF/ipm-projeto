@@ -68,7 +68,7 @@ function Dropdown({ type, title, genres }) {
                     <i class="bi bi-fire"></i> Top {title}
                 </NavDropdown.Item>
                 <NavDropdown.Item href={`${baseLink}&sort=throwback`}>
-                    <i class="bi bi-archive-fill"></i> Throwback {title}
+                <i class="bi bi-rewind-btn-fill"></i>Throwback {title}
                 </NavDropdown.Item>
                 <NavDropdown.Item href={`${baseLink}&sort=trending`}>
                     <i class="bi bi-ticket-detailed"></i> Trending {title}
