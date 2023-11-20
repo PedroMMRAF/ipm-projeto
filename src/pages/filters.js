@@ -56,6 +56,9 @@ function checkSearch(movie, search) {
     for (let writer of movie.writer)
         if (writer.toLowerCase().includes(search.toLowerCase()))
             return true;
+    if (movie.director && movie.director.toLowerCase().includes(search.toLowerCase()))
+        return true;
+
     return false;
 }
 export default function FiltersPage() {
