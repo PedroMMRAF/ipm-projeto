@@ -1,6 +1,6 @@
 import styles from "./MovieCard.module.css";
 
-export default function MovieCard({ className, title, image, onClick = () => {}, width = "200px" }) {
+export default function MovieCard({ className, title, poster, onClick = () => { }, width = "200px" }) {
     return (
         <div
             className={className + " " + styles.card}
@@ -10,7 +10,7 @@ export default function MovieCard({ className, title, image, onClick = () => {},
                 height: `calc(${width} * 1.5)`,
             }}
         >
-            <img className={styles.cardImg} src={image} alt={title} />
+            <img className={styles.cardImg} src={poster} alt={title} />
             <div className={styles.overlay}>
                 <div className={styles.cardText}>{title}</div>
             </div>

@@ -1,37 +1,32 @@
 [
     {
         "title": "Oppenheimer",
-        "year": 2023,
+        "year": "2023",
+        "rated": "R",
+        "released": "21 Jul 2023",
+        "runtime": "180 min",
+        "trailer": "uYPbbksJxIg",
         "genres": [
-            "Thriller",
+            "Biography",
+            "Drama",
             "History"
         ],
-        "image": "https://www.themoviedb.org/t/p/w220_and_h330_face/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
-        "quote": "The world forever changes.",
-        "overview": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
-        "colab": [
-            {
-                "name": "Christopher Nolan",
-                "roles": [
-                    "Director,",
-                    " Writer"
-                ]
-            }
+        "director": "Christopher Nolan",
+        "writer": [
+            "Christopher Nolan",
+            "Kai Bird",
+            "Martin Sherwin"
         ],
-        "trailer": "uYPbbksJxIg",
-        "poster": "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
-        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg",
-        "cover": "linear-gradient(to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84))",
         "actors": [
             {
                 "name": "Cillian Murphy",
                 "character": "J. Robert Oppenheimer",
-                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/3DZAf9CwXmfV2HZOEdqeZAGTndV.jpg"
+                "image": "https://image.tmdb.org/t/p/w138_and_h175_face/3DZAf9CwXmfV2HZOEdqeZAGTndV.jpg"
             },
             {
                 "name": "Emily Blunt",
                 "character": "Kitty Oppenheimer",
-                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/nPJXaRMvu1vh3COG16GzmdsBySQ.jpg"
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/xDc01ud6ZtaJFQWg8YfffFlUBdY.jpg"
             },
             {
                 "name": "Matt Damon",
@@ -39,237 +34,899 @@
                 "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/At3JgvaNeEN4Z4ESKlhhes85Xo3.jpg"
             },
             {
-                "name": "Robert Downey Jr.",
+                "name": "Matt Damon",
                 "character": "Lewis Strauss",
                 "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/im9SAqJPZKEbVZGmjXuLI4O7RvM.jpg"
             },
             {
-                "name": "Florence Pugh",
+                "name": "Matt Damon",
                 "character": "Jean Tatlock",
-                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/421cSReX2Fktldac8SyY2k0yLwY.jpg"
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/ogoAeJyLzam5m3JvBFg6vwI8p0I.jpg"
             },
             {
-                "name": "Josh Hartnett",
+                "name": "Matt Damon",
                 "character": "Ernest Lawrence",
                 "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/dCfu2EN7FjISACcjilaJu7evwEc.jpg"
             }
         ],
+        "plot": "The story of American scientist, J. Robert Oppenheimer, and his role in the development of the atomic bomb.",
+        "quote": "Now I am become death, the destroyer of worlds.",
+        "language": "English, German, Italian",
+        "country": "United States, United Kingdom",
+        "awards": "2 wins & 1 nomination",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_SX300.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg",
+        "cover": "linear-gradient(to right, rgba(31.5, 10.5, 10.5, 1) calc((50vw - 170px) - 340px), rgba(31.5, 10.5, 10.5, 0.84) 50%, rgba(31.5, 10.5, 10.5, 0.84) 100%)",
+        "reviews": [
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Internet Movie Database",
+                "review": "Uma review",
+                "rating": "4"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Rotten Tomatoes",
+                "review": "Uma review",
+                "rating": "3.3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Metacritic",
+                "review": "Uma review",
+                "rating": "2.5"
+            }
+        ],
+        "metascore": "88",
+        "imdbRating": "8.5",
+        "imdbVotes": "471,059",
+        "imdbID": "tt15398776",
+        "type": "movies",
+        "dvd": "N/A",
         "marker": {
             "lat": 38.6739,
             "lng": -9.166215
         },
-        "reviews": [
-            {
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
-            }
-        ],
-        "status": "Released",
-        "original-language": "English",
+        "box-office": "$324,281,160",
         "budget": "$100,000,000.00",
-        "revenue": "$948,900,000.00",
-        "type": "movies"
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
     },
     {
-        "title": "Fast X",
-        "year": 2023,
-        "image": "https://www.themoviedb.org/t/p/w220_and_h330_face/fiVW06jE7z9YnO4trhaMEdclSiC.jpg",
-        "overview": "The tenth installment in the Fast Saga.",
-        "author": {
-            "name": "Justin Lin",
-            "roles": [
-                "Director"
-            ]
-        },
-        "type": "movies",
+        "title": "The Creator",
+        "year": "2023",
+        "rated": "PG-13",
+        "released": "29 Sep 2023",
+        "runtime": "133 min",
+        "trailer": "ex3C1-5Dhb8",
         "genres": [
             "Action",
-            "Adventure"
+            "Adventure",
+            "Drama"
+        ],
+        "director": "Gareth Edwards",
+        "writer": [
+            "Gareth Edwards",
+            "Chris Weitz"
         ],
         "actors": [
             {
-                "name": "Vin Diesel",
-                "character": "Dominic Toretto"
+                "name": "John David Washington",
+                "character": "Joshua",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/qoOp8XvZ4v7B0C9ZmtoRCl9CDSO.jpg"
             },
             {
-                "name": "Michelle Rodriguez",
-                "character": "Letty Ortiz"
+                "name": "Madeleine Yuna Voyles",
+                "character": "Alphie",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/mLKvNuCJSgyK0WdLd4ogO81sOO1.jpg"
             },
             {
-                "name": "Jordana Brewster",
-                "character": "Mia Toretto"
+                "name": "Gemma Chan",
+                "character": "Maya",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/lm2FKwj2zO8ZsqMNFHm4KMtlNlM.jpg"
             },
             {
-                "name": "Tyrese Gibson",
-                "character": "Roman Pearce"
+                "name": "Allison Janney",
+                "character": "Colonel Howell",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/cDcB8mKP1GiIeoM3Qe7GIucs0iv.jpg"
             },
             {
-                "name": "Ludacris",
-                "character": "Tej Parker"
+                "name": "Ken Watanabe",
+                "character": "Harun",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/w2t30L5Cmr34myAaUobLoSgsLfS.jpg"
             },
             {
-                "name": "Nathalie Emmanuel",
-                "character": "Ramsey"
+                "name": "Sturgill Simpson",
+                "character": "Drew",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/bpS4YRGyPKcgNjSu6pnsMnVRRv8.jpg"
             }
         ],
-        "marker": {
-            "lat": 38.728175,
-            "lng": -9.140576
-        },
+        "plot": "Against the backdrop of a war between humans and robots with artificial intelligence, a former soldier finds the secret weapon, a robot in the form of a young child.",
+        "quote": " Then we’re the same. We can’t go to heaven, because you’re not good. And I’m not a person.",
+        "language": "English",
+        "country": "United States",
+        "awards": "N/A",
+        "poster": "https://m.media-amazon.com/images/M/MV5BNDUyNTIzNDQtYTZmMi00M2FlLTgyZjUtYWViZWNhMDYzMjE4XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/kjQBrc00fB2RjHZB3PGR4w9ibpz.jpg",
+        "cover": "linear-gradient(to right, rgba(220.5, 199.5, 178.5, 1) calc((50vw - 170px) - 340px), rgba(220.5, 199.5, 178.5, 0.84) 50%, rgba(220.5, 199.5, 178.5, 0.84) 100%)",
         "reviews": [
             {
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Internet Movie Database",
+                "review": "Uma review",
+                "rating": "4"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Rotten Tomatoes",
+                "review": "Uma review",
+                "rating": "3.3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Metacritic",
+                "review": "Uma review",
+                "rating": "2.5"
             }
-        ]
+        ],
+        "metascore": "N/A",
+        "imdbRating": "7.1",
+        "imdbVotes": "48,479",
+        "imdbID": "tt11858890",
+        "type": "movies",
+        "dvd": "N/A",
+        "marker": {
+            "lat": 0,
+            "lng": 0
+        },
+        "box-office": "$39,600,241",
+        "budget": "$80,000,000.00",
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
     },
     {
-        "type": "movies",
-        "year": 2023,
-        "genres": [
-            "Horror"
-        ],
         "title": "Five Nights at Freddy's",
-        "image": "https://www.themoviedb.org/t/p/w220_and_h330_face/A4j8S6moJS2zNtRR8oWF08gRnL5.jpg",
-        "overview": "A film adaptation of the popular horror franchise.",
-        "author": {
-            "name": "Chris Columbus",
-            "roles": [
-                "Director",
-                "Writer"
-            ]
-        },
+        "year": "2023",
+        "rated": "PG-13",
+        "released": "27 Oct 2023",
+        "runtime": "109 min",
+        "trailer": "0VH9WCFV6XQ",
+        "genres": [
+            "Horror",
+            "Mystery",
+            "Thriller"
+        ],
+        "director": "Emma Tammi",
+        "writer": [
+            "Scott Cawthon",
+            "Seth Cuddeback",
+            "Emma Tammi"
+        ],
         "actors": [
             {
-                "name": "Chris Columbus",
-                "character": "Director"
+                "name": "Josh Hutcherson",
+                "character": "Mike",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/npowygg8rH7uJ4v7rAoDMsHBhNq.jpg"
             },
             {
-                "name": "Jason Blum",
-                "character": "Producer"
+                "name": "Piper Rubio",
+                "character": "Abby",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/x8tDKAgxMKwaNJSd9RB75EIJnOD.jpg"
             },
             {
-                "name": "Scott Cawthon",
-                "character": "Writer"
+                "name": "Elizabeth Lail",
+                "character": "Vanessa",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/lDYjEyqojUs2sF3CgdsOZ9vr2KL.jpg"
+            },
+            {
+                "name": "Matthew Lillard",
+                "character": "Steve Raglan",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/51v6jsvzuAXYirIzdqcjLBp46d6.jpg"
+            },
+            {
+                "name": "Mary Stuart Masterson",
+                "character": "Aunt Jane",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/njHHxFIJutnRsFM1c85PC8FBOzj.jpg"
+            },
+            {
+                "name": "Kat Conner Sterling",
+                "character": "Max",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/5Mq6X1MeVuoSa37VRQw987aF3pZ.jpg"
             }
         ],
+        "plot": "A troubled security guard begins working at Freddy Fazbear's Pizza. During his first night on the job, he realizes that the night shift won't be so easy to get through. Pretty soon he will unveil what actually happened at Freddy's.",
+        "quote": "Just keep your eyes on the monitors and keep people out. Piece of cake.",
+        "language": "English",
+        "country": "United States",
+        "awards": "N/A",
+        "poster": "https://m.media-amazon.com/images/M/MV5BYTI0ZmI4NDItZGFlZC00M2E4LWIyZWEtMTFhMjQwYmU4MGNlXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/t5zCBSB5xMDKcDqe91qahCOUYVV.jpg",
+        "cover": "linear-gradient(to right, rgba(10.5, 31.5, 52.5, 1) calc((50vw - 170px) - 340px), rgba(10.5, 31.5, 52.5, 0.84) 50%, rgba(10.5, 31.5, 52.5, 0.84) 100%)",
+        "reviews": [
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Internet Movie Database",
+                "review": "Uma review",
+                "rating": "4"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Rotten Tomatoes",
+                "review": "Uma review",
+                "rating": "3.3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Metacritic",
+                "review": "Uma review",
+                "rating": "2.5"
+            }
+        ],
+        "metascore": "N/A",
+        "imdbRating": "5.5",
+        "imdbVotes": "61,825",
+        "imdbID": "tt4589218",
+        "type": "movies",
+        "dvd": "N/A",
         "marker": {
             "lat": 38.703505,
             "lng": -9.351862
         },
+        "box-office": "$127,205,300",
+        "budget": "$20,000,000.00",
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
+    },
+    {
+        "title": "Fast X",
+        "year": "2023",
+        "rated": "PG-13",
+        "released": "19 May 2023",
+        "runtime": "141 min",
+        "trailer": "32RAq6JzY-w",
+        "genres": [
+            "Action",
+            "Adventure",
+            "Crime"
+        ],
+        "director": "Louis Leterrier",
+        "writer": [
+            "Dan Mazeau",
+            "Justin Lin",
+            "Zach Dean"
+        ],
+        "actors": [
+            {
+                "name": "Vin Diesel",
+                "character": "Dominic Toretto",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/nZdVry7lnUkE24PnXakok9okvL4.jpg"
+            },
+            {
+                "name": "Michelle Rodriguez",
+                "character": "Letty",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/76sSLbMKLH80jlmMeqsHIIvlQgG.jpg"
+            },
+            {
+                "name": "Tyrese Gibson",
+                "character": "Roman",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/1K315wBQBvDBuZMlzoozuGsqFXZ.jpg"
+            },
+            {
+                "name": "Ludacris",
+                "character": "Tej",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/erkJijujhe48vhJ8iCEtVpNEeVn.jpg"
+            },
+            {
+                "name": "John Cena",
+                "character": "Jakob Toretto",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/cO6n5pxKzHdGauqru6m5kuHb51z.jpg"
+            },
+            {
+                "name": "Nathalie Emmanuel",
+                "character": "Ramsey",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/koSwmmonFJiZDfwmZgdVA7I1aR.jpg"
+            }
+        ],
+        "plot": "Dom Toretto and his family are targeted by the vengeful son of drug kingpin Hernan Reyes.",
+        "quote": "Pass it down. Each generation better than the last.",
+        "language": "English",
+        "country": "United States, China, Japan",
+        "awards": "1 win & 3 nominations",
+        "poster": "https://m.media-amazon.com/images/M/MV5BNzZmOTU1ZTEtYzVhNi00NzQxLWI5ZjAtNWNhNjEwY2E3YmZjXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/4XM8DUTQb3lhLemJC51Jx4a2EuA.jpg",
+        "cover": "linear-gradient(to right, rgba(52.5, 52.5, 52.5, 1) calc((50vw - 170px) - 340px), rgba(52.5, 52.5, 52.5, 0.84) 50%, rgba(52.5, 52.5, 52.5, 0.84) 100%)",
         "reviews": [
             {
                 "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
+                "author": "Internet Movie Database",
+                "review": "Uma review",
+                "rating": "4"
             },
             {
                 "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
+                "author": "Rotten Tomatoes",
+                "review": "Uma review",
+                "rating": "3.3"
             },
             {
                 "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
-            },
-            {
-                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
-            },
-            {
-                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
-            },
-            {
-                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
+                "author": "Metacritic",
+                "review": "Uma review",
+                "rating": "2.5"
             }
-        ]
+        ],
+        "metascore": "56",
+        "imdbRating": "5.8",
+        "imdbVotes": "101,452",
+        "imdbID": "tt5433140",
+        "type": "movies",
+        "dvd": "09 Jun 2023",
+        "marker": {
+            "lat": 38.728175,
+            "lng": -9.140576
+        },
+        "box-office": "$145,960,660",
+        "budget": "340,000,000",
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
     },
     {
-        "year": 2023,
-        "type": "movies",
-        "genres": [
-            "Drama",
-            "Comedy"
-        ],
         "title": "Radical",
-        "image": "https://www.themoviedb.org/t/p/w220_and_h330_face/eSatbygYZp8ooprBHZdb6GFZxGB.jpg",
-        "overview": "A look at the rise of the radical right in contemporary Germany.",
-        "author": {
-            "name": "Fatih Akin",
-            "roles": [
-                "Director",
-                "Writer"
-            ]
-        },
+        "year": "2023",
+        "rated": "PG-13",
+        "released": "19 Oct 2023",
+        "runtime": "125 min",
+        "trailer": "L4DvL0UBZPQ",
+        "genres": [
+            "Drama"
+        ],
+        "director": "Christopher Zalla",
+        "writer": [
+            "Christopher Zalla",
+            "Joshua Davis"
+        ],
         "actors": [
             {
-                "name": "Fatih Akin",
-                "character": "Director"
+                "name": "Eugenio Derbez",
+                "character": "Sergio",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/6o1w3mYF947N6TTakQXcs3NNy4w.jpg"
             },
             {
-                "name": "Fatih Akin",
-                "character": "Writer"
+                "name": "Daniel Haddad",
+                "character": "Chucho",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/tCZAs7jDAjOl5545eL93C1mcIsa.jpg"
             },
             {
-                "name": "Fatih Akin",
-                "character": "Producer"
+                "name": "Jennifer Trejo",
+                "character": "Paloma",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/kjKptBXj7z3VJlzUJA9dJZmpFrO.jpg"
+            },
+            {
+                "name": "Mia Fernanda Solis",
+                "character": "Lupe",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/rGzl5vQM2CG4SfFl2MJK7BAlJ7u.jpg"
+            },
+            {
+                "name": "Danilo Guardiola Escobar",
+                "character": "Nico",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/rlceus4FE90OWZ71rOFo2P0zQOF.jpg"
+            },
+            {
+                "name": "Gilberto Barraza",
+                "character": "Papa Paloma",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/sHSpqLD1HZbzLjyGvdMlgML9j09.jpg"
             }
         ],
+        "plot": "A teacher in a Mexican border town full of neglect, corruption, and violence, tries a radical new method to unlock their students' curiosity, potential - and maybe even their genius.",
+        "quote": "Think for yourself",
+        "language": "Spanish",
+        "country": "Mexico",
+        "awards": "3 wins & 1 nomination",
+        "poster": "https://m.media-amazon.com/images/M/MV5BOWU1YWQwMWItNzNkOC00MTE1LTk1YTktNDM5NjkxZGQ2NmM2XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/p9DKeXp6FPJtAQ1k13Z4zPWrCbN.jpg",
+        "cover": "linear-gradient(to right, rgba(52.5, 52.5, 52.5, 1) calc((50vw - 170px) - 340px), rgba(52.5, 52.5, 52.5, 0.84) 50%, rgba(52.5, 52.5, 52.5, 0.84) 100%)",
+        "reviews": [
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Internet Movie Database",
+                "review": "Uma review",
+                "rating": "4"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Rotten Tomatoes",
+                "review": "Uma review",
+                "rating": "3.3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Metacritic",
+                "review": "Uma review",
+                "rating": "2.5"
+            }
+        ],
+        "metascore": "71",
+        "imdbRating": "7.9",
+        "imdbVotes": "467",
+        "imdbID": "tt14570440",
+        "type": "movies",
+        "dvd": "N/A",
         "marker": {
             "lat": 38.735913,
             "lng": -9.264491
         },
+        "box-office": "N/A",
+        "budget": "$10,000,000",
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
+    },
+    {
+        "title": "Whiplash",
+        "year": "2014",
+        "rated": "R",
+        "released": "15 Oct 2014",
+        "runtime": "106 min",
+        "trailer": "7d_jQycdQGo",
+        "genres": [
+            "Drama",
+            "Music"
+        ],
+        "director": "Damien Chazelle",
+        "writer": [
+            "Damien Chazelle"
+        ],
+        "actors": [
+            {
+                "name": "Miles Teller",
+                "character": "Andrew Neiman",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/cg3LW0xX6RKr8dmescxq1bepcb5.jpg"
+            },
+            {
+                "name": "J.K. Simmons",
+                "character": "Terence Fletcher",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/ScmKoJ9eiSUOthAt1PDNLi8Fkw.jpg"
+            },
+            {
+                "name": "Paul Reiser",
+                "character": "Jim Neiman",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/rGryzG00uSk8LsidacSBXVgo3iv.jpg"
+            },
+            {
+                "name": "Melissa Benoist",
+                "character": "Nicole",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/1F0fCPNhb5W0WyFe8Tszfbx1DEp.jpg"
+            },
+            {
+                "name": "Austin Stowell",
+                "character": "Ryan Connolly",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/At09XQpVXnChgedNsxu4ceR5W9i.jpg"
+            },
+            {
+                "name": "Chris Mulkey",
+                "character": "Uncle Frank",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/jzIy97l6g4xmwXnaZxDkjP7w9pS.jpg"
+            }
+        ],
+        "plot": "A promising young drummer enrolls at a cut-throat music conservatory where his dreams of greatness are mentored by an instructor who will stop at nothing to realize a student's potential.",
+        "quote": "The road to greatness can take you to the edge.",
+        "language": "English",
+        "country": "United States",
+        "awards": "Won 3 Oscars. 98 wins & 144 nominations total",
+        "poster": "https://m.media-amazon.com/images/M/MV5BOTA5NDZlZGUtMjAxOS00YTRkLTkwYmMtYWQ0NWEwZDZiNjEzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/vNXGrknx4GjWLgmuNTftWZluIUl.jpg",
+        "cover": "linear-gradient(to right, rgba(199.5, 10.5, 10.5, 1) calc((50vw - 170px) - 340px), rgba(199.5, 10.5, 10.5, 0.84) 50%, rgba(199.5, 10.5, 10.5, 0.84) 100%)",
         "reviews": [
             {
                 "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
+                "author": "Internet Movie Database",
+                "review": "Uma review",
+                "rating": "4"
             },
             {
                 "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
+                "author": "Rotten Tomatoes",
+                "review": "Uma review",
+                "rating": "3.3"
             },
             {
                 "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
-            },
-            {
-                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
-            },
-            {
-                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
-            },
-            {
-                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                "author": "Eu",
-                "review": "Achei muito bom",
-                "rating": "3"
+                "author": "Metacritic",
+                "review": "Uma review",
+                "rating": "2.5"
             }
-        ]
+        ],
+        "metascore": "89",
+        "imdbRating": "8.5",
+        "imdbVotes": "942,571",
+        "imdbID": "tt2582802",
+        "type": "movies",
+        "dvd": "08 Sep 2016",
+        "marker": {
+            "lat": 0,
+            "lng": 0
+        },
+        "box-office": "$13,092,000",
+        "budget": "3,300,000",
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
+    },
+    {
+        "title": "McLaren",
+        "year": "2017",
+        "rated": "Not Rated",
+        "released": "17 Aug 2017",
+        "runtime": "92 min",
+        "trailer": "yyMfzi6WRnY",
+        "genres": [
+            "Documentary",
+            "Biography",
+            "Drama"
+        ],
+        "director": "Roger Donaldson",
+        "writer": [
+            "James Brown",
+            "Matthew Metcalfe",
+            "Glenn Standring"
+        ],
+        "actors": [
+            {
+                "name": "Dwayne Cameron",
+                "character": "Bruce McLaren",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/jUXYK8H91rpwa0yziq9KH6DUOeS.jpg"
+            },
+            {
+                "name": "Mario Andretti",
+                "character": "Self",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/d73LeLNJT02qEJ8ay0gY5GDcW4t.jpg"
+            },
+            {
+                "name": "Alastair Caldwell",
+                "character": "Self",
+                "image": "https://via.placeholder.com/200x300"
+            },
+            {
+                "name": "Jackie Stewart",
+                "character": "Self",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/fhtd10e0xnLYN527vemKwyt1xYF.jpg"
+            },
+            {
+                "name": "Dan Gurney",
+                "character": "Self",
+                "image": "https://via.placeholder.com/200x300"
+            },
+            {
+                "name": "Emerson Fittipaldi",
+                "character": "Self",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/4rTSmOGECBk0ZaxDYSL3hopde6y.jpg"
+            }
+        ],
+        "plot": "The story of Bruce McLaren, the New Zealander who founded the McLaren Motor Racing team. A man who showed the world that a man of humble beginnings could take on the elite of motor racing and win.",
+        "quote": "Pioneer. Leader. Father. Champion.",
+        "language": "English, German",
+        "country": "New Zealand",
+        "awards": "1 nomination",
+        "poster": "https://m.media-amazon.com/images/M/MV5BODZiOGMzOTgtN2ExZC00MmQ5LTg4MDctN2FkZTRjYWVkZWI1XkEyXkFqcGdeQXVyMjU1Njc3NTk@._V1_SX300.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/mQ5pHTMTBBxZv52xl1iORdK7Pqt.jpg",
+        "cover": "linear-gradient(to right, rgba(52.5, 73.5, 94.5, 1) calc((50vw - 170px) - 340px), rgba(52.5, 73.5, 94.5, 0.84) 50%, rgba(52.5, 73.5, 94.5, 0.84) 100%)",
+        "reviews": [
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Internet Movie Database",
+                "review": "Uma review",
+                "rating": "4"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Rotten Tomatoes",
+                "review": "Uma review",
+                "rating": "3.3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Metacritic",
+                "review": "Uma review",
+                "rating": "2.5"
+            }
+        ],
+        "metascore": "N/A",
+        "imdbRating": "7.3",
+        "imdbVotes": "2,619",
+        "imdbID": "tt5031332",
+        "type": "movies",
+        "dvd": "18 Aug 2017",
+        "marker": {
+            "lat": 0,
+            "lng": 0
+        },
+        "box-office": "N/A",
+        "budget": "-",
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
+    },
+    {
+        "title": "Nobody",
+        "year": "2021",
+        "rated": "R",
+        "released": "26 Mar 2021",
+        "runtime": "92 min",
+        "trailer": "wZti8QKBWPo",
+        "genres": [
+            "Action",
+            "Crime",
+            "Drama"
+        ],
+        "director": "Ilya Naishuller",
+        "writer": [
+            "Derek Kolstad"
+        ],
+        "actors": [
+            {
+                "name": "Bob Odenkirk",
+                "character": "Hutch Mansell",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/rF0Lb6SBhGSTvjRffmlKRSeI3jE.jpg"
+            },
+            {
+                "name": "Aleksey Serebryakov",
+                "character": "Yulian Kuznetsov",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/oFeLJoqKyhx0YgNxa6gfALMf0H5.jpg"
+            },
+            {
+                "name": "Connie Nielsen",
+                "character": "Becca Mansell",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/lvQypTfeH2Gn2PTbzq6XkT2PLmn.jpg"
+            },
+            {
+                "name": "Christopher Lloyd",
+                "character": "David Mansell",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/nxVjpyb3UrfbPZnEyDNlQVlFAs5.jpg"
+            },
+            {
+                "name": "Michael Ironside",
+                "character": "Eddie Williams",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/mzHmxtKcMJjDqWxKd67mKQJFW1B.jpg"
+            },
+            {
+                "name": "Colin Salmon",
+                "character": "The Barber",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/mLlAU6Zl2MIL5znp5UHdX3sVTN7.jpg"
+            }
+        ],
+        "plot": "A docile family man slowly reveals his true character after his house gets burgled by two petty thieves, which, coincidentally, leads him into a bloody war with a Russian crime boss.",
+        "quote": "Never underestimate a nobody.",
+        "language": "English, Russian, Spanish",
+        "country": "United States, Japan, China",
+        "awards": "5 wins & 18 nominations",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMjM5YTRlZmUtZGVmYi00ZjE2LWIyNzAtOWVhMDk1MDdkYzhjXkEyXkFqcGdeQXVyMjMxOTE0ODA@._V1_SX300.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/6zbKgwgaaCyyBXE4Sun4oWQfQmi.jpg",
+        "cover": "linear-gradient(to right, rgba(31.5, 31.5, 31.5, 1) calc((50vw - 170px) - 340px), rgba(31.5, 31.5, 31.5, 0.84) 50%, rgba(31.5, 31.5, 31.5, 0.84) 100%)",
+        "reviews": [
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Internet Movie Database",
+                "review": "Uma review",
+                "rating": "4"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Rotten Tomatoes",
+                "review": "Uma review",
+                "rating": "3.3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Metacritic",
+                "review": "Uma review",
+                "rating": "2.5"
+            }
+        ],
+        "metascore": "64",
+        "imdbRating": "7.4",
+        "imdbVotes": "307,173",
+        "imdbID": "tt7888964",
+        "type": "movies",
+        "dvd": "15 Apr 2021",
+        "marker": {
+            "lat": 0,
+            "lng": 0
+        },
+        "box-office": "$27,568,035",
+        "budget": "$17,000,000",
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
+    },
+    {
+        "title": "Blade Runner 2049",
+        "year": "2017",
+        "rated": "R",
+        "released": "06 Oct 2017",
+        "runtime": "164 min",
+        "trailer": "gCcx85zbxz4",
+        "genres": [
+            "Action",
+            "Drama",
+            "Mystery"
+        ],
+        "director": "Denis Villeneuve",
+        "writer": [
+            "Hampton Fancher",
+            "Michael Green",
+            "Philip K. Dick"
+        ],
+        "actors": [
+            {
+                "name": "Ryan Gosling",
+                "character": "'K'",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/lyUyVARQKhGxaxy0FbPJCQRpiaW.jpg"
+            },
+            {
+                "name": "Harrison Ford",
+                "character": "Rick Deckard",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/zVnHagUvXkR2StdOtquEwsiwSVt.jpg"
+            },
+            {
+                "name": "Ana de Armas",
+                "character": "Joi",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/3vxvsmYLTf4jnr163SUlBIw51ee.jpg"
+            },
+            {
+                "name": "Sylvia Hoeks",
+                "character": "Luv",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/envfC7U1yPkjP6bQidyfCVPzyJu.jpg"
+            },
+            {
+                "name": "Robin Wright",
+                "character": "Lieutenant Joshi",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/hpx0mJQrusrOWG78LHveL8NT2iV.jpg"
+            },
+            {
+                "name": "Jared Leto",
+                "character": "Niander Wallace",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/ca3x0OfIKbJppZh8S1Alx3GfUZO.jpg"
+            }
+        ],
+        "plot": "Young Blade Runner K's discovery of a long-buried secret leads him to track down former Blade Runner Rick Deckard, who's been missing for thirty years.",
+        "quote": "The key to the future is finally unearthed.",
+        "language": "English, Finnish, Japanese, Hungarian, Russian, Somali, Spanish",
+        "country": "United States, United Kingdom, Canada, Spain",
+        "awards": "Won 2 Oscars. 98 wins & 161 nominations total",
+        "poster": "https://m.media-amazon.com/images/M/MV5BNzA1Njg4NzYxOV5BMl5BanBnXkFtZTgwODk5NjU3MzI@._V1_SX300.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/uKbX1ha7KWyTecvpPpRCB3iFfj3.jpg",
+        "cover": "linear-gradient(to right, rgba(31.5, 31.5, 31.5, 1) calc((50vw - 170px) - 340px), rgba(31.5, 31.5, 31.5, 0.84) 50%, rgba(31.5, 31.5, 31.5, 0.84) 100%)",
+        "reviews": [
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Internet Movie Database",
+                "review": "Uma review",
+                "rating": "4"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Rotten Tomatoes",
+                "review": "Uma review",
+                "rating": "3.3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Metacritic",
+                "review": "Uma review",
+                "rating": "2.5"
+            }
+        ],
+        "metascore": "81",
+        "imdbRating": "8.0",
+        "imdbVotes": "630,175",
+        "imdbID": "tt1856101",
+        "type": "movies",
+        "dvd": "26 Dec 2017",
+        "marker": {
+            "lat": 0,
+            "lng": 0
+        },
+        "box-office": "$92,071,675",
+        "budget": "$150,000,000",
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
+    },
+    {
+        "title": "Jack Reacher",
+        "year": "2012",
+        "rated": "PG-13",
+        "released": "21 Dec 2012",
+        "runtime": "130 min",
+        "trailer": "A7FiWkyevqY",
+        "genres": [
+            "Action",
+            "Mystery",
+            "Thriller"
+        ],
+        "director": "Christopher McQuarrie",
+        "writer": [
+            "Lee Child",
+            "Christopher McQuarrie"
+        ],
+        "actors": [
+            {
+                "name": "Tom Cruise",
+                "character": "Jack Reacher",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/eOh4ubpOm2Igdg0QH2ghj0mFtC.jpg"
+            },
+            {
+                "name": "Rosamund Pike",
+                "character": "Helen Rodin",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/8ObNklHDi2hjdz0ayzJFB9jtqzm.jpg"
+            },
+            {
+                "name": "Richard Jenkins",
+                "character": "Alex Rodin",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/muT3RZG9hiKaKojD751RcQ5tGEy.jpg"
+            },
+            {
+                "name": "David Oyelowo",
+                "character": "Emerson",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/7UZHRwOKe2cYxj8SeNUklyPYkns.jpg"
+            },
+            {
+                "name": "Werner Herzog",
+                "character": "Zec Chelovek",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/vokqteY91Pda0L13pTqTzTCo7vV.jpg"
+            },
+            {
+                "name": "Jai Courtney",
+                "character": "Charlie",
+                "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/6vEaNwbOKov6yzQx15CdtrqfK3L.jpg"
+            }
+        ],
+        "plot": "A homicide investigator digs deeper into a case involving a trained military sniper responsible for a mass shooting.",
+        "quote": "The Law Has Limits. He Does Not.",
+        "language": "English",
+        "country": "United States",
+        "awards": "1 win & 6 nominations",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMTM1NjUxMDI3OV5BMl5BanBnXkFtZTcwNjg1ODM3OA@@._V1_SX300.jpg",
+        "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/5QEtCBM6aXHftr7sgFxxUUl9Ej8.jpg",
+        "cover": "linear-gradient(to right, rgba(31.5, 31.5, 10.5, 1) calc((50vw - 170px) - 340px), rgba(31.5, 31.5, 10.5, 0.84) 50%, rgba(31.5, 31.5, 10.5, 0.84) 100%)",
+        "reviews": [
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Internet Movie Database",
+                "review": "Uma review",
+                "rating": "4"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Rotten Tomatoes",
+                "review": "Uma review",
+                "rating": "3.3"
+            },
+            {
+                "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                "author": "Metacritic",
+                "review": "Uma review",
+                "rating": "2.5"
+            }
+        ],
+        "metascore": "50",
+        "imdbRating": "7.0",
+        "imdbVotes": "357,356",
+        "imdbID": "tt0790724",
+        "type": "movies",
+        "dvd": "31 Dec 2014",
+        "marker": {
+            "lat": 0,
+            "lng": 0
+        },
+        "box-office": "$80,070,736",
+        "budget": "$60,000,000",
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
     }
 ]

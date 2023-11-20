@@ -10,6 +10,7 @@ import {
     Button,
     Modal,
     Container,
+    Form,
 } from "react-bootstrap";
 
 import CardDeck from "@/components/CardDeck";
@@ -22,18 +23,35 @@ import PropTypes from "prop-types";
 import styles from "@/styles/movie-page.module.css"
 import MOVIES from "@/const/movies.json"
 
+
 export default function MoviePage() {
+
+    const [movie, setMovie] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const params = new URLSearchParams(location.search);
+            const title = params.get("title")
+            const foundMovie = MOVIES.find(movie => movie.title === title);
+            setMovie(foundMovie);
+            setLoading(false);
+        };
+        fetchData();
+    }, []);
+
+
     return (
         <div>
             <MyNavbar />
-            <Headline />
+            {loading ? <div /> : <Headline movie={movie} />}
             <Container>
                 <Row>
                     <Col md={9} sm={9}>
-                        <Body />
+                        {loading ? <div /> : <Body movie={movie} />}
                     </Col>
                     <Col className={styles.sidebody} md={3} sm={3}>
-                        <Sidebody />
+                        {loading ? <div /> : <Sidebody movie={movie} />}
                     </Col>
                 </Row>
             </Container>
@@ -42,7 +60,7 @@ export default function MoviePage() {
 }
 
 // The element containing everything within the movie background image
-function Headline() {
+function Headline({ movie }) {
     const [review, setReview] = useState(null);
 
     useEffect(() => {
@@ -53,47 +71,86 @@ function Headline() {
     }, []);
 
     let rating = 0;
-    MOVIES[0]["reviews"].map((review, i) => (
+    movie["reviews"].map((review, i) => (
         rating += parseInt(review["rating"])
     ))
 
     if (!review) {
-        rating = rating / MOVIES[0]["reviews"].length
+        rating = rating / movie["reviews"].length
     } else {
-        rating = (rating + review["rating"]) / (MOVIES[0]["reviews"].length + 1)
+        rating = (rating + review["rating"]) / (movie["reviews"].length + 1)
     }
 
+    const [isBookmarked, setBookmark] = useState(false);
+
     const addToWatchlist = () => {
-        let bookmarkList = []
-        bookmarkList[0] = MOVIES[0]
-        localStorage.setItem("bookmarks", JSON.stringify(bookmarkList))
+        if (loggedIn) {
+            if (isBookmarked) {
+                let bookmarkList = JSON.parse(localStorage.getItem("bookmarks"))
+                if (bookmarkList == null)
+                    bookmarkList = []
+                bookmarkList[movie.title] = null //?
+                localStorage.setItem("bookmarks", JSON.stringify(bookmarkList))
+                setBookmark(false)
+            } else {
+                let bookmarkList = JSON.parse(localStorage.getItem("bookmarks"))
+                if (bookmarkList == null)
+                    bookmarkList = []
+                bookmarkList[movie.title] = movie
+                localStorage.setItem("bookmarks", JSON.stringify(bookmarkList))
+                setBookmark(true)
+            }
+        }
     }
+
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    const [show, setShow] = useState(false);
+    const handleLogin = () => {
+        window.localStorage.setItem("loggedIn", true);
+        setLoggedIn(true);
+        handleCloseLoginModal();
+    };
+
+    const handleShow = () => {
+        let isLogged = window.localStorage.getItem("loggedIn");
+        if (isLogged == null || !isLogged) {
+            setShow(true)
+        } else {
+            setLoggedIn(true);
+            setShow(false)
+        }
+    }
+
+    const handleCloseLoginModal = () => {
+        setShow(false);
+    };
 
     return (
         <div
             className={styles.div}
             style={{
-                backgroundImage: `url(${MOVIES[0]["background-image"]})`,
+                backgroundImage: `url(${movie["background-image"]})`,
             }}
         >
-            <div className={styles.cover} style={{ backgroundImage: MOVIES[0]["cover"] }}>
+            <div className={styles.cover} style={{ backgroundImage: movie["cover"] }}>
                 <Container>
                     <div>
                         <Row>
                             <Col xs={4} className={styles.content}>
                                 <div>
-                                    <Image src={MOVIES[0]["poster"]} style={{ height: "70vh" }} rounded />
+                                    <Image src={movie["poster"]} style={{ height: "70vh" }} rounded />
                                 </div>
                             </Col>
                             <Col xs={8} className={styles.content} style={{ marginTop: "12vh" }}>
                                 <div style={{ marginLeft: "1vh" }}>
                                     <div style={{ marginBottom: "3vh" }}>
-                                        <h2>{MOVIES[0]["title"]}</h2>
+                                        <h2>{movie["title"]}</h2>
                                         <div>
-                                            <span className={styles.span}>R</span>
-                                            <span className={styles.span}>2023 US</span>
-                                            <span className={styles.span}>&#x2022; Drama, History</span>
-                                            <span className={styles.span}>&#x2022; 3h 1m</span>
+                                            <span className={styles.span}>{movie["rated"]}</span>
+                                            <span className={styles.span}>{movie["year"]}</span>
+                                            <span className={styles.span}>&#x2022; {movie["genres"].map((genre, i) => (genre + " "))}</span>
+                                            <span className={styles.span}>&#x2022; {movie["runtime"]}</span>
                                         </div>
                                     </div>
                                     <div style={{ marginLeft: "-2vw" }}>
@@ -113,17 +170,37 @@ function Headline() {
                                                 </svg>
                                                 <span style={{ marginLeft: "-1.5vw" }}>{rating}/5</span>
                                             </Col>
-                                            <Col xs={3}>
-                                                <TrailerModal />
+                                            <Col xs={3} >
+                                                <TrailerModal movie={movie} />
                                             </Col>
-                                            <Col xs={3}>
+                                            <Col xs={3} onClick={handleShow}>
                                                 <div style={{ marginTop: "2vh", marginLeft: "-5vw", cursor: "pointer" }} onClick={addToWatchlist}>
-                                                    <i className="bi bi-bookmark-plus"></i> Add To Watchlist
+                                                    {isBookmarked ? <i class="bi bi-bookmark-star-fill"></i> : <i className="bi bi-bookmark-plus"></i>} Add To Watchlist
                                                 </div>
                                             </Col>
-                                            <Col xs={3}>
-                                                <ReviewModal />
+                                            <Col xs={3} onClick={handleShow}>
+                                                <ReviewModal movie={movie} loggedIn={loggedIn} />
                                             </Col>
+                                            <Modal show={show} onHide={handleCloseLoginModal} centered>
+                                                <Modal.Header closeButton>
+                                                    <Modal.Title>Login</Modal.Title>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <Form>
+                                                        <Form.Group className="d-flex flex-nowrap align-items-center">
+                                                            <Form.Label className="p-0 m-2 w-25">Username</Form.Label>
+                                                            <Form.Control className="m-2" type="text" placeholder="Enter your username" />
+                                                        </Form.Group>
+
+                                                        <Form.Group className="d-flex flex-nowrap align-items-center">
+                                                            <Form.Label className="p-0 m-2 w-25">Password</Form.Label>
+                                                            <Form.Control className="m-2" type="password" placeholder="Enter your password" />
+                                                        </Form.Group>
+
+                                                        <Form.Control className="mt-3 btn btn-primary" value="Login" onClick={handleLogin} />
+                                                    </Form>
+                                                </Modal.Body>
+                                            </Modal>
                                         </Row>
                                     </div>
                                     <div>
@@ -135,23 +212,20 @@ function Headline() {
                                                 marginTop: "2vh",
                                             }}
                                         >
-                                            <i>{MOVIES[0]["quote"]}</i>
+                                            <i>{movie["quote"]}</i>
                                         </h3>
                                         <h3 style={{ fontSize: "20px" }}>Overview</h3>
                                         <div>
-                                            <p>{MOVIES[0]["overview"]}</p>
+                                            <p>{movie["plot"]}</p>
                                         </div>
                                         <Container style={{ marginLeft: "-0.7vw" }}>
                                             <Row>
-                                                {MOVIES[0]["colab"].map((colaborator, i) => (
-                                                    <div>
-                                                        <p>
-                                                            <b>Christopher Nolan</b>
-                                                        </p>
-                                                        <p style={{ marginTop: "-3vh", fontSize: "14px" }}>
-                                                            {colaborator["roles"]}
-                                                        </p>
-                                                    </div>
+                                                {movie["writer"].map((colaborator, i) => (
+                                                    <Col xs={2}>
+                                                        <div style={{ fontSize: "14px", marginTop: "2vh" }}>
+                                                            {colaborator}
+                                                        </div>
+                                                    </Col>
                                                 ))}
                                             </Row>
                                         </Container>
@@ -167,7 +241,7 @@ function Headline() {
 }
 
 // Left side of the page minus headline
-function Body() {
+function Body({ movie }) {
     const [review, setReview] = useState(null);
 
     useEffect(() => {
@@ -182,11 +256,12 @@ function Body() {
             <div>
                 <div style={{ marginTop: "2%" }}>
                     <h3>Top Actors</h3>
-                    <CardDeck.Horizontal cardItems={MOVIES[0]["actors"]} childItem={(actor) => <ActorCard {...actor} />} />
+                    <CardDeck.Horizontal cardItems={movie["actors"]} childItem={(actor) => <ActorCard {...actor} />} />
                 </div>
                 <hr className={styles.hr} />
                 <div className='reviewList' style={{ overflowY: "auto", maxHeight: "90vh" }}>
-                    {MOVIES[0]["reviews"].map((review, i) => (
+                    <h3>Reviews</h3>
+                    {movie["reviews"].map((review, i) => (
                         <ReviewCard
                             author={review["author"]}
                             review={review["review"]}
@@ -203,7 +278,7 @@ function Body() {
         <div>
             <div style={{ marginTop: "2%" }}>
                 <h3>Top Actors</h3>
-                <CardDeck.Horizontal cardItems={MOVIES[0]["actors"]} childItem={(actor) => <ActorCard {...actor} />} />
+                <CardDeck.Horizontal cardItems={movie["actors"]} childItem={(actor) => <ActorCard {...actor} />} />
             </div>
             <hr className={styles.hr} />
             <div className='reviewList' style={{ overflowY: "auto", maxHeight: "90vh" }}>
@@ -213,7 +288,7 @@ function Body() {
                     rating={review["rating"]}
                     image={review["profile-image"]}
                 />
-                {MOVIES[0]["reviews"].map((review, i) => (
+                {movie["reviews"].map((review, i) => (
                     <ReviewCard
                         author={review["author"]}
                         review={review["review"]}
@@ -247,34 +322,34 @@ function ReviewCard({ author, review, rating, image }) {
 }
 
 // Right side of the body minus headline
-function Sidebody() {
+function Sidebody({ movie }) {
     return (
         <div>
             <Container>
                 <div>
                     <div>
                         <strong>
-                            <bdi>Status</bdi>
+                            <bdi>Released</bdi>
                         </strong>
-                        <p>{MOVIES[0]["status"]}</p>
+                        <p>{movie["released"]}</p>
                     </div>
                     <div>
                         <strong>
                             <bdi>Original Language</bdi>
                         </strong>
-                        <p>{MOVIES[0]["original-language"]}</p>
+                        <p>{movie["language"]}</p>
                     </div>
                     <div>
                         <strong>
                             <bdi>Budget</bdi>
                         </strong>
-                        <p>{MOVIES[0]["budget"]}</p>
+                        <p>{movie["budget"]}</p>
                     </div>
                     <div>
                         <strong>
                             <bdi>Revenue</bdi>
                         </strong>
-                        <p>{MOVIES[0]["revenue"]}</p>
+                        <p>{movie["box-office"]}</p>
                     </div>
                 </div>
             </Container>
@@ -283,10 +358,16 @@ function Sidebody() {
 }
 
 // Modal of the review
-function ReviewModal() {
+function ReviewModal({ movie, loggedIn }) {
     const [show, setShow] = useState(false);
 
     const [value, setValue] = useState(0);
+
+    const [isReviewed, setReview] = useState(false);
+
+    const handleCloseLoginModal = () => {
+        setShow(false);
+    };
 
     const handleClose = () => {
         setShow(false)
@@ -298,8 +379,19 @@ function ReviewModal() {
             "review": review,
             "rating": value
         }))
+        setReview(true)
     };
-    const handleShow = () => setShow(true);
+
+    const handleShow = () => {
+        if (loggedIn) {
+            if (!isReviewed)
+                setShow(true);
+            else {
+                localStorage.setItem("review", "")
+                setReview(false)
+            }
+        }
+    }
 
     return (
         <>
@@ -308,12 +400,12 @@ function ReviewModal() {
                 onClick={handleShow}
                 style={{ marginTop: "2vh", marginLeft: "-5vw", cursor: "pointer" }}
             >
-                <i className="bi bi-star"></i> Review
+                {isReviewed ? <i class="bi bi-star-fill"></i> : <i className="bi bi-star"></i>} Review
             </div>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleCloseLoginModal}>
                 <Modal.Header closeButton>
                     <Modal.Title style={{ fontFamily: "'Source Sans Pro',Arial,sans-serif" }}>
-                        Rate {MOVIES[0]["title"]}
+                        Rate {movie["title"]}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -338,7 +430,8 @@ function ReviewModal() {
     );
 }
 
-function TrailerModal() {
+
+function TrailerModal({ movie }) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -351,14 +444,14 @@ function TrailerModal() {
             </div>
             <Modal show={show} onHide={handleClose} size="lg" style={{ display: "flex" }}>
                 <Modal.Body>
-                    <Player />
+                    <Player movie={movie} />
                 </Modal.Body>
             </Modal>
         </>
     );
 }
 
-function Player() {
+function Player({ movie }) {
     const YoutubeEmbed = ({ embedId }) => (
         <div className="video-responsive">
             <iframe
@@ -378,7 +471,7 @@ function Player() {
 
     return (
         <div>
-            <YoutubeEmbed embedId={MOVIES[0]["trailer"]} />
+            <YoutubeEmbed embedId={movie["trailer"]} />
         </div>
     );
 }

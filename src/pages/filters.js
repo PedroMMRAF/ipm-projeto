@@ -82,7 +82,7 @@ export default function FiltersPage() {
                             <MovieCard
                                 {...movie}
                                 onClick={() => {
-                                    window.location.href = "/movie-page";
+                                    window.location.href = `/movie-page?title=${movie.title}`;
                                 }}
                             />
                         </div>
@@ -237,12 +237,12 @@ function SearchFilterBox({ setActiveMovies }) {
                             {sort === "new"
                                 ? "Newest"
                                 : sort === "top"
-                                  ? "Best Rating"
-                                  : sort === "throwback"
-                                    ? "Throwback"
-                                    : sort === "popular"
-                                      ? "Most Popular"
-                                      : "Trending"}
+                                    ? "Best Rating"
+                                    : sort === "throwback"
+                                        ? "Throwback"
+                                        : sort === "popular"
+                                            ? "Most Popular"
+                                            : "Trending"}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu style={{ width: "100%" }}>
