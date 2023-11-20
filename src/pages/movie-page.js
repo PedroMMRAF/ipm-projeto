@@ -18,6 +18,7 @@ const MEDIA = [...MOVIES, ...TV];
 
 export default function MoviePage() {
     const [movie, setMovie] = useState(null);
+    const [review, setReview] = useState(null);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -34,11 +35,11 @@ export default function MoviePage() {
                 <></>
             ) : (
                 <>
-                    <Headline movie={movie} />
+                    <Headline movie={movie} review={review} setReview={setReview} />
                     <Container>
                         <Row>
                             <Col md={9} sm={9}>
-                                <Body movie={movie} />
+                                <Body movie={movie} review={review} />
                             </Col>
                             <Col md={3} sm={3} className={styles.sidebody}>
                                 <Sidebody movie={movie} />
@@ -51,33 +52,24 @@ export default function MoviePage() {
     );
 }
 
-function Headline({ movie }) {
-    const [review, setReview] = useState(null);
+function Headline({ movie, review, setReview }) {
+    // Modal states
+    const [showLogin, setShowLogin] = useState(false);
+    const [showReview, setShowReview] = useState(false);
+    const [showTrailer, setShowTrailer] = useState(false);
+
+    // Login state
+    const [loggedIn, setLoggedIn] = useLoginState();
+
     const [isBookmarked, setBookmark] = useState(null);
     const [willBookmark, setWillBookmark] = useState(null);
 
-    const [showLogin, setShowLogin] = useState(false);
-    const [loggedIn, setLoggedIn] = useLoginState();
-
-    const [show, setShow] = useState(false);
-    const [showTrailer, setShowTrailer] = useState(false);
-
-    const [value, setValue] = useState(0);
-    const [isReviewed, setIsReviewed] = useState(false);
-
-    let rating = movie["reviews"].reduce((acc, review) => acc + parseInt(review["rating"]), 0);
-
-    if (!review) {
-        rating = rating / movie["reviews"].length;
-    } else {
-        rating = (rating + review["rating"]) / (movie["reviews"].length + 1);
-    }
+    const [rating, setRating] = useState(0);
+    const [willReview, setWillReview] = useState(null);
 
     useEffect(() => {
-        const storedReview = localStorage.getItem("review");
-        if (storedReview) {
-            setReview(JSON.parse(storedReview));
-        }
+        const storedReviews = JSON.parse(localStorage.getItem("reviews") || "{}");
+        setReview(storedReviews[movie.title] || null);
 
         const bookmarkList = JSON.parse(localStorage.getItem("bookmarks") || "{}");
         setBookmark(bookmarkList[movie.title] || false);
@@ -98,36 +90,39 @@ function Headline({ movie }) {
             setBookmark(true);
         }
 
+        if (willReview && loggedIn && review == null) {
+            handleShowReview();
+        }
+
         setWillBookmark(false);
+        setWillReview(false);
     }, [showLogin]);
 
-    const handleCloseLoginModal = () => {
-        setShow(false);
-    };
+    useEffect(() => {
+        let raters = movie["reviews"].length;
+        let storedRating = movie["reviews"].reduce((acc, review) => acc + parseInt(review.rating), 0);
 
-    const handleClose = () => {
-        setShow(false);
+        if (review) {
+            storedRating += review.rating;
+            raters++;
+        }
+
+        setRating(storedRating / raters);
 
         localStorage.setItem(
-            "review",
+            "reviews",
             JSON.stringify({
-                "profile-image":
-                    "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-                author: "eu",
-                review: review,
-                rating: value,
+                ...JSON.parse(localStorage.getItem("reviews") || "{}"),
+                [movie.title]: review,
             }),
         );
-        setIsReviewed(true);
-    };
+    }, [review]);
 
-    const handleShow = () => {
-        if (loggedIn) {
-            if (!isReviewed) setShow(true);
-            else {
-                localStorage.setItem("review", "");
-                setReview(false);
-            }
+    const handleShowReview = () => {
+        if (review == null) {
+            setShowReview(true);
+        } else {
+            setReview(null);
         }
     };
 
@@ -137,10 +132,17 @@ function Headline({ movie }) {
 
             <ReviewModal
                 movie={movie}
-                show={show}
-                value={value}
-                onClose={() => setShow(false)}
-                onChange={(newValue) => setValue(newValue)}
+                show={showReview}
+                onClose={() => setShowReview(false)}
+                onChange={(reviewRating, reviewText) =>
+                    setReview({
+                        profileImage:
+                            "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                        author: "eu",
+                        review: reviewText,
+                        rating: reviewRating,
+                    })
+                }
             />
 
             <div
@@ -210,9 +212,24 @@ function Headline({ movie }) {
                                     )}
                                 </Col>
                                 <Col className="ps-0 pe-4 flex-grow-0">
-                                    <div onClick={handleShow} style={{ cursor: "pointer" }}>
-                                        <TextIcon icon={isReviewed ? "star-fill" : "star"} text="Review"></TextIcon>
-                                    </div>
+                                    {loggedIn ? (
+                                        <div onClick={handleShowReview} style={{ cursor: "pointer" }}>
+                                            <TextIcon
+                                                icon={review != null ? "star-fill" : "star"}
+                                                text="Review"
+                                            ></TextIcon>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            onClick={() => {
+                                                setShowLogin(true);
+                                                setWillReview(true);
+                                            }}
+                                            style={{ cursor: "pointer" }}
+                                        >
+                                            <TextIcon icon="star" text="Review"></TextIcon>
+                                        </div>
+                                    )}
                                 </Col>
                             </Row>
                             <div>
@@ -243,16 +260,7 @@ function Headline({ movie }) {
     );
 }
 
-function Body({ movie }) {
-    const [review, setReview] = useState(null);
-
-    useEffect(() => {
-        const storedReview = localStorage.getItem("review");
-        if (storedReview) {
-            setReview(JSON.parse(storedReview));
-        }
-    }, []);
-
+function Body({ movie, review }) {
     return (
         <div>
             <div style={{ marginTop: "2%" }}>
@@ -261,34 +269,21 @@ function Body({ movie }) {
             </div>
             <hr className={styles.hr} />
             <div className="reviewList" style={{ overflowY: "auto", maxHeight: "90vh" }}>
-                {review && (
-                    <ReviewCard
-                        author={review["author"]}
-                        review={review["review"]}
-                        rating={review["rating"]}
-                        image={review["profile-image"]}
-                    />
-                )}
-                {movie["reviews"].map((review, i) => (
-                    <ReviewCard
-                        key={i}
-                        author={review["author"]}
-                        review={review["review"]}
-                        rating={review["rating"]}
-                        image={review["profile-image"]}
-                    />
+                {review && <ReviewCard {...review} />}
+                {movie.reviews.map((review, i) => (
+                    <ReviewCard key={i} {...review} />
                 ))}
             </div>
         </div>
     );
 }
 
-function ReviewCard({ author, review, rating, image }) {
+function ReviewCard({ author, review, rating, profileImage }) {
     return (
         <Card style={{ marginTop: "2vh", marginBottom: "2vh" }}>
             <Card.Header>
                 <Image
-                    src={image}
+                    src={profileImage}
                     style={{ width: "32px", height: "32px", borderRadius: "50%", marginRight: "32px" }}
                 />{" "}
                 <b style={{ fontSize: "110%" }}>A review by {author} </b>
