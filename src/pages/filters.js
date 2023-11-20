@@ -339,7 +339,7 @@ function SearchFilterBox({ setActiveMovies }) {
                         applyFilters({ activeGenres }, { type }, { fromYear }, { toYear }, { search });
                     }}
                     className="btn btn-primary"
-                    value="Search"
+                    value="Apply Filters"
                 />
             </Form>
         </Container>
