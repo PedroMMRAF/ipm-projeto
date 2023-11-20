@@ -1,248 +1,248 @@
-import MyNavbar from "@/components/PageNavbar";
-
-import { useState, React, useEffect } from 'react';
-
-import {
-    Col,
-    Row,
-    Image,
-    Card,
-    Button,
-    Modal,
-    Container,
-    Form,
-} from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Chip } from "@mui/material";
+import { Col, Row, Image, Card, Container } from "react-bootstrap";
 
 import CardDeck from "@/components/CardDeck";
 import ActorCard from "@/components/ActorCard";
+import PageNavbar from "@/components/PageNavbar";
+import ReviewModal from "@/components/ReviewModal";
+import TrailerModal from "@/components/TrailerModal";
+import LoginModal, { useLoginState } from "@/components/LoginModal";
 
-import { Rating, Typography, Chip } from "@mui/material";
+import styles from "@/styles/movie-page.module.css";
 
-import PropTypes from "prop-types";
-
-import styles from "@/styles/movie-page.module.css"
-import MOVIES from "@/const/movies.json"
-import TV from "@/const/tv-shows.json"
+import TV from "@/const/tv-shows.json";
+import MOVIES from "@/const/movies.json";
 
 const MEDIA = [...MOVIES, ...TV];
 
 export default function MoviePage() {
-
     const [movie, setMovie] = useState(null);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const params = new URLSearchParams(location.search);
-            const title = params.get("title")
-            const foundMovie = MEDIA.find(movie => movie.title === title);
-            setMovie(foundMovie);
-            setLoading(false);
-        };
-        fetchData();
+        const params = new URLSearchParams(location.search);
+        const title = params.get("title");
+        const foundMovie = MEDIA.find((movie) => movie.title === title);
+        console.log(foundMovie);
+        setMovie(foundMovie);
     }, []);
-
 
     return (
         <div>
-            <MyNavbar />
-            {loading ? <div /> : <Headline movie={movie} />}
-            <Container>
-                <Row>
-                    <Col md={9} sm={9}>
-                        {loading ? <div /> : <Body movie={movie} />}
-                    </Col>
-                    <Col className={styles.sidebody} md={3} sm={3}>
-                        {loading ? <div /> : <Sidebody movie={movie} />}
-                    </Col>
-                </Row>
-            </Container>
+            <PageNavbar />
+            {!movie ? (
+                <></>
+            ) : (
+                <>
+                    <Headline movie={movie} />
+                    <Container>
+                        <Row>
+                            <Col md={9} sm={9}>
+                                <Body movie={movie} />
+                            </Col>
+                            <Col md={3} sm={3} className={styles.sidebody}>
+                                <Sidebody movie={movie} />
+                            </Col>
+                        </Row>
+                    </Container>
+                </>
+            )}
         </div>
     );
 }
 
-// The element containing everything within the movie background image
 function Headline({ movie }) {
     const [review, setReview] = useState(null);
+    const [isBookmarked, setBookmark] = useState(null);
+    const [willBookmark, setWillBookmark] = useState(null);
+
+    const [showLogin, setShowLogin] = useState(false);
+    const [loggedIn, setLoggedIn] = useLoginState();
+
+    const [show, setShow] = useState(false);
+    const [showTrailer, setShowTrailer] = useState(false);
+
+    const [value, setValue] = useState(0);
+    const [isReviewed, setIsReviewed] = useState(false);
+
+    let rating = movie["reviews"].reduce((acc, review) => acc + parseInt(review["rating"]), 0);
+
+    if (!review) {
+        rating = rating / movie["reviews"].length;
+    } else {
+        rating = (rating + review["rating"]) / (movie["reviews"].length + 1);
+    }
 
     useEffect(() => {
         const storedReview = localStorage.getItem("review");
         if (storedReview) {
             setReview(JSON.parse(storedReview));
         }
+
+        const bookmarkList = JSON.parse(localStorage.getItem("bookmarks") || "{}");
+        setBookmark(bookmarkList[movie.title] || false);
     }, []);
 
-    let rating = 0;
-    movie["reviews"].map((review, i) => (
-        rating += parseInt(review["rating"])
-    ))
+    useEffect(() => {
+        if (isBookmarked === null) return;
 
-    if (!review) {
-        rating = rating / movie["reviews"].length
-    } else {
-        rating = (rating + review["rating"]) / (movie["reviews"].length + 1)
-    }
+        let bookmarkList = JSON.parse(localStorage.getItem("bookmarks") || "{}");
+        bookmarkList[movie.title] = isBookmarked;
+        localStorage.setItem("bookmarks", JSON.stringify(bookmarkList));
+    }, [isBookmarked]);
 
-    const [isBookmarked, setBookmark] = useState(false);
+    useEffect(() => {
+        if (showLogin) return;
 
-    const addToWatchlist = () => {
-        if (loggedIn) {
-            if (isBookmarked) {
-                let bookmarkList = JSON.parse(localStorage.getItem("bookmarks"))
-                if (bookmarkList == null)
-                    bookmarkList = []
-                bookmarkList[movie.title] = null //?
-                localStorage.setItem("bookmarks", JSON.stringify(bookmarkList))
-                setBookmark(false)
-            } else {
-                let bookmarkList = JSON.parse(localStorage.getItem("bookmarks"))
-                if (bookmarkList == null)
-                    bookmarkList = []
-                bookmarkList[movie.title] = movie
-                localStorage.setItem("bookmarks", JSON.stringify(bookmarkList))
-                setBookmark(true)
-            }
+        if (willBookmark && loggedIn) {
+            setBookmark(true);
         }
-    }
 
-    const [loggedIn, setLoggedIn] = useState(false);
-
-    const [show, setShow] = useState(false);
-    const handleLogin = () => {
-        window.localStorage.setItem("loggedIn", true);
-        setLoggedIn(true);
-        handleCloseLoginModal();
-    };
-
-    const handleShow = () => {
-        let isLogged = window.localStorage.getItem("loggedIn");
-        if (isLogged == null || !isLogged) {
-            setShow(true)
-        } else {
-            setLoggedIn(true);
-            setShow(false)
-        }
-    }
+        setWillBookmark(false);
+    }, [showLogin]);
 
     const handleCloseLoginModal = () => {
         setShow(false);
     };
 
+    const handleClose = () => {
+        setShow(false);
+
+        localStorage.setItem(
+            "review",
+            JSON.stringify({
+                "profile-image":
+                    "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                author: "eu",
+                review: review,
+                rating: value,
+            }),
+        );
+        setIsReviewed(true);
+    };
+
+    const handleShow = () => {
+        if (loggedIn) {
+            if (!isReviewed) setShow(true);
+            else {
+                localStorage.setItem("review", "");
+                setReview(false);
+            }
+        }
+    };
+
     return (
-        <div
-            className={styles.div}
-            style={{
-                backgroundImage: `url(${movie["background-image"]})`,
-            }}
-        >
-            <div className={styles.cover} style={{ backgroundImage: movie["cover"] }}>
-                <Container>
-                    <div>
-                        <Row>
-                            <Col xs={4} className={styles.content}>
+        <>
+            <LoginModal loginState={[loggedIn, setLoggedIn]} showState={[showLogin, setShowLogin]} />
+
+            <ReviewModal
+                movie={movie}
+                show={show}
+                value={value}
+                onClose={() => setShow(false)}
+                onChange={(newValue) => setValue(newValue)}
+            />
+
+            <div
+                className={styles.div}
+                style={{
+                    backgroundImage: `url(${movie["background-image"]})`,
+                }}
+            >
+                <div className={styles.cover} style={{ backgroundImage: movie["cover"] }}>
+                    <Container className="d-flex">
+                        <div className="flex-grow-0 me-5" style={{ width: "fit-content" }}>
+                            <Image src={movie["poster"]} style={{ height: "500px" }} rounded />
+                        </div>
+                        <div className="my-auto">
+                            <div className="mb-4">
+                                <h2>{movie["title"]}</h2>
                                 <div>
-                                    <Image src={movie["poster"]} style={{ height: "70vh" }} rounded />
+                                    <span className={styles.span}>{movie["rated"]}</span>
+                                    <span className={styles.span}>{movie["year"]}</span>
+                                    <span className={styles.span}> &#x2022; {movie["genres"]}</span>
+                                    <span className={styles.span}> &#x2022; {movie["runtime"]}</span>
                                 </div>
-                            </Col>
-                            <Col xs={8} className={styles.content} style={{ marginTop: "12vh" }}>
-                                <div style={{ marginLeft: "1vh" }}>
-                                    <div style={{ marginBottom: "3vh" }}>
-                                        <h2>{movie["title"]}</h2>
-                                        <div>
-                                            <span className={styles.span}>{movie["rated"]}</span>
-                                            <span className={styles.span}>{movie["year"]}</span>
-                                            <span className={styles.span}>&#x2022; {movie["genres"].map((genre, i) => (genre + " "))}</span>
-                                            <span className={styles.span}>&#x2022; {movie["runtime"]}</span>
-                                        </div>
+                            </div>
+                            <Row className="ms-0 align-items-center">
+                                <Col className="ps-0 pe-4 flex-grow-0 d-flex align-items-center">
+                                    <TextIcon
+                                        fs={2}
+                                        icon="star-fill"
+                                        iconColor="yellow"
+                                        text={`${rating}/5`}
+                                    ></TextIcon>
+                                </Col>
+                                <Col className="ps-0 pe-4 flex-grow-0">
+                                    <div onClick={() => setShowTrailer(true)} style={{ cursor: "pointer" }}>
+                                        <TextIcon icon="play" text="Play Trailer"></TextIcon>
                                     </div>
-                                    <div style={{ marginLeft: "-2vw" }}>
-                                        <Row>
-                                            <Col xs={3}>
-                                                <svg
-                                                    style={{ height: "8vh", width: "8vw", color: "yellow" }}
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    className="ipc-icon ipc-icon--star sc-bde20123-4 frBGmx"
-                                                    viewBox="0 0 24 24"
-                                                    fill="currentColor"
-                                                    role="presentation"
-                                                >
-                                                    <path d="M12 17.27l4.15 2.51c.76.46 1.69-.22 1.49-1.08l-1.1-4.72 3.67-3.18c.67-.58.31-1.68-.57-1.75l-4.83-.41-1.89-4.46c-.34-.81-1.5-.81-1.84 0L9.19 8.63l-4.83.41c-.88.07-1.24 1.17-.57 1.75l3.67 3.18-1.1 4.72c-.2.86.73 1.54 1.49 1.08l4.15-2.5z"></path>
-                                                </svg>
-                                                <span style={{ marginLeft: "-1.5vw" }}>{rating}/5</span>
-                                            </Col>
-                                            <Col xs={3} >
-                                                <TrailerModal movie={movie} />
-                                            </Col>
-                                            <Col xs={3} onClick={handleShow}>
-                                                <div style={{ marginTop: "2vh", marginLeft: "-5vw", cursor: "pointer" }} onClick={addToWatchlist}>
-                                                    {isBookmarked ? <i class="bi bi-bookmark-star-fill"></i> : <i className="bi bi-bookmark-plus"></i>} Add To Watchlist
-                                                </div>
-                                            </Col>
-                                            <Col xs={3} onClick={handleShow}>
-                                                <ReviewModal movie={movie} loggedIn={loggedIn} />
-                                            </Col>
-                                            <Modal show={show} onHide={handleCloseLoginModal} centered>
-                                                <Modal.Header closeButton>
-                                                    <Modal.Title>Login</Modal.Title>
-                                                </Modal.Header>
-                                                <Modal.Body>
-                                                    <Form>
-                                                        <Form.Group className="d-flex flex-nowrap align-items-center">
-                                                            <Form.Label className="p-0 m-2 w-25">Username</Form.Label>
-                                                            <Form.Control className="m-2" type="text" placeholder="Enter your username" />
-                                                        </Form.Group>
-
-                                                        <Form.Group className="d-flex flex-nowrap align-items-center">
-                                                            <Form.Label className="p-0 m-2 w-25">Password</Form.Label>
-                                                            <Form.Control className="m-2" type="password" placeholder="Enter your password" />
-                                                        </Form.Group>
-
-                                                        <Form.Control className="mt-3 btn btn-primary" value="Login" onClick={handleLogin} />
-                                                    </Form>
-                                                </Modal.Body>
-                                            </Modal>
-                                        </Row>
-                                    </div>
-                                    <div>
-                                        <h3
-                                            style={{
-                                                fontSize: "18px",
-                                                color: "grey",
-                                                marginBottom: "3vh",
-                                                marginTop: "2vh",
+                                    <TrailerModal
+                                        movie={movie}
+                                        show={showTrailer}
+                                        onHide={() => setShowTrailer(false)}
+                                    />
+                                </Col>
+                                <Col className="ps-0 pe-4 flex-grow-0">
+                                    {loggedIn ? (
+                                        <div
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => {
+                                                setBookmark(!isBookmarked);
                                             }}
                                         >
-                                            <i>{movie["quote"]}</i>
-                                        </h3>
-                                        <h3 style={{ fontSize: "20px" }}>Overview</h3>
-                                        <div>
-                                            <p>{movie["plot"]}</p>
+                                            <TextIcon
+                                                fs={3}
+                                                icon={isBookmarked ? "bookmark-star-fill" : "bookmark-plus"}
+                                                text="Add To Watchlist"
+                                            ></TextIcon>
                                         </div>
-                                        <Container style={{ marginLeft: "-0.7vw" }}>
-                                            <Row>
-                                                {movie["writer"].map((colaborator, i) => (
-                                                    <Col xs={2}>
-                                                        <div style={{ fontSize: "14px", marginTop: "2vh" }}>
-                                                            {colaborator}
-                                                        </div>
-                                                    </Col>
-                                                ))}
-                                            </Row>
-                                        </Container>
+                                    ) : (
+                                        <div
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => {
+                                                setShowLogin(true);
+                                                setWillBookmark(true);
+                                            }}
+                                        >
+                                            <TextIcon fs={3} icon="bookmark-plus" text="Add To Watchlist"></TextIcon>
+                                        </div>
+                                    )}
+                                </Col>
+                                <Col className="ps-0 pe-4 flex-grow-0">
+                                    <div onClick={handleShow} style={{ cursor: "pointer" }}>
+                                        <TextIcon icon={isReviewed ? "star-fill" : "star"} text="Review"></TextIcon>
                                     </div>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                </Container>
+                                </Col>
+                            </Row>
+                            <div>
+                                <h5
+                                    className="my-4"
+                                    style={{
+                                        color: "var(--bs-gray-500)",
+                                    }}
+                                >
+                                    <i>{movie["quote"]}</i>
+                                </h5>
+                                <h5>Overview</h5>
+                                <p>{movie["plot"]}</p>
+
+                                <Row>
+                                    {movie["writer"].map((colaborator, i) => (
+                                        <Col key={i} className="text-nowrap flex-grow-0">
+                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>{colaborator}</div>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </div>
+                        </div>
+                    </Container>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 
-// Left side of the page minus headline
 function Body({ movie }) {
     const [review, setReview] = useState(null);
 
@@ -253,29 +253,6 @@ function Body({ movie }) {
         }
     }, []);
 
-    if (!review) {
-        return (
-            <div>
-                <div style={{ marginTop: "2%" }}>
-                    <h3>Top Actors</h3>
-                    <CardDeck.Horizontal cardItems={movie["actors"]} childItem={(actor) => <ActorCard {...actor} />} />
-                </div>
-                <hr className={styles.hr} />
-                <div className='reviewList' style={{ overflowY: "auto", maxHeight: "90vh" }}>
-                    <h3>Reviews</h3>
-                    {movie["reviews"].map((review, i) => (
-                        <ReviewCard
-                            author={review["author"]}
-                            review={review["review"]}
-                            rating={review["rating"]}
-                            image={review["profile-image"]}
-                        />
-                    ))}
-                </div>
-            </div>
-        )
-    }
-
     return (
         <div>
             <div style={{ marginTop: "2%" }}>
@@ -283,15 +260,18 @@ function Body({ movie }) {
                 <CardDeck.Horizontal cardItems={movie["actors"]} childItem={(actor) => <ActorCard {...actor} />} />
             </div>
             <hr className={styles.hr} />
-            <div className='reviewList' style={{ overflowY: "auto", maxHeight: "90vh" }}>
-                <ReviewCard
-                    author={review["author"]}
-                    review={review["review"]}
-                    rating={review["rating"]}
-                    image={review["profile-image"]}
-                />
+            <div className="reviewList" style={{ overflowY: "auto", maxHeight: "90vh" }}>
+                {review && (
+                    <ReviewCard
+                        author={review["author"]}
+                        review={review["review"]}
+                        rating={review["rating"]}
+                        image={review["profile-image"]}
+                    />
+                )}
                 {movie["reviews"].map((review, i) => (
                     <ReviewCard
+                        key={i}
                         author={review["author"]}
                         review={review["review"]}
                         rating={review["rating"]}
@@ -306,14 +286,20 @@ function Body({ movie }) {
 function ReviewCard({ author, review, rating, image }) {
     return (
         <Card style={{ marginTop: "2vh", marginBottom: "2vh" }}>
-            <Card.Header><Image src={image} style={{ width: "2.5vw", height: "5vh", borderRadius: "50%", marginRight: "1vw" }} />  <b style={{ fontSize: "110%" }}>A review by {author} </b></Card.Header>
+            <Card.Header>
+                <Image
+                    src={image}
+                    style={{ width: "32px", height: "32px", borderRadius: "50%", marginRight: "32px" }}
+                />{" "}
+                <b style={{ fontSize: "110%" }}>A review by {author} </b>
+            </Card.Header>
             <Card.Body>
                 <Card.Title>
                     <Chip
                         label={
-                            <i className="bi bi-star-fill">
-                                <span style={{ marginLeft: "0.5vw" }}>{rating}</span>
-                            </i>
+                            <>
+                                <i className="bi bi-star-fill"></i> <span>{rating}</span>
+                            </>
                         }
                     />
                 </Card.Title>
@@ -323,7 +309,6 @@ function ReviewCard({ author, review, rating, image }) {
     );
 }
 
-// Right side of the body minus headline
 function Sidebody({ movie }) {
     return (
         <div>
@@ -359,121 +344,10 @@ function Sidebody({ movie }) {
     );
 }
 
-// Modal of the review
-function ReviewModal({ movie, loggedIn }) {
-    const [show, setShow] = useState(false);
-
-    const [value, setValue] = useState(0);
-
-    const [isReviewed, setReview] = useState(false);
-
-    const handleCloseLoginModal = () => {
-        setShow(false);
-    };
-
-    const handleClose = () => {
-        setShow(false)
-        let review = document.getElementById("textarea").value
-
-        localStorage.setItem("review", JSON.stringify({
-            "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-            "author": "eu",
-            "review": review,
-            "rating": value
-        }))
-        setReview(true)
-    };
-
-    const handleShow = () => {
-        if (loggedIn) {
-            if (!isReviewed)
-                setShow(true);
-            else {
-                localStorage.setItem("review", "")
-                setReview(false)
-            }
-        }
-    }
-
+function TextIcon({ fs = 2, icon, iconColor = undefined, text }) {
     return (
-        <>
-            <div
-                variant="primary"
-                onClick={handleShow}
-                style={{ marginTop: "2vh", marginLeft: "-5vw", cursor: "pointer" }}
-            >
-                {isReviewed ? <i class="bi bi-star-fill"></i> : <i className="bi bi-star"></i>} Review
-            </div>
-            <Modal show={show} onHide={handleCloseLoginModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title style={{ fontFamily: "'Source Sans Pro',Arial,sans-serif" }}>
-                        Rate {movie["title"]}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Typography component="legend">Give us your opinion</Typography>
-                    <Rating
-                        name="simple-controlled"
-                        value={value}
-                        onChange={(event, newValue) => {
-                            setValue(newValue);
-                        }}
-                    />
-                    <p></p>
-                    <textarea id="textarea" style={{ width: "100%" }} />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" onClick={handleClose}>
-                        Review
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </>
-    );
-}
-
-
-function TrailerModal({ movie }) {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    return (
-        <>
-            <div onClick={handleShow} style={{ marginTop: "2vh", marginLeft: "-2vw", cursor: "pointer" }}>
-                <i className="bi bi-play"></i> Play Trailer
-            </div>
-            <Modal show={show} onHide={handleClose} size="lg" style={{ display: "flex" }}>
-                <Modal.Body>
-                    <Player movie={movie} />
-                </Modal.Body>
-            </Modal>
-        </>
-    );
-}
-
-function Player({ movie }) {
-    const YoutubeEmbed = ({ embedId }) => (
-        <div className="video-responsive">
-            <iframe
-                style={{ height: "80vh", width: "100%" }}
-                src={`https://www.youtube.com/embed/${embedId}`}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                title="Embedded youtube"
-            />
-        </div>
-    );
-
-    YoutubeEmbed.propTypes = {
-        embedId: PropTypes.string.isRequired,
-    };
-
-    return (
-        <div>
-            <YoutubeEmbed embedId={movie["trailer"]} />
+        <div className="text-nowrap d-flex align-items-center">
+            <i className={`me-2 fs-${fs} bi bi-${icon}`} style={{ color: iconColor }}></i> <div>{text}</div>
         </div>
     );
 }

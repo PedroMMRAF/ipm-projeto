@@ -2,20 +2,15 @@
     border-bottom: 1px solid var(--primaryColor);
     background-size: cover;
     background-repeat: no-repeat;
-    height: 75vh;
+    background-position: center;
+    height: fit-content;
 }
 
 .cover {
+    position: relative;
     color: white;
-    height: 75vh;
-}
-
-.content {
-    margin-top: 2.5vh;
-}
-
-.span {
-    padding-left: 1vh;
+    height: fit-content;
+    padding: 64px;
 }
 
 .carousel {

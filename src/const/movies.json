@@ -34,17 +34,17 @@
                 "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/At3JgvaNeEN4Z4ESKlhhes85Xo3.jpg"
             },
             {
-                "name": "Matt Damon",
+                "name": "Robert Downey Jr.",
                 "character": "Lewis Strauss",
                 "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/im9SAqJPZKEbVZGmjXuLI4O7RvM.jpg"
             },
             {
-                "name": "Matt Damon",
+                "name": "Sam Rockwell",
                 "character": "Jean Tatlock",
                 "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/ogoAeJyLzam5m3JvBFg6vwI8p0I.jpg"
             },
             {
-                "name": "Matt Damon",
+                "name": "Tom Hardy",
                 "character": "Ernest Lawrence",
                 "image": "https://www.themoviedb.org/t/p/w138_and_h175_face/dCfu2EN7FjISACcjilaJu7evwEc.jpg"
             }
@@ -149,7 +149,7 @@
         "awards": "N/A",
         "poster": "https://m.media-amazon.com/images/M/MV5BNDUyNTIzNDQtYTZmMi00M2FlLTgyZjUtYWViZWNhMDYzMjE4XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
         "background-image": "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/kjQBrc00fB2RjHZB3PGR4w9ibpz.jpg",
-        "cover": "linear-gradient(to right, rgba(220.5, 199.5, 178.5, 1) calc((50vw - 170px) - 340px), rgba(220.5, 199.5, 178.5, 0.84) 50%, rgba(220.5, 199.5, 178.5, 0.84) 100%)",
+        "cover": "linear-gradient(to right, rgba(120, 104, 87, 1) 0%, rgba(120, 104, 87, 0.84) 50%, rgba(120, 104, 87, 0.84) 100%)",
         "reviews": [
             {
                 "profile-image": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",

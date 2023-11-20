@@ -31,15 +31,45 @@ export default function HomePage() {
             <Container className="my-5">
                 <hr></hr>
                 <h3>Trending Movies</h3>
-                <CardDeck.Horizontal cardItems={MOVIES} childItem={(movie) => <MovieCard {...movie} />} />
+                <CardDeck.Horizontal
+                    cardItems={MOVIES}
+                    childItem={(movie) => (
+                        <MovieCard
+                            {...movie}
+                            onClick={() => {
+                                window.location.href = `/movie-page?title=${movie.title}`;
+                            }}
+                        />
+                    )}
+                />
 
                 <br></br>
                 <h3>Popular Movies</h3>
-                <CardDeck.Horizontal cardItems={MOVIES} childItem={(movie) => <MovieCard {...movie} />} />
+                <CardDeck.Horizontal
+                    cardItems={MOVIES}
+                    childItem={(movie) => (
+                        <MovieCard
+                            {...movie}
+                            onClick={() => {
+                                window.location.href = `/movie-page?title=${movie.title}`;
+                            }}
+                        />
+                    )}
+                />
 
                 <br></br>
                 <h3>Top Movies</h3>
-                <CardDeck.Horizontal cardItems={MOVIES} childItem={(movie) => <MovieCard {...movie} />} />
+                <CardDeck.Horizontal
+                    cardItems={MOVIES}
+                    childItem={(movie) => (
+                        <MovieCard
+                            {...movie}
+                            onClick={() => {
+                                window.location.href = `/movie-page?title=${movie.title}`;
+                            }}
+                        />
+                    )}
+                />
             </Container>
         </>
     );
@@ -48,6 +78,6 @@ export default function HomePage() {
 for (let i = MOVIES.length; i < 21; i++) {
     MOVIES.push({
         title: `Movie ${i}`,
-        image: "https://via.placeholder.com/200x300",
+        poster: "https://via.placeholder.com/200x300",
     });
 }

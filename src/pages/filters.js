@@ -45,12 +45,13 @@ function checkYear(movie, fromYear, toYear) {
     return movie.year >= fromYear && movie.year <= toYear;
 }
 function checkSearch(movie, search) {
-    if (!search)
-        return true;
-    if (movie.title.toLowerCase().includes(search.toLowerCase()))
-        return true;
+    if (!search) return true;
+    if (movie.title.toLowerCase().includes(search.toLowerCase())) return true;
     for (let actor of movie.actors) {
-        if (actor.name.toLowerCase().includes(search.toLowerCase()) || actor.character.toLowerCase().includes(search.toLowerCase()))
+        if (
+            actor.name.toLowerCase().includes(search.toLowerCase()) ||
+            actor.character.toLowerCase().includes(search.toLowerCase())
+        )
             return true;
     }
     return false;
@@ -74,7 +75,10 @@ export default function FiltersPage() {
         setActiveMovies(
             MEDIA.filter(
                 (movie) =>
-                    movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search)
+                    movie.type === type &&
+                    checkMovieGenre(movie, activeGenres) &&
+                    checkYear(movie, fromYear, toYear) &&
+                    checkSearch(movie, search),
             ),
         );
     }, []);
@@ -192,7 +196,10 @@ function SearchFilterBox({ setActiveMovies }) {
         setActiveMovies(
             MEDIA.filter(
                 (movie) =>
-                    movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search)
+                    movie.type === type &&
+                    checkMovieGenre(movie, activeGenres) &&
+                    checkYear(movie, fromYear, toYear) &&
+                    checkSearch(movie, search),
             ),
         );
     };
