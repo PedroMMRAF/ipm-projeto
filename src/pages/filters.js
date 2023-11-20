@@ -64,12 +64,16 @@ function checkSearch(movie, search) {
 
     return false;
 }
+function checkType(movie, type) {
+    if (type === "All") return true;
+    return movie.type === type;
+}
 export default function FiltersPage() {
     const [activeMovies, setActiveMovies] = useState([]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        const type = params.get("type") || "movies";
+        const type = params.get("type") || "All";
         const urlGenres = params.get("genres") || "";
         const toYear = params.get("to") || "";
         const fromYear = params.get("from") || "";
@@ -83,7 +87,7 @@ export default function FiltersPage() {
         setActiveMovies(
             MEDIA.filter(
                 (movie) =>
-                    movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search)
+                    checkType(movie, type) && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search)
             ),
         );
     }, []);
@@ -123,7 +127,7 @@ function SearchFilterBox({ setActiveMovies }) {
     const [toYear, setToYear] = useState("");
     const [location, setLocation] = useState("");
 
-    let [type, setType] = useState("movies");
+    let [type, setType] = useState("All");
     let [sort, setSort] = useState("popular");
 
     const changeFromYear = (value) => {
@@ -201,7 +205,7 @@ function SearchFilterBox({ setActiveMovies }) {
         setActiveMovies(
             MEDIA.filter(
                 (movie) =>
-                    movie.type === type && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search)
+                    checkType(movie, type) && checkMovieGenre(movie, activeGenres) && checkYear(movie, fromYear, toYear) && checkSearch(movie, search)
             ),
         );
     };
@@ -217,7 +221,7 @@ function SearchFilterBox({ setActiveMovies }) {
     // Update the page with the URL parameters
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        const type = params.get("type") || "movies";
+        const type = params.get("type") || "All";
         const genres = params.get("genres") || "";
         const sort = params.get("sort") || "popular";
         const from = params.get("from") || "";
@@ -262,10 +266,11 @@ function SearchFilterBox({ setActiveMovies }) {
                 <Form.Group className="mb-3">
                     <Dropdown>
                         <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
-                            {type === "movies" ? "Movies" : "TV Shows"}
+                            {type === "movies" ? "Movies" : (type === "All" ? "All" : "TV Shows")}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => changeType("All")}>All</Dropdown.Item>
                             <Dropdown.Item onClick={() => changeType("movies")}>Movies</Dropdown.Item>
                             <Dropdown.Item onClick={() => changeType("tv")}>TV Shows</Dropdown.Item>
                         </Dropdown.Menu>
