@@ -1003,7 +1003,7 @@
         "released": "16 Jul 2010",
         "runtime": "148 min",
         "trailer": "YoHD9XEInc0",
-        "genre": [
+        "genres": [
             "Action",
             "Adventure",
             "Sci-Fi"
@@ -1016,7 +1016,7 @@
             {
                 "name": "Leonardo DiCaprio",
                 "character": "Dom Cobb",
-                "image": "https://www.themoviedb.org/t/p/w276_and_h350_face/jRNn8SZqFXuI5wOOlHwYsWh0hXs.jpg"
+                "image": "https://www.themoviedb.org/t/p/w276_and_h350_face/wo2hJpn04vbtmh0B9utCFdsQhxM.jpg"
             },
             {
                 "name": "Joseph Gordon-Levitt",
@@ -1076,12 +1076,12 @@
         "imdbRating": "8.8",
         "imdbVotes": "2,482,798",
         "imdbID": "tt1375666",
-        "Type": "movie",
-        "DVD": "20 Jun 2013",
+        "type": "movies",
+        "dvd": "20 Jun 2013",
         "box-office": "$292,587,330",
         "budget": "$160,000,000",
-        "Production": "N/A",
-        "Website": "N/A",
-        "Response": "True"
+        "production": "N/A",
+        "website": "N/A",
+        "response": "True"
     }
 ]
