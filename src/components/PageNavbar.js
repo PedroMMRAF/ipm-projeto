@@ -164,6 +164,11 @@ export default function PageNavbar() {
                                             </>
                                         }
                                     >
+                                        <NavDropdown.Item onClick={() => {
+                                            window.location.href = `/watchlist-page`;
+                                        }}>
+                                            <i className="bi bi-journal-bookmark-fill"></i> Watchlist
+                                        </NavDropdown.Item>
                                         <NavDropdown.Item onClick={() => setLoggedIn(false)}>
                                             <i className="bi bi-box-arrow-right"></i> Log Out
                                         </NavDropdown.Item>
@@ -196,7 +201,7 @@ export default function PageNavbar() {
                         />
                     </Form>
                 </div>
-            </div>
+            </div >
 
             <LoginModal loginState={[loggedIn, setLoggedIn]} showState={[showLogin, setShowLogin]} />
         </>
