@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Nav, Button, Modal, Form } from "react-bootstrap";
 import { InfoWindow } from "@react-google-maps/api";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import styles from "@/styles/near-you.module.css";
 
 import CardDeck from "@/components/CardDeck";
@@ -50,26 +50,22 @@ function AnimatingWidth({ children, condition, style, ...props }) {
     );
 }
 
-
 export default function NearYouPage() {
+    const [showModal, setShowModal] = useState(true);
     const [infoWindow, setInfoWindow] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState(null);
-    const [showLocationPopup, setShowLocationPopup] = useState(true);
     const [leftSidebarOpen, setleftSidebarOpen] = useState(true);
     const [rightSidebarOpen, setrightSidebarOpen] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const Movies= MOVIES.filter(movie => movie.marker!=undefined )
+
+    const Movies = MOVIES.filter((movie) => movie.marker != undefined);
 
     const handleAgree = () => {
-
         setShowModal(false);
     };
 
     const handleDisagree = () => {
-
         window.location.href = "/";
     };
-
 
     const toggleLeftSidebar = () => {
         setleftSidebarOpen(!leftSidebarOpen);
@@ -108,19 +104,18 @@ export default function NearYouPage() {
     };
     useEffect(() => {
         if (!showModal) {
-          setShowModal(true);
+            setShowModal(true);
         }
-      }, []);
-   
+    }, []);
 
     return (
         <div className={styles.page}>
             <title>Movies Near You</title>
-            
+
             <PageNavbar />
-            
+
             <Modal show={showModal} centered>
-                <Modal.Header >
+                <Modal.Header>
                     <Modal.Title>Location Permission</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -128,7 +123,6 @@ export default function NearYouPage() {
                         <Form.Label className="p-0 m-2">
                             In order to use this feature, we need your location. Click Agree if you agree.
                         </Form.Label>
-
                     </Form>
                     <button className="mt-3 btn btn-primary" onClick={handleDisagree}>
                         Disagree
@@ -139,64 +133,70 @@ export default function NearYouPage() {
                 </Modal.Body>
             </Modal>
 
-            {/* <h2 className="text-center">Movies near You</h2> */}
-
-            <div className={styles.map}>
-                <AnimatingWidth condition={leftSidebarOpen}>
-                    <CardDeck.Vertical
-                        style={{ padding: "1rem" }}
-                        cardItems={Movies}
-                        childItem={(movie) => 
-                        <MovieCard {...movie} onClick={() => selectMovie(movie)} />}
-                    
-                    />
-                </AnimatingWidth>
-
-                <button className={styles.button} onClick={toggleLeftSidebar}>
-                    {leftSidebarOpen ? <i className="bi bi-chevron-left"></i> : <i className="bi bi-chevron-right"></i>}
-                </button>
-
-                <GoogleMapComponent center={center} onClick={closeInfoWindow}>
-                    <CustomMarker onClick={() => locationPopUp(center)} color="red" position={center} />
-                    {MOVIES.map((movie, index) => (
-                        <CustomMarker
-                            key={index}
-                            onClick={() => selectMovie(movie)}
-                            color="lightblue"
-                            position={movie.marker}
+            {!showModal && (
+                <div className={styles.map}>
+                    <AnimatingWidth condition={leftSidebarOpen}>
+                        <CardDeck.Vertical
+                            style={{ padding: "1rem" }}
+                            cardItems={Movies}
+                            childItem={(movie) => <MovieCard {...movie} onClick={() => selectMovie(movie)} />}
                         />
-                    ))}
-                    {infoWindow && (
-                        <InfoWindow position={infoWindow.position} onCloseClick={closeInfoWindow}>
-                            <div>{infoWindow.content}</div>
-                        </InfoWindow>
-                    )}
-                </GoogleMapComponent>
+                    </AnimatingWidth>
 
-                <AnimatingWidth condition={rightSidebarOpen} style={{ display: "flex" }}>
-                    <button className={styles.button} onClick={closeMovie}>
-                        <i className="bi bi-x-lg"></i>
+                    <button className={styles.button} onClick={toggleLeftSidebar}>
+                        {leftSidebarOpen ? (
+                            <i className="bi bi-chevron-left"></i>
+                        ) : (
+                            <i className="bi bi-chevron-right"></i>
+                        )}
                     </button>
-                    <div className={styles.sidebarRight}>
-                        <div>
-                            <h2 className="text-center mb-3">Movie Details</h2>
-                            <MovieCard
-                                {...selectedMovie}
-                                style={{ width: "300px" }}
-                                onClick={() => {
-                                    window.location.href = `/movie-page?title=${selectedMovie.title}`;
-                                }}
+
+                    <GoogleMapComponent center={center} onClick={closeInfoWindow}>
+                        <CustomMarker onClick={() => locationPopUp(center)} color="red" position={center} />
+                        {MOVIES.map((movie, index) => (
+                            <CustomMarker
+                                key={index}
+                                onClick={() => selectMovie(movie)}
+                                color="lightblue"
+                                position={movie.marker}
                             />
-                            <div style={{ textAlign: "center" }}>
-                                <Button onClick={() => {
-                                    window.location.href = `/movie-page?title=${selectedMovie.title}`;
-                                }} >Redirect To Movie Page</Button>
+                        ))}
+                        {infoWindow && (
+                            <InfoWindow position={infoWindow.position} onCloseClick={closeInfoWindow}>
+                                <div>{infoWindow.content}</div>
+                            </InfoWindow>
+                        )}
+                    </GoogleMapComponent>
+
+                    <AnimatingWidth condition={rightSidebarOpen} style={{ display: "flex" }}>
+                        <button className={styles.button} onClick={closeMovie}>
+                            <i className="bi bi-x-lg"></i>
+                        </button>
+                        <div className={styles.sidebarRight}>
+                            <div>
+                                <h2 className="text-center mb-3">Movie Details</h2>
+                                <MovieCard
+                                    {...selectedMovie}
+                                    style={{ width: "300px" }}
+                                    onClick={() => {
+                                        window.location.href = `/movie-page?title=${selectedMovie.title}`;
+                                    }}
+                                />
+                                <div style={{ textAlign: "center" }}>
+                                    <Button
+                                        onClick={() => {
+                                            window.location.href = `/movie-page?title=${selectedMovie.title}`;
+                                        }}
+                                    >
+                                        Redirect To Movie Page
+                                    </Button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </AnimatingWidth>
-            </div>
-
+                    </AnimatingWidth>
+                </div>
+            )}
         </div>
     );
 }
+

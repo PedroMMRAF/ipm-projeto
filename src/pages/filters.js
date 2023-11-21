@@ -2,40 +2,33 @@ import React, { useState, useEffect } from "react";
 import { Dropdown, Container, Form, Button } from "react-bootstrap";
 
 import MovieCard from "@/components/MovieCard";
-import PageNavbar from "@/components/PageNavbar";
+import PageNavbar, { SORTING } from "@/components/PageNavbar";
 
 import TV from "@/const/tv-shows.json";
 import TV_GENRES from "@/const/tv-genres.json";
 import MOVIES from "@/const/movies.json";
 import MOVIE_GENRES from "@/const/movie-genres.json";
 
-const MEDIA = [...MOVIES, ...TV];
+const ALL = [...MOVIES, ...TV];
+const ALL_GENRES = [...new Map([...MOVIE_GENRES, ...TV_GENRES].map((v) => [v, null])).keys()];
 
 function checkMovieGenre(movie, activeGenres) {
-    let isAnyGenreActive = false;
-
-    for (let [genre, isActive] of Object.entries(activeGenres)) {
-        if (isActive) {
-            isAnyGenreActive = true;
-            break;
-        }
-    }
-
-    if (!isAnyGenreActive) {
-        return true;
-    }
+    let ignoreGenreCheck = true;
 
     const movieGenres = movie.genres;
+
     for (let [genre, isActive] of Object.entries(activeGenres)) {
         if (!isActive) {
             continue;
         }
+
+        ignoreGenreCheck = false;
         if (movieGenres.includes(genre)) {
             return true;
         }
     }
 
-    return false;
+    return ignoreGenreCheck;
 }
 
 function checkYear(movie, fromYear, toYear) {
@@ -48,6 +41,7 @@ function checkYear(movie, fromYear, toYear) {
 function checkSearch(movie, search) {
     if (!search) return true;
     search = search.toLowerCase();
+
     if (movie.title.toLowerCase().includes(search)) return true;
 
     for (let actor of movie.actors)
@@ -69,7 +63,7 @@ function checkSearch(movie, search) {
 }
 
 function checkType(movie, type) {
-    if (type === "All") return true;
+    if (type === "all") return true;
     return movie.type === type;
 }
 
@@ -82,31 +76,68 @@ function checkLocation(movie, location) {
 
 export default function FiltersPage() {
     const [activeMovies, setActiveMovies] = useState([]);
+    const [params, setParams] = useState({
+        type: "all",
+        sort: "popular",
+        genres: {},
+        to: "",
+        from: "",
+        search: "",
+        location: "",
+    });
 
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const type = params.get("type") || "All";
-        const urlGenres = params.get("genres") || "";
-        const toYear = params.get("to") || "";
-        const fromYear = params.get("from") || "";
-        const search = params.get("search") || "";
-        const location = params.get("location") || "";
-        let activeGenres = {};
-        if (urlGenres) {
-            for (let genre of urlGenres.split(",")) {
-                activeGenres[genre] = true;
+    let basePath = "/filters";
+
+    const updateParams = (toChange) => {
+        console.log(params);
+
+        const newParams = { ...params, ...toChange };
+        setParams(newParams);
+
+        const URLParams = new URLSearchParams(window.location.search);
+
+        for (let [key, value] of Object.entries(toChange)) {
+            if (key === "genres") {
+                value = Object.entries(value)
+                    .filter(([_, v]) => v) // filter for true values only
+                    .map(([g, _]) => g) // map from [genre, isActive] to genre
+                    .join(","); // join with commas
+            }
+
+            if (value) {
+                URLParams.set(key, value);
+            } else {
+                URLParams.delete(key);
             }
         }
+
+        window.history.pushState(null, "", `${basePath}?${URLParams.toString()}`);
+    };
+
+    const reloadMovies = (newParams) => {
+        if (newParams === undefined) newParams = params;
+
         setActiveMovies(
-            MEDIA.filter(
+            ALL.filter(
                 (movie) =>
-                    checkType(movie, type) &&
-                    checkMovieGenre(movie, activeGenres) &&
-                    checkYear(movie, fromYear, toYear) &&
-                    checkSearch(movie, search) &&
-                    checkLocation(movie, location),
+                    checkType(movie, newParams.type) &&
+                    checkMovieGenre(movie, newParams.genres) &&
+                    checkYear(movie, parseInt(newParams.from) || undefined, parseInt(newParams.to) || undefined) &&
+                    checkSearch(movie, newParams.search) &&
+                    checkLocation(movie, newParams.location),
             ),
         );
+    };
+
+    useEffect(() => {
+        const urlParams = Object.fromEntries(new URLSearchParams(window.location.search));
+        if (urlParams.genres) urlParams.genres = Object.fromEntries(urlParams.genres.split(",").map((g) => [g, true]));
+
+        console.log(urlParams);
+
+        const newParams = { ...params, ...urlParams };
+        setParams(newParams);
+        reloadMovies(newParams);
     }, []);
 
     return (
@@ -114,15 +145,15 @@ export default function FiltersPage() {
             <title>Search</title>
             <PageNavbar />
             <div style={{ display: "flex" }}>
-                <div style={{ flexShrink: 0 }}>
-                    <SearchFilterBox setActiveMovies={setActiveMovies} />
+                <div className="m-2" style={{ flexShrink: 0 }}>
+                    <SearchFilterBox params={params} updateParams={updateParams} reloadMovies={reloadMovies} />
                 </div>
                 <div
-                    className="mt-2"
+                    className="m-2"
                     style={{ flexGrow: 4, display: "flex", flexWrap: "wrap", alignContent: "flex-start" }}
                 >
                     {activeMovies.map((movie) => (
-                        <div style={{ margin: "1rem" }}>
+                        <div key={movie.title} className="m-3">
                             <MovieCard
                                 {...movie}
                                 onClick={() => {
@@ -137,134 +168,34 @@ export default function FiltersPage() {
     );
 }
 
-function SearchFilterBox({ setActiveMovies }) {
-    const [activeGenres, setActiveGenres] = useState({});
-    const [search, setSearch] = useState("");
-    const [fromYear, setFromYear] = useState("");
-    const [toYear, setToYear] = useState("");
-    const [location, setLocation] = useState("");
-
-    let [type, setType] = useState("All");
-    let [sort, setSort] = useState("popular");
-
+function SearchFilterBox({ params, updateParams, reloadMovies }) {
     const changeFromYear = (value) => {
-        setFromYear(value);
-        const params = new URLSearchParams(window.location.search);
-        params.set("from", value);
-        updateUrl(params);
+        updateParams({ from: value });
     };
 
     const changeToYear = (value) => {
-        setToYear(value);
-        const params = new URLSearchParams(window.location.search);
-        params.set("to", value);
-        updateUrl(params);
+        updateParams({ to: value });
     };
 
     const changeLocation = (value) => {
-        setLocation(value);
-        const params = new URLSearchParams(window.location.search);
-        params.set("location", value);
-        updateUrl(params);
+        updateParams({ location: value });
     };
 
     const changeType = (value) => {
-        setType(value);
-
-        setActiveGenres({});
-
-        const params = new URLSearchParams(window.location.search);
-
-        params.set("type", value);
-        params.set("genres", "");
-
-        updateUrl(params);
+        updateParams({ type: value, genres: {} });
     };
 
     const changeSort = (value) => {
-        const params = new URLSearchParams(window.location.search);
-        setSort(value);
-        params.set("sort", value);
-
-        updateUrl(params);
+        updateParams({ sort: value });
     };
+
     const changeSearch = (value) => {
-        const params = new URLSearchParams(window.location.search);
-        setSearch(value);
-        params.set("search", value);
-
-        updateUrl(params);
+        updateParams({ search: value });
     };
+
     const changeGenre = (genre) => {
-        const params = new URLSearchParams(window.location.search);
-
-        setActiveGenres((prev) => ({
-            ...prev,
-            [genre]: !prev[genre],
-        }));
-
-        if (!activeGenres[genre]) {
-            params.set("genres", params.get("genres") ? `${params.get("genres")},${genre}` : genre);
-        } else {
-            params.set(
-                "genres",
-                params
-                    .get("genres")
-                    .split(",")
-                    .filter((genrea) => genrea !== genre)
-                    .join(","),
-            );
-        }
-        updateUrl(params);
+        updateParams({ genres: { ...params.genres, [genre]: !params.genres[genre] } });
     };
-
-    const applyFilters = ({ activeGenres }, { type }, { fromYear }, { toYear }, { search }, { location }) => {
-        setActiveMovies(
-            MEDIA.filter(
-                (movie) =>
-                    checkType(movie, type) &&
-                    checkMovieGenre(movie, activeGenres) &&
-                    checkYear(movie, fromYear, toYear) &&
-                    checkSearch(movie, search) &&
-                    checkLocation(movie, location),
-            ),
-        );
-    };
-
-    let baseLink = "/filters";
-
-    // Change the URL without reloading the page
-    const updateUrl = (params) => {
-        const newUrl = `${baseLink}?${params.toString()}`;
-        window.history.pushState(null, "", newUrl);
-    };
-
-    // Update the page with the URL parameters
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const type = params.get("type") || "All";
-        const genres = params.get("genres") || "";
-        const sort = params.get("sort") || "popular";
-        const from = params.get("from") || "";
-        const to = params.get("to") || "";
-        const location = params.get("location") || "";
-        const search = params.get("search") || "";
-        setType(type);
-
-        if (genres) {
-            for (let genre of genres.split(",")) {
-                setActiveGenres((prev) => ({
-                    ...prev,
-                    [genre]: !prev[genre],
-                }));
-            }
-        }
-        setSort(sort);
-        setFromYear(from);
-        setToYear(to);
-        setLocation(location);
-        setSearch(search);
-    }, []);
 
     const numericInputFilter = (event) => {
         if (!/[0-9]/.test(event.key) && event.key !== "Backspace") {
@@ -273,27 +204,34 @@ function SearchFilterBox({ setActiveMovies }) {
     };
 
     return (
-        <Container className="ms-4 mt-4 ps-0">
+        <Container className="m-3 ps-0">
             <Form className="p-2 m-0 d-flex flex-column border rounded" style={{ maxWidth: "350px" }}>
                 <Form.Label className="mb-1 fw-bold">Search</Form.Label>
                 <Form.Control
                     className="mb-3"
                     type="text"
-                    value={search}
+                    value={params.search}
                     onChange={(event) => changeSearch(event.target.value)}
                     placeholder="Search"
                 />
+
                 <Form.Label className="fw-bold mb-1">Category</Form.Label>
                 <Form.Group className="mb-3">
-                    <Dropdown>
+                    <Dropdown onSelect={changeType}>
                         <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
-                            {type === "movies" ? "Movies" : type === "All" ? "All" : "TV Shows"}
+                            {
+                                {
+                                    movies: "Movies",
+                                    tv: "TV Shows",
+                                    all: "All",
+                                }[params.type]
+                            }
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => changeType("All")}>All</Dropdown.Item>
-                            <Dropdown.Item onClick={() => changeType("movies")}>Movies</Dropdown.Item>
-                            <Dropdown.Item onClick={() => changeType("tv")}>TV Shows</Dropdown.Item>
+                            <Dropdown.Item eventKey="all">All</Dropdown.Item>
+                            <Dropdown.Item eventKey="movies">Movies</Dropdown.Item>
+                            <Dropdown.Item eventKey="tv">TV Shows</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Form.Group>
@@ -302,23 +240,15 @@ function SearchFilterBox({ setActiveMovies }) {
                 <Form.Group className="mb-3">
                     <Dropdown onSelect={changeSort}>
                         <Dropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "100%" }}>
-                            {
-                                {
-                                    new: "Newest",
-                                    top: "Best Rating",
-                                    throwback: "Throwback",
-                                    popular: "Most Popular",
-                                    trending: "Trending",
-                                }[sort]
-                            }
+                            {SORTING[params.sort]}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu style={{ width: "100%" }}>
-                            <Dropdown.Item eventKey="new">Newest</Dropdown.Item>
-                            <Dropdown.Item eventKey="top">Best Rating</Dropdown.Item>
-                            <Dropdown.Item eventKey="throwback">Throwback</Dropdown.Item>
-                            <Dropdown.Item eventKey="popular">Most Popular</Dropdown.Item>
-                            <Dropdown.Item eventKey="trending">Trending</Dropdown.Item>
+                            {Object.entries(SORTING).map(([key, value]) => (
+                                <Dropdown.Item key={key} eventKey={key}>
+                                    {value}
+                                </Dropdown.Item>
+                            ))}
                         </Dropdown.Menu>
                     </Dropdown>
                 </Form.Group>
@@ -330,7 +260,7 @@ function SearchFilterBox({ setActiveMovies }) {
                         type="text"
                         maxLength={4}
                         onChange={(event) => changeFromYear(event.target.value)}
-                        value={fromYear}
+                        value={params.from}
                         onKeyDown={numericInputFilter}
                     />
 
@@ -339,17 +269,21 @@ function SearchFilterBox({ setActiveMovies }) {
                         type="text"
                         maxLength={4}
                         onChange={(event) => changeToYear(event.target.value)}
-                        value={toYear}
+                        value={params.to}
                         onKeyDown={numericInputFilter}
                     />
                 </Form.Group>
 
                 <Form.Label className="mb-1 fw-bold">Genres</Form.Label>
                 <Form.Group className="mb-3 d-flex flex-wrap">
-                    {(type === "tv" ? TV_GENRES : MOVIE_GENRES).map((genre) => (
+                    {{
+                        tv: TV_GENRES,
+                        movies: MOVIE_GENRES,
+                        all: ALL_GENRES,
+                    }[params.type].map((genre) => (
                         <Button
                             key={genre}
-                            variant={activeGenres[genre] ? "primary" : "secondary"}
+                            variant={params.genres[genre] ? "primary" : "secondary"}
                             className="m-1 flex-fill"
                             onClick={(event) => {
                                 event.preventDefault();
@@ -365,16 +299,14 @@ function SearchFilterBox({ setActiveMovies }) {
                 <Form.Control
                     className="mb-3"
                     type="text"
-                    value={location}
+                    value={params.location}
                     onChange={(event) => changeLocation(event.target.value)}
                     placeholder="Location"
                 />
 
                 <Form.Control
                     type="button"
-                    onClick={() => {
-                        applyFilters({ activeGenres }, { type }, { fromYear }, { toYear }, { search }, { location });
-                    }}
+                    onClick={() => reloadMovies()}
                     className="btn btn-primary"
                     value="Apply Filters"
                 />
@@ -382,3 +314,4 @@ function SearchFilterBox({ setActiveMovies }) {
         </Container>
     );
 }
+

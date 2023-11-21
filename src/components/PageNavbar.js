@@ -8,6 +8,39 @@ import LoginModal, { useLoginState } from "@/components/LoginModal";
 import TV_GENRES from "@/const/tv-genres.json";
 import MOVIE_GENRES from "@/const/movie-genres.json";
 
+export const SORTING = {
+    popular: (
+        <>
+            <i className="bi bi-film"></i> Popular
+        </>
+    ),
+    trending: (
+        <>
+            <i className="bi bi-ticket-detailed"></i> Trending
+        </>
+    ),
+    top: (
+        <>
+            <i className="bi bi-fire"></i> Best
+        </>
+    ),
+    new: (
+        <>
+            <i className="bi bi-newspaper"></i> Newest
+        </>
+    ),
+    throwback: (
+        <>
+            <i className="bi bi-rewind-btn-fill"></i> Throwback
+        </>
+    ),
+    random: (
+        <>
+            <i className="bi bi-collection-fill"></i> Random
+        </>
+    ),
+};
+
 function NavDropdownMultiColumn({ children, ...params }) {
     return (
         <NavDropdown {...params}>
@@ -61,24 +94,11 @@ function Dropdown({ type, title, genres }) {
             <NavDropdownColumn>
                 <NavDropdown.Header className={styles.dropdownHeader}>Trending Topics</NavDropdown.Header>
                 <NavDropdown.Divider className={styles.dropdownDivider} />
-                <NavDropdown.Item href={`${baseLink}&sort=new`}>
-                    <i class="bi bi-newspaper"></i> New {title}
-                </NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=top`}>
-                    <i class="bi bi-fire"></i> Top {title}
-                </NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=throwback`}>
-                <i class="bi bi-rewind-btn-fill"></i>Throwback {title}
-                </NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=trending`}>
-                    <i class="bi bi-ticket-detailed"></i> Trending {title}
-                </NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=popular`}>
-                    <i class="bi bi-film"></i> Popular {title}
-                </NavDropdown.Item>
-                <NavDropdown.Item href={`${baseLink}&sort=random`}>
-                    <i class="bi bi-collection-fill"></i> Random {title}
-                </NavDropdown.Item>
+                {Object.entries(SORTING).map(([key, value]) => (
+                    <NavDropdown.Item key={key} href={`${baseLink}&sort=${key}`}>
+                        {value} {title}
+                    </NavDropdown.Item>
+                ))}
             </NavDropdownColumn>
         </NavDropdownMultiColumn>
     );
@@ -131,7 +151,9 @@ export default function PageNavbar() {
                             <Nav>
                                 <Dropdown type="movies" title="Movies" genres={MOVIE_GENRES} />
                                 <Dropdown type="tv" title="TV Shows" genres={TV_GENRES} />
-                                <Nav.Link href="/near-you">Near You</Nav.Link>
+                                <Nav.Link href="/near-you">
+                                    <i className="bi bi-globe"></i> Near You
+                                </Nav.Link>
                             </Nav>
                             <Nav>
                                 {loggedIn ? (
@@ -180,3 +202,4 @@ export default function PageNavbar() {
         </>
     );
 }
+

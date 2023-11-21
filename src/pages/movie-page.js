@@ -31,9 +31,7 @@ export default function MoviePage() {
     return (
         <div>
             <PageNavbar />
-            {!movie ? (
-                <></>
-            ) : (
+            {movie ?
                 <>
                     <Headline movie={movie} review={review} setReview={setReview} />
                     <Container>
@@ -47,7 +45,8 @@ export default function MoviePage() {
                         </Row>
                     </Container>
                 </>
-            )}
+                :
+                <></>}
         </div>
     );
 }
@@ -76,7 +75,9 @@ function Headline({ movie, review, setReview }) {
     }, []);
 
     useEffect(() => {
-        if (isBookmarked === null) return;
+        if (isBookmarked === null) {
+            return;
+        }
 
         let bookmarkList = JSON.parse(localStorage.getItem("bookmarks") || "{}");
         bookmarkList[movie.title] = isBookmarked;
@@ -84,7 +85,9 @@ function Headline({ movie, review, setReview }) {
     }, [isBookmarked]);
 
     useEffect(() => {
-        if (showLogin) return;
+        if (showLogin) {
+            return;
+        }
 
         if (willBookmark && loggedIn) {
             setBookmark(true);
@@ -158,12 +161,15 @@ function Headline({ movie, review, setReview }) {
                         </div>
                         <div className="my-auto">
                             <div className="mb-4">
-                                <h2>{movie["title"]}</h2>
+                                <h2>{movie.title}</h2>
                                 <div>
-                                    <span className={styles.span}>{movie["rated"]}</span>
-                                    <span className={styles.span}>{movie["year"]}</span>
-                                    <span className={styles.span}> &#x2022; {movie["genres"]}</span>
-                                    <span className={styles.span}> &#x2022; {movie["runtime"]}</span>
+                                    <span className={styles.span + " p-1 me-2"} style={{
+                                        border: "1px solid var(--bs-gray-500)",
+                                        borderRadius: "5px",
+                                    }}>{movie.rated}</span>
+                                    <span className={styles.span}>{movie.year}</span>
+                                    <span className={styles.span}> &#x2022; {movie.genres.join(", ")}</span>
+                                    <span className={styles.span}> &#x2022; {movie.runtime}</span>
                                 </div>
                             </div>
                             <Row className="ms-0 align-items-center">
