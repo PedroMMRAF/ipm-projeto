@@ -1,3 +1,38 @@
+.btn-primary {
+    --bs-btn-color: hwb(0 100% 0%);
+    --bs-btn-bg: hwb(7 9% 67%);
+    --bs-btn-border-color: hwb(7 9% 67%);
+    --bs-btn-hover-color: hwb(0 100% 0%);
+    --bs-btn-hover-bg: hwb(7 9% 82%);
+    --bs-btn-hover-border-color: hwb(7 9% 87%);
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: hwb(0 100% 0%);
+    --bs-btn-active-bg: hwb(7 9% 87%);
+    --bs-btn-active-border-color: hwb(7 9% 91%);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: hwb(0 100% 0%);
+    --bs-btn-disabled-bg: hwb(7 9% 67%);
+    --bs-btn-disabled-border-color: hwb(7 9% 67%);
+}
+
+.btn-secondary {
+    --bs-btn-color: hwb(0 0% 100%);
+    --bs-btn-bg: hwb(27 66% 6%);
+    --bs-btn-border-color: hwb(27 66% 6%);
+    --bs-btn-hover-color: hwb(0 0% 100%);
+    --bs-btn-hover-bg: hwb(27 66% 21%);
+    --bs-btn-hover-border-color: hwb(27 66% 26%);
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: hwb(0 0% 100%);
+    --bs-btn-active-bg: hwb(27 66% 26%);
+    --bs-btn-active-border-color: hwb(27 66% 30%);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: hwb(0 0% 100%);
+    --bs-btn-disabled-bg: hwb(27 66% 6%);
+    --bs-btn-disabled-border-color: hwb(27 66% 6%);
+}
+
+
 body {
     background-color: #fbe5cf;
 }
@@ -27,14 +62,14 @@ body {
 }
 
 #navbar {
-    background-color: #551F18;
+    background-color: hwb(7 9% 67%);
     z-index: 1000;
 }
 
 #image {
     background-image: url("images/logo-color.png");
     height: 100vh;
-    background-color: #E7B17F;
+    background-color: hwb(29 50% 9%);
     background-repeat: no-repeat;
     background-position: 50%;
 }
