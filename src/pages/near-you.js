@@ -56,6 +56,7 @@ export default function NearYouPage() {
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [leftSidebarOpen, setleftSidebarOpen] = useState(true);
     const [rightSidebarOpen, setrightSidebarOpen] = useState(false);
+    const [showLogOutModal, setShowLogOutModal] = useState(true);
 
     const Movies = MOVIES.filter((movie) => movie.marker != undefined);
 
@@ -113,8 +114,26 @@ export default function NearYouPage() {
             <title>Movies Near You</title>
 
             <PageNavbar />
-
+            
             <Modal show={showModal} centered>
+                <Modal.Header>
+                    <Modal.Title>Location Permission</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Label className="p-0 m-2">
+                            In order to use this feature, we need your location. Click Agree if you agree.
+                        </Form.Label>
+                    </Form>
+                    <button className="mt-3 btn btn-primary" onClick={handleDisagree}>
+                        Disagree
+                    </button>
+                    <button className="mt-3 ms-1 btn btn-primary" onClick={handleAgree}>
+                        Agree
+                    </button>
+                </Modal.Body>
+            </Modal>
+            <Modal show={showLogOutModal} centered>
                 <Modal.Header>
                     <Modal.Title>Location Permission</Modal.Title>
                 </Modal.Header>

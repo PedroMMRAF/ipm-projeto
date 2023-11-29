@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Collapse, Container, Navbar, Nav, NavDropdown, Form } from "react-bootstrap";
+import { Collapse, Container, Navbar, Nav, NavDropdown, Form,Modal } from "react-bootstrap";
 
 import styles from "./PageNavbar.module.css";
 
@@ -106,6 +106,7 @@ function Dropdown({ type, title, genres }) {
 
 export default function PageNavbar() {
     const [isCollapsed, setCollapsed] = useState(true);
+    const [showLogOutModal, setShowLogOutModal] = useState(false);
 
     const contentRef = useRef(null);
     const topRef = useRef(null);
@@ -120,6 +121,15 @@ export default function PageNavbar() {
         if (contentRef.current) {
             contentRef.current.style.height = isCollapsed ? `${contentRef.current.scrollHeight}px` : "0px";
         }
+    };
+
+    const handleAgree = () => {
+        setShowLogOutModal(false);
+        setLoggedIn(false)
+    };
+    const handleDisagree  = () => {
+        setShowLogOutModal(false);
+  
     };
 
     useEffect(() => {
@@ -142,6 +152,24 @@ export default function PageNavbar() {
     return (
         <>
             <div ref={topRef}></div>
+            <Modal show={showLogOutModal} centered>
+                <Modal.Header>
+                    <Modal.Title>Log Out Confirmation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Label className="p-0 m-2">
+                            Are you sure you want to Log Out?
+                        </Form.Label>
+                    </Form>
+                    <button className="mt-3 btn btn-primary" onClick={handleDisagree}>
+                        Disagree
+                    </button>
+                    <button className="mt-3 ms-1 btn btn-primary" onClick={handleAgree}>
+                        Agree
+                    </button>
+                </Modal.Body>
+            </Modal>
             <div ref={navRef} className="fixed-top">
                 <Navbar bg="light" expand="lg">
                     <Container>
@@ -172,7 +200,7 @@ export default function PageNavbar() {
                                         }}>
                                             <i className="bi bi-journal-bookmark-fill"></i> Watchlist
                                         </NavDropdown.Item>
-                                        <NavDropdown.Item onClick={() => setLoggedIn(false)}>
+                                        <NavDropdown.Item onClick={() => setShowLogOutModal(true) }>
                                             <i className="bi bi-box-arrow-right"></i> Log Out
                                         </NavDropdown.Item>
                                     </NavDropdown>
