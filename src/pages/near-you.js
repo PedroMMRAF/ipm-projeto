@@ -56,6 +56,7 @@ export default function NearYouPage() {
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [leftSidebarOpen, setleftSidebarOpen] = useState(true);
     const [rightSidebarOpen, setrightSidebarOpen] = useState(false);
+   
 
     const Movies = MOVIES.filter((movie) => movie.marker != undefined);
 
@@ -113,7 +114,7 @@ export default function NearYouPage() {
             <title>Movies Near You</title>
 
             <PageNavbar />
-
+            
             <Modal show={showModal} centered>
                 <Modal.Header>
                     <Modal.Title>Location Permission</Modal.Title>
@@ -132,6 +133,7 @@ export default function NearYouPage() {
                     </button>
                 </Modal.Body>
             </Modal>
+           
 
             {!showModal && (
                 <div className={styles.map}>
