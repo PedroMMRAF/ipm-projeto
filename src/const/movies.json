@@ -14,7 +14,6 @@
         ],
         "director": "Christopher Nolan",
         "writer": [
-            "Christopher Nolan",
             "Kai Bird",
             "Martin Sherwin"
         ],
@@ -108,7 +107,6 @@
         ],
         "director": "Gareth Edwards",
         "writer": [
-            "Gareth Edwards",
             "Chris Weitz"
         ],
         "actors": [
@@ -198,8 +196,7 @@
         "director": "Emma Tammi",
         "writer": [
             "Scott Cawthon",
-            "Seth Cuddeback",
-            "Emma Tammi"
+            "Seth Cuddeback"
         ],
         "actors": [
             {
@@ -383,7 +380,6 @@
         ],
         "director": "Christopher Zalla",
         "writer": [
-            "Christopher Zalla",
             "Joshua Davis"
         ],
         "actors": [
@@ -474,9 +470,7 @@
             "Music"
         ],
         "director": "Damien Chazelle",
-        "writer": [
-            "Damien Chazelle"
-        ],
+        "writer": [],
         "actors": [
             {
                 "name": "Miles Teller",
@@ -831,8 +825,7 @@
         ],
         "director": "Christopher McQuarrie",
         "writer": [
-            "Lee Child",
-            "Christopher McQuarrie"
+            "Lee Child"
         ],
         "actors": [
             {
@@ -921,7 +914,6 @@
         "director": "Wes Anderson",
         "writer": [
             "Stefan Zweig",
-            "Wes Anderson",
             "Hugo Guinness"
         ],
         "actors": [
@@ -1009,9 +1001,7 @@
             "Sci-Fi"
         ],
         "director": "Christopher Nolan",
-        "writer": [
-            "Christopher Nolan"
-        ],
+        "writer": [],
         "actors": [
             {
                 "name": "Leonardo DiCaprio",
