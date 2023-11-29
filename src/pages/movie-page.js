@@ -251,16 +251,14 @@ function Headline({ movie, review, setReview }) {
                                 <p>{movie["plot"]}</p>
 
                                 <Row>
-                                    {movie.director.map((colaborator, i) => (
-                                        <Col key={i} className="text-nowrap flex-grow-0">
-                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>{colaborator}</div>
-                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>director</div>
-                                        </Col>
-                                    ))}
+                                    <Col className="text-nowrap flex-grow-0">
+                                        <div className="mt-4 fs-11"><b>{movie.director}</b></div>
+                                        <div className=" fs-7">Director</div>
+                                    </Col>
                                     {movie.writer.map((colaborator, i) => (
                                         <Col key={i} className="text-nowrap flex-grow-0">
-                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>{colaborator}</div>
-                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>writer</div>
+                                            <div className="mt-4 fs-11"><b>{colaborator}</b></div>
+                                            <div className=" fs-7">Writer</div>
                                         </Col>
                                     ))}
                                 </Row>
@@ -282,7 +280,8 @@ function Body({ movie, review }) {
             </div>
             <hr className={styles.hr} />
             <div className="reviewList" style={{ overflowY: "auto", maxHeight: "90vh" }}>
-                {review && <ReviewCard {...review} />}
+                <h3>Reviews</h3>
+                {review ? <ReviewCard {...review} /> : <></>}
                 {movie.reviews.map((review, i) => (
                     <ReviewCard key={i} {...review} />
                 ))}
