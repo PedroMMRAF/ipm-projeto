@@ -51,7 +51,7 @@ function AnimatingWidth({ children, condition, style, ...props }) {
 }
 
 export default function NearYouPage() {
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState();
     const [infoWindow, setInfoWindow] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [leftSidebarOpen, setleftSidebarOpen] = useState(true);
@@ -102,10 +102,9 @@ export default function NearYouPage() {
     const closeMovie = () => {
         toggleRightSidebar();
     };
+
     useEffect(() => {
-        if (!showModal) {
-            setShowModal(true);
-        }
+        setShowModal(true);
     }, []);
 
     return (
