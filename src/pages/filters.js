@@ -295,13 +295,13 @@ function SearchFilterBox({ params, updateParams, reloadMovies }) {
                     ))}
                 </Form.Group>
 
-                <Form.Label className="mb-1 fw-bold">Location</Form.Label>
+                <Form.Label className="mb-1 fw-bold">Country</Form.Label>
                 <Form.Control
                     className="mb-3"
                     type="text"
                     value={params.location}
                     onChange={(event) => changeLocation(event.target.value)}
-                    placeholder="Location"
+                    placeholder="Country"
                 />
 
                 <Form.Control
