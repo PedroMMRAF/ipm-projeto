@@ -154,6 +154,9 @@ export default function PageNavbar() {
                                 <Nav.Link href="/near-you">
                                     <i className="bi bi-globe"></i> Near You
                                 </Nav.Link>
+                                <Nav.Link href="/filters">
+                                    <i className="bi bi-funnel"></i> Advanced Search
+                                </Nav.Link>
                             </Nav>
                             <Nav>
                                 {loggedIn ? (
