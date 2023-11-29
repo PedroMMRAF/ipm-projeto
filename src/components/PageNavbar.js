@@ -211,8 +211,8 @@ export default function PageNavbar() {
                                 )}
 
                                 <Nav.Link onClick={toggleCollapse} >
-                                  <><i className="bi bi-search"></i> Search</> 
-                                  <i class="bi bi-caret-down-fill" style={{fontSize: "11px"}} ></i>
+                                    <><i className="bi bi-search"></i> Search</>
+                                    <i className="bi bi-caret-down-fill" style={{ fontSize: "11px" }} ></i>
                                 </Nav.Link>
 
                             </Nav>
