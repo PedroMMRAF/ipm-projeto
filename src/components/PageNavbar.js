@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Collapse, Container, Navbar, Nav, NavDropdown, Form,Modal } from "react-bootstrap";
+import { Collapse, Container, Navbar, Nav, NavDropdown, Form, Modal } from "react-bootstrap";
 
 import styles from "./PageNavbar.module.css";
 
@@ -127,9 +127,9 @@ export default function PageNavbar() {
         setShowLogOutModal(false);
         setLoggedIn(false)
     };
-    const handleDisagree  = () => {
+    const handleDisagree = () => {
         setShowLogOutModal(false);
-  
+
     };
 
     useEffect(() => {
@@ -200,7 +200,7 @@ export default function PageNavbar() {
                                         }}>
                                             <i className="bi bi-journal-bookmark-fill"></i> Watchlist
                                         </NavDropdown.Item>
-                                        <NavDropdown.Item onClick={() => setShowLogOutModal(true) }>
+                                        <NavDropdown.Item onClick={() => setShowLogOutModal(true)}>
                                             <i className="bi bi-box-arrow-right"></i> Log Out
                                         </NavDropdown.Item>
                                     </NavDropdown>
@@ -209,9 +209,12 @@ export default function PageNavbar() {
                                         <i className="bi bi-person-circle"></i> Login
                                     </Nav.Link>
                                 )}
-                                <Nav.Link href="#" onClick={toggleCollapse}>
-                                    <i className="bi bi-search"></i> Search
+
+                                <Nav.Link onClick={toggleCollapse} >
+                                  <><i className="bi bi-search"></i> Search</> 
+                                  <i class="bi bi-caret-down-fill" style={{fontSize: "11px"}} ></i>
                                 </Nav.Link>
+
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
