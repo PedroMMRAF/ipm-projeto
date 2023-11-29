@@ -251,9 +251,16 @@ function Headline({ movie, review, setReview }) {
                                 <p>{movie["plot"]}</p>
 
                                 <Row>
-                                    {movie["writer"].map((colaborator, i) => (
+                                    {movie.director.map((colaborator, i) => (
                                         <Col key={i} className="text-nowrap flex-grow-0">
                                             <div style={{ fontSize: "14px", marginTop: "2vh" }}>{colaborator}</div>
+                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>director</div>
+                                        </Col>
+                                    ))}
+                                    {movie.writer.map((colaborator, i) => (
+                                        <Col key={i} className="text-nowrap flex-grow-0">
+                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>{colaborator}</div>
+                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>writer</div>
                                         </Col>
                                     ))}
                                 </Row>
