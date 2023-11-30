@@ -51,8 +51,8 @@ function AnimatingWidth({ children, condition, style, ...props }) {
 
 export default function NearYouPage() {
     const [showModal, setShowModal] = useState();
-    const [infoWindow, setInfoWindow] = useState(null);
-    const [selectedMovie, setSelectedMovie] = useState(null);
+    const [infoWindow, setInfoWindow] = useState();
+    const [selectedMovie, setSelectedMovie] = useState();
     const [leftSidebarOpen, setleftSidebarOpen] = useState(true);
     const [rightSidebarOpen, setrightSidebarOpen] = useState(false);
 
@@ -103,7 +103,9 @@ export default function NearYouPage() {
     };
 
     useEffect(() => {
-        setShowModal(true);
+        if (!showModal) {
+            setShowModal(true);
+        }
     }, []);
 
     return (
@@ -141,13 +143,13 @@ export default function NearYouPage() {
                         />
                     </AnimatingWidth>
 
-                    <button className={styles.button} onClick={toggleLeftSidebar}>
+                    <Button variant="secondary" className={styles.button} onClick={toggleLeftSidebar}>
                         {leftSidebarOpen ? (
                             <i className="bi bi-chevron-left"></i>
                         ) : (
                             <i className="bi bi-chevron-right"></i>
                         )}
-                    </button>
+                    </Button>
 
                     <GoogleMapComponent center={center} onClick={closeInfoWindow}>
                         <CustomMarker onClick={() => locationPopUp(center)} color="red" position={center} />
@@ -167,28 +169,26 @@ export default function NearYouPage() {
                     </GoogleMapComponent>
 
                     <AnimatingWidth condition={rightSidebarOpen} style={{ display: "flex" }}>
-                        <button className={styles.button} onClick={closeMovie}>
+                        <Button variant="secondary" className={styles.button} onClick={closeMovie}>
                             <i className="bi bi-x-lg"></i>
-                        </button>
+                        </Button>
                         <div className={styles.sidebarRight}>
-                            <div>
-                                <h2 className="text-center mb-3">Movie Details</h2>
-                                <MovieCard
-                                    {...selectedMovie}
-                                    style={{ width: "300px" }}
+                            <h2 className="text-center">Movie Details</h2>
+                            <MovieCard
+                                {...selectedMovie}
+                                style={{ width: "300px" }}
+                                onClick={() => {
+                                    window.location.href = `/movie-page?title=${selectedMovie.title}`;
+                                }}
+                            />
+                            <div className="text-center">
+                                <Button
                                     onClick={() => {
                                         window.location.href = `/movie-page?title=${selectedMovie.title}`;
                                     }}
-                                />
-                                <div style={{ textAlign: "center" }}>
-                                    <Button
-                                        onClick={() => {
-                                            window.location.href = `/movie-page?title=${selectedMovie.title}`;
-                                        }}
-                                    >
-                                        Redirect To Movie Page
-                                    </Button>
-                                </div>
+                                >
+                                    Redirect To Movie Page
+                                </Button>
                             </div>
                         </div>
                     </AnimatingWidth>
