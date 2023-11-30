@@ -37,7 +37,7 @@ export default function MoviePage() {
                     <Container>
                         <Row>
                             <Col md={9} sm={9}>
-                                <Body movie={movie} review={review} />
+                                <Body movie={movie} review={review} setReview={setReview} />
                             </Col>
                             <Col md={3} sm={3} className={styles.sidebody}>
                                 <Sidebody movie={movie} />
@@ -251,16 +251,14 @@ function Headline({ movie, review, setReview }) {
                                 <p>{movie["plot"]}</p>
 
                                 <Row>
-                                    {movie.director.map((colaborator, i) => (
-                                        <Col key={i} className="text-nowrap flex-grow-0">
-                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>{colaborator}</div>
-                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>director</div>
-                                        </Col>
-                                    ))}
+                                    <Col className="text-nowrap flex-grow-0">
+                                        <div className="mt-4 fs-11"><b>{movie.director}</b></div>
+                                        <div className=" fs-7">Director</div>
+                                    </Col>
                                     {movie.writer.map((colaborator, i) => (
                                         <Col key={i} className="text-nowrap flex-grow-0">
-                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>{colaborator}</div>
-                                            <div style={{ fontSize: "14px", marginTop: "2vh" }}>writer</div>
+                                            <div className="mt-4 fs-11"><b>{colaborator}</b></div>
+                                            <div className=" fs-7">Writer</div>
                                         </Col>
                                     ))}
                                 </Row>
@@ -273,7 +271,8 @@ function Headline({ movie, review, setReview }) {
     );
 }
 
-function Body({ movie, review }) {
+function Body({ movie, review, setReview }) {
+
     return (
         <div>
             <div style={{ marginTop: "2%" }}>
@@ -282,7 +281,8 @@ function Body({ movie, review }) {
             </div>
             <hr className={styles.hr} />
             <div className="reviewList" style={{ overflowY: "auto", maxHeight: "90vh" }}>
-                {review && <ReviewCard {...review} />}
+                <h3>Reviews</h3>
+                {review ? <ReviewCard {...review} /> : <DefaultCard movie={movie} review={review} setReview={setReview} />}
                 {movie.reviews.map((review, i) => (
                     <ReviewCard key={i} {...review} />
                 ))}
@@ -314,6 +314,47 @@ function ReviewCard({ author, review, rating, profileImage }) {
                 <Card.Text>{review}</Card.Text>
             </Card.Body>
         </Card>
+    );
+}
+
+function DefaultCard({ movie, review, setReview }) {
+    const [showReview, setShowReview] = useState(false);
+
+    const handleShowReview = () => {
+        if (review == null) {
+            setShowReview(true);
+            console.log(showReview)
+        } else {
+            review = null
+        }
+    };
+
+
+    return (
+        <><ReviewModal
+            movie={movie}
+            show={showReview}
+            onClose={() => setShowReview(false)}
+            onChange={(reviewRating, reviewText) => {
+                let newReview = {
+                    profileImage: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+                    author: "eu",
+                    review: reviewText,
+                    rating: reviewRating,
+                }
+                localStorage.setItem(
+                    "reviews",
+                    JSON.stringify({
+                        ...JSON.parse(localStorage.getItem("reviews") || "{}"),
+                        [movie.title]: newReview,
+                    })
+                )
+                setReview(newReview)
+            }} /><Card style={{ marginTop: "2vh", marginBottom: "2vh", cursor: "pointer" }}>
+                <Card.Body style={{ textDecorationLine: 'underline', color: "#334561" }} onClick={handleShowReview}>
+                    <Card.Text><i className="bi bi-star me-2"></i>Add your review...</Card.Text>
+                </Card.Body>
+            </Card></>
     );
 }
 
