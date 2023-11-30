@@ -125,11 +125,10 @@ export default function PageNavbar() {
 
     const handleAgree = () => {
         setShowLogOutModal(false);
-        setLoggedIn(false)
+        setLoggedIn(false);
     };
     const handleDisagree = () => {
         setShowLogOutModal(false);
-
     };
 
     useEffect(() => {
@@ -158,9 +157,7 @@ export default function PageNavbar() {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Label className="p-0 m-2">
-                            Are you sure you want to Log Out?
-                        </Form.Label>
+                        <Form.Label className="p-0 m-2">Are you sure you want to Log Out?</Form.Label>
                     </Form>
                     <button className="mt-3 btn btn-primary" onClick={handleDisagree}>
                         Disagree
@@ -195,9 +192,11 @@ export default function PageNavbar() {
                                             </>
                                         }
                                     >
-                                        <NavDropdown.Item onClick={() => {
-                                            window.location.href = `/watchlist-page`;
-                                        }}>
+                                        <NavDropdown.Item
+                                            onClick={() => {
+                                                window.location.href = `/watchlist-page`;
+                                            }}
+                                        >
                                             <i className="bi bi-journal-bookmark-fill"></i> Watchlist
                                         </NavDropdown.Item>
                                         <NavDropdown.Item onClick={() => setShowLogOutModal(true)}>
@@ -210,11 +209,9 @@ export default function PageNavbar() {
                                     </Nav.Link>
                                 )}
 
-                                <Nav.Link onClick={toggleCollapse} >
-                                  <><i className="bi bi-search"></i> Search</> 
-                                  <i class="bi bi-caret-down-fill" style={{fontSize: "11px"}} ></i>
+                                <Nav.Link onClick={toggleCollapse} className="dropdown-toggle">
+                                    <i className="bi bi-search"></i> Search
                                 </Nav.Link>
-
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
@@ -235,7 +232,7 @@ export default function PageNavbar() {
                         />
                     </Form>
                 </div>
-            </div >
+            </div>
 
             <LoginModal loginState={[loggedIn, setLoggedIn]} showState={[showLogin, setShowLogin]} />
         </>

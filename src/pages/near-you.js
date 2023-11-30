@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Row, Col, Nav, Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import { InfoWindow } from "@react-google-maps/api";
-import { useNavigate } from "react-router-dom";
 import styles from "@/styles/near-you.module.css";
 
 import CardDeck from "@/components/CardDeck";
@@ -56,7 +55,6 @@ export default function NearYouPage() {
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [leftSidebarOpen, setleftSidebarOpen] = useState(true);
     const [rightSidebarOpen, setrightSidebarOpen] = useState(false);
-   
 
     const Movies = MOVIES.filter((movie) => movie.marker != undefined);
 
@@ -113,7 +111,7 @@ export default function NearYouPage() {
             <title>Movies Near You</title>
 
             <PageNavbar />
-            
+
             <Modal show={showModal} centered>
                 <Modal.Header>
                     <Modal.Title>Location Permission</Modal.Title>
@@ -132,7 +130,6 @@ export default function NearYouPage() {
                     </button>
                 </Modal.Body>
             </Modal>
-           
 
             {!showModal && (
                 <div className={styles.map}>
