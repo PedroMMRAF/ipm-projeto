@@ -2,10 +2,13 @@ const fs = require("fs");
 const next = require("next");
 const http = require("http");
 const https = require("https");
+const path = require("path");
+
+require("dotenv").config()
 
 const sslOptions = {
-    cert: fs.readFileSync("/etc/letsencrypt/live/mtvdb.bot.nu/fullchain.pem"),
-    key: fs.readFileSync("/etc/letsencrypt/live/mtvdb.bot.nu/privkey.pem"),
+    cert: fs.readFileSync(path.join(process.env.SSL_ROOT ?? "./", "fullchain.pem")),
+    key: fs.readFileSync(path.join(process.env.SSL_ROOT ?? "./", "privkey.pem")),
 };
 
 const app = next({ dev: false, hostname: "localhost", port: 443 });
